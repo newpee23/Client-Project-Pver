@@ -7,7 +7,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 
 import '../../assets/css/SingInCss.css'
-import FormSingIN from '../formsubmit/auth/FormSingIN';
+import FormSingIN from '../molecules/auth/FormSingIN';
 type Props = {}
 
 const SingIn = ({ }: Props) => {
@@ -31,7 +31,7 @@ const SingIn = ({ }: Props) => {
                   <Tab label={<span className="normal-case text-base sml:text-lg font-medium text-purple-600">Sing Up</span>} value="2" className="w-1/2" />
                 </TabList>
               </Box>
-              <TabPanel value="1"><FormSingIN/></TabPanel>
+              <TabPanel value="1" className="p-0 pt-10"><FormSingIN/></TabPanel>
               <TabPanel value="2">Item Two</TabPanel>
             </TabContext>
           </Box>
