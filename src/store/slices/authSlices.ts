@@ -1,11 +1,13 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosResponse, CancelTokenSource } from "axios";
 import { dataLogin, initialStateAuth, resDataLogin } from "../../types/authType";
 import { SERVER_APP_API } from "../../api/config";
+import { checkLevelUser } from "../../components/function/function";
 
 const initialState: initialStateAuth = {
+  userLogin: undefined,
   loading: false,
-  userLogin: null,
+  message: ''
 };
 
 // สร้างตัวแปรเพื่อใช้ในการยกเลิก
@@ -32,6 +34,7 @@ export const login = createAsyncThunk<resDataLogin , dataLogin>(
       );
 
       const dataResponse:resDataLogin = response.data;
+      
       return dataResponse;
 
     } catch (error: unknown) {
@@ -51,21 +54,35 @@ export const login = createAsyncThunk<resDataLogin , dataLogin>(
 const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
+    },
+     // cleanState function
+    cleanState: (): initialStateAuth => {
+      return {
+        ...initialState,
+      };
+    },
+  },
   extraReducers: (builder) => {
-    // login/loadAsync function
     builder.addCase(login.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(login.fulfilled, (state) => {
-      state.loading = false;
+    builder.addCase(login.fulfilled, (state, action) => {
+      state.userLogin = action.payload.userLogin;
+      state.message = action.payload.message;
+   
+      if(action.payload.token && action.payload.userLogin){
+          checkLevelUser(action.payload.userLogin);
+      }
     });
-    builder.addCase(login.rejected, (state) => {
-      state.loading = false;
+    builder.addCase(login.rejected, (state, action) => {
+      state.message =  action.error.message || "";
     });
   },
 });
 
 // Action creators
-
+export const { setLoading , cleanState} = authSlice.actions;
 export default authSlice.reducer;

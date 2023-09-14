@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState  } from 'react';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -7,14 +7,14 @@ import TabPanel from '@mui/lab/TabPanel';
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 
 import '../../assets/css/SingInCss.css'
+
 import FormSingIN from '../molecules/auth/FormSingIN';
 import { useAppSelector } from '../../store/store';
 import Loading from '../atoms/Loading';
-type Props = {}
 
-const SingIn = ({ }: Props) => {
+const SingIn = () => {
   const [value, setValue] = useState<string>('1');
-  const { loading } = useAppSelector((state) => state?.auth);
+  const { loading  } = useAppSelector((state) => state?.auth);
   const handleChange = (event: React.SyntheticEvent, newValue: string): void => {
     setValue(newValue);
   };

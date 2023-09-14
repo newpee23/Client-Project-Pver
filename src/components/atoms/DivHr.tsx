@@ -1,4 +1,4 @@
-import { DivHrType } from "../../types/buttonType";
+import { DivHrType } from "../../types/atomsType";
 
 
 const DivHr = (props: DivHrType) => {

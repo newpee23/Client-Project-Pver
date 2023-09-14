@@ -1,4 +1,4 @@
-import { buttonSingIN } from "../../types/buttonType";
+import { buttonSingIN } from "../../types/atomsType";
 
 const DivButton = (props: buttonSingIN) => {
     return (

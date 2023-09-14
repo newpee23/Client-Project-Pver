@@ -10,3 +10,8 @@ export type DivHrType = {
     divClass: string;
     className: string
 }
+
+export type DivTxtMesErr = {
+  className: string
+  text: string;
+}

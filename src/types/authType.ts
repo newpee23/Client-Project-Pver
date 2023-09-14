@@ -1,4 +1,4 @@
-type userLogin ={
+export type userLogin ={
     id: number;
     fname: string;
     lname: string;
@@ -6,8 +6,9 @@ type userLogin ={
 }
 
 export type initialStateAuth = {
-    loading: boolean; 
-    userLogin: userLogin | null ;
+    userLogin: userLogin | undefined ;
+    loading: boolean;
+    message: string | undefined;
 }
 
 export type dataLogin = {
