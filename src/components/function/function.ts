@@ -1,5 +1,6 @@
 import { BASEURL } from "../../api/config";
 import { userLogin } from "../../types/authType";
+
 export const checkLevelUser = (user: userLogin): void => {
   switch (user.level) {
     case "m":

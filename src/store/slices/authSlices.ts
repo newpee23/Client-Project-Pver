@@ -2,6 +2,8 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosResponse, CancelTokenSource } from "axios";
 import { dataLogin, initialStateAuth, resDataLogin } from "../../types/authType";
 import { SERVER_APP_API } from "../../api/config";
+
+import { setLocalTokenUser, setLocalUser } from "../../components/function/localStorage";
 import { checkLevelUser } from "../../components/function/function";
 
 const initialState: initialStateAuth = {
@@ -72,9 +74,10 @@ const authSlice = createSlice({
     builder.addCase(login.fulfilled, (state, action) => {
       state.userLogin = action.payload.userLogin;
       state.message = action.payload.message;
-   
       if(action.payload.token && action.payload.userLogin){
-          checkLevelUser(action.payload.userLogin);
+        setLocalUser(action.payload.userLogin);
+        setLocalTokenUser(action.payload.token);
+        checkLevelUser(action.payload.userLogin);
       }
     });
     builder.addCase(login.rejected, (state, action) => {
