@@ -45,8 +45,6 @@ const SingIn = () => {
         </div>
       </section>
     )
-
-
   )
 }
 

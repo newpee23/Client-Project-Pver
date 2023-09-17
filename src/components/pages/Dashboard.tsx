@@ -5,10 +5,9 @@ import { userLogin } from "../../types/authType";
 import { backToLogin } from "../function/function";
 import Navbar from "../organs/Navbar";
 
-type Props = {};
+type Props = {}
 
-function Home({}: Props) {
-
+ const Dashboard = ({}: Props) => {
   const user = localStorage.getItem("userLogin");
   const dispatch = useAppDispatch();
 
@@ -29,11 +28,12 @@ function Home({}: Props) {
   useEffect(() => {
     checkToken();
   }, []);
-
-  return (    <>
+  return (
+    <>
     <Navbar/>
-    <div>Home</div>
-    </>);
+    <div>Dashbord</div>
+    </>
+  )
 }
 
-export default Home;
+export default Dashboard;

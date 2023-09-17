@@ -5,6 +5,7 @@ import SingIn from "../components/pages/SingIn";
 import ErrorPage from "../components/pages/ErrorPage";
 import Home from "../components/pages/Home";
 import App from "../App";
+import Dashboard from "../components/pages/Dashboard";
 
 type routersType = {
     path: string;
@@ -44,11 +45,11 @@ if (user) {
             routerData = [
                 {
                     path: "/",
-                    element: token ? <App /> : <Navigate to="/SingIn" />,// ถ้าไม่มี tokenAuth จะเปลี่ยนเส้นทางไปที่หน้า App
+                    element: token ? <Dashboard /> : <Navigate to="/SingIn" />,// ถ้าไม่มี tokenAuth จะเปลี่ยนเส้นทางไปที่หน้า App
                 },
                 {
-                    path: "/App",
-                    element: <App />,
+                    path: "/Dashboard",
+                    element: <Dashboard />,
                 },
                 {
                     path: "/SingIn",
