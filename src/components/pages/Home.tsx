@@ -4,10 +4,12 @@ import { checkTokenUser } from "../../store/slices/authSlices";
 import { userLogin } from "../../types/authType";
 import { backToLogin } from "../function/function";
 import Navbar from "../organs/Navbar";
+import FormHome from "../molecules/home/FormHome";
+import DivHr from "../atoms/DivHr";
 
 type Props = {};
 
-function Home({}: Props) {
+function Home({ }: Props) {
 
   const user = localStorage.getItem("userLogin");
   const dispatch = useAppDispatch();
@@ -30,10 +32,15 @@ function Home({}: Props) {
     checkToken();
   }, []);
 
-  return (    <>
-    <Navbar/>
-    <div>Home</div>
-    </>);
+  return (
+  <>
+    <Navbar />
+    <section>
+      <FormHome />
+      <DivHr divClass="flex justify-center" className="h-px mt-4 mb-6 bg-gray-400 border-0 dark:bg-gray-700 w-10/12 opacity-20" />
+    </section>
+  
+  </>);
 }
 
 export default Home;
