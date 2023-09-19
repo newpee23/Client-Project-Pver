@@ -24,8 +24,6 @@ function Navbar({}: Props) {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
-
     
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">

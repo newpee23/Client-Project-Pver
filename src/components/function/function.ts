@@ -1,4 +1,5 @@
 import { BASEURL } from "../../api/config";
+import { logOutPage } from "../../api/logoutApi";
 import { cleanState } from "../../store/slices/authSlices";
 import { userLogin } from "../../types/authType";
 import { clearLocalStorageSingIn } from "./localStorage";
@@ -18,8 +19,11 @@ export const checkLevelUser = (user: userLogin): void => {
 };
 
 export const backToLogin = async (): Promise<void> => {
-  await clearLocalStorageSingIn();
-  await cleanState();
-  window.location.replace(BASEURL);
+    // await logOutPage();
+    await clearLocalStorageSingIn();
+    await cleanState();
+    window.location.replace(BASEURL);
+  
+
 }
 
