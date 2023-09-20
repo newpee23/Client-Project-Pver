@@ -19,11 +19,10 @@ export const checkLevelUser = (user: userLogin): void => {
 };
 
 export const backToLogin = async (): Promise<void> => {
-    // await logOutPage();
+  
     await clearLocalStorageSingIn();
     await cleanState();
     window.location.replace(BASEURL);
-  
 
 }
 

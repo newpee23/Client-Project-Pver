@@ -6,6 +6,7 @@ import { backToLogin } from "../function/function";
 import Navbar from "../organs/Navbar";
 import FormHome from "../molecules/home/FormHome";
 import DivHr from "../atoms/DivHr";
+import Questionnaire from "../organs/Questionnaire";
 
 type Props = {};
 
@@ -19,7 +20,7 @@ function Home({ }: Props) {
       let parsedData: userLogin = JSON.parse(user);
       try {
         const statusChToken = await dispatch(checkTokenUser(parsedData.id));
-        if (statusChToken.payload === "No Token, Authorization Denied") {
+        if (statusChToken.payload === '"No Token, Authorization Denied"') {
           backToLogin();
         }
       } catch (error) {
@@ -31,13 +32,14 @@ function Home({ }: Props) {
   useEffect(() => {
     checkToken();
   }, []);
-
+ 
   return (
   <>
     <Navbar />
     <section>
       <FormHome />
       <DivHr divClass="flex justify-center" className="h-px mt-4 mb-6 bg-gray-400 border-0 dark:bg-gray-700 w-10/12 opacity-20" />
+      <Questionnaire />
     </section>
   
   </>);
