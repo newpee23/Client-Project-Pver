@@ -30,7 +30,7 @@ function FormHome({ }: Props) {
         } else {
             backToLogin();
         }
-        console.log('Submitted search query:', inputRef.current?.value);
+        // console.log('Submitted search query:', inputRef.current?.value);
     };
 
     const handleInputChange = () => {
