@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useAppDispatch } from '../../../store/store';
-import { findQuestionnaire } from '../../../store/slices/homeSlices';
+import { findQuestionnaire, setLoadingHome } from '../../../store/slices/homeSlices';
 import { userLogin } from '../../../types/authType';
 import { backToLogin } from '../../function/function';
 import DivTextMesErr from '../../atoms/DivTextMesErr';
@@ -12,7 +12,7 @@ function FormHome({ }: Props) {
     const inputRef = useRef<HTMLInputElement | null>(null);
     const dispatch = useAppDispatch();
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const user = localStorage.getItem('userLogin');
         if (user) {
@@ -20,9 +20,20 @@ function FormHome({ }: Props) {
             if (inputRef.current?.value) {
                 // Validate the input value to ensure it's a 5-digit number
                 const inputValue = inputRef.current.value;
-                if (/^\d{5}$/.test(inputValue)) {
+                if (/^\d{0,5}$/.test(inputValue)) {
                     // Perform your dispatch here
-                    dispatch(findQuestionnaire({ f_id: inputValue, id: parsedData.id }));
+                    try {
+                        dispatch(setLoadingHome(true));
+                        await dispatch(findQuestionnaire({ f_id: inputValue, id: parsedData.id }));
+                    } catch (error) {
+                        setTimeout(() => {
+                            dispatch(setLoadingHome(false));
+                        }, 1000);
+                    } finally {
+                        setTimeout(() => {
+                            dispatch(setLoadingHome(false));
+                        }, 1000);
+                    }
                 } else {
                     setRemark(false); // Show an error message if the input is not valid
                 }
@@ -37,7 +48,7 @@ function FormHome({ }: Props) {
         if (inputRef.current) {
             const searchQuery:string = inputRef.current.value;
             if (!/^\d{5}$/.test(searchQuery)) {
-                setRemark(false);
+                 setRemark(false);
             } else {
                 setRemark(true);
             }
@@ -60,7 +71,7 @@ function FormHome({ }: Props) {
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                             </svg>
                         </div>
-                        <input type="number" id="search" className={`block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-purple-500-500 ${remark ? 'focus:border-purple-500' : 'focus:border-red-500'} `}  placeholder="กรุณากรอกหัสแบบสอบถาม"  required  ref={inputRef} onChange={handleInputChange} />
+                        <input type="number" id="search" className={`block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg drop-shadow-md bg-gray-50 focus:ring-purple-500-500 ${remark ? 'focus:border-purple-500' : 'focus:border-red-500'} `}  placeholder="กรุณากรอกหัสแบบสอบถาม"  required  ref={inputRef} onChange={handleInputChange} />
                         <button disabled={!remark} type="submit" className={`text-white absolute right-2.5 bottom-2.5 ${remark ? 'bg-purple-600 hover:bg-purple-800' : 'bg-red-600 hover:bg-red-800'} focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-4 py-2 `} >
                             Search
                         </button>

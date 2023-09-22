@@ -2,9 +2,9 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosError, AxiosResponse, CancelTokenSource } from "axios";
 import { SERVER_APP_API } from "../../api/config";
 import { allFromMaster, initialStateHome } from "../../types/homeType";
+import { setLocalQuestion } from "../../components/function/localStorage";
 
 const initialState: initialStateHome = {
-  allFrom: [],
   message: "",
   loading: false,
 };
@@ -66,22 +66,16 @@ const homeSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(findQuestionnaire.pending, (state) => {
-      state.loading = true;
-      state.allFrom = [];
-      state.message = "";
-    });
     builder.addCase(findQuestionnaire.fulfilled, (state, action) => {
       if (Array.isArray(action.payload)) {
-        state.allFrom = action.payload;
-      } else {
-        state.allFrom = []; // หรือค่าเริ่มต้นที่คุณต้องการเมื่อเกิดข้อผิดพลาด
+        // state.allFrom = action.payload;
+        setLocalQuestion(action.payload);
+      }else{
+        setLocalQuestion([]);
       }
-      state.loading = false;
     });
     builder.addCase(findQuestionnaire.rejected, (state, action) => {
       state.message = action.error.message || "";
-      state.loading = false;
     });
   },
 });

@@ -1,4 +1,4 @@
-import React, { useState  } from 'react';
+import React, { useCallback, useEffect, useState  } from 'react';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -14,14 +14,16 @@ import Loading from '../atoms/Loading';
 
 const SingIn = () => {
   const [value, setValue] = useState<string>('1');
+
   const { loading  } = useAppSelector((state) => state?.auth);
-  const handleChange = (event: React.SyntheticEvent, newValue: string): void => {
+
+  const handleChange = useCallback((event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
-  };
+  }, []);
 
   return (
     loading ? (
-      <Loading />
+      <Loading setHeight=""/>
     ) : (
       <section>
         <div className="h-screen flex items-center justify-center">

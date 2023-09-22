@@ -54,45 +54,45 @@ export const login = createAsyncThunk<resDataLogin , dataLogin>(
 );
 
 // Check token
-export const checkTokenUser = createAsyncThunk<string , number>(
-  "checkToken/loadAsync", async(id: number): Promise<string> => {
+// export const checkTokenUser = createAsyncThunk<string , number>(
+//   "checkToken/loadAsync", async(id: number): Promise<string> => {
   
-    try {
-      const response: AxiosResponse = await axios.get(SERVER_APP_API+`/member/${id}`,{
-        headers: {
-          "Content-Type": "application/json",
-          "token-request": token,
-        },
-        cancelToken: cancelSource.token,
-      })
+//     try {
+//       const response: AxiosResponse = await axios.get(SERVER_APP_API+`/member/${id}`,{
+//         headers: {
+//           "Content-Type": "application/json",
+//           "token-request": token,
+//         },
+//         cancelToken: cancelSource.token,
+//       })
     
-      return response.data;
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError;
-        if (axiosError.response && axiosError.response.status === 401) {
-          // console.log("Unauthorized error:", axiosError.response.data);
-          const responseDataAsString:string = JSON.stringify(axiosError.response.data);
-          return responseDataAsString;
-        } else {
-          // กระทำเมื่อเกิดข้อผิดพลาดอื่น ๆ
-          console.error("Other error:", axiosError);
-        }
-      } else {
-        // กระทำเมื่อเกิดข้อผิดพลาดที่ไม่ใช่ axios error
-        console.error("Non-Axios error:", error);
-      }
-      return  '';
-    }
+//       return response.data;
+//     } catch (error: unknown) {
+//       if (axios.isAxiosError(error)) {
+//         const axiosError = error as AxiosError;
+//         if (axiosError.response && axiosError.response.status === 401) {
+//           // console.log("Unauthorized error:", axiosError.response.data);
+//           const responseDataAsString:string = JSON.stringify(axiosError.response.data);
+//           return responseDataAsString;
+//         } else {
+//           // กระทำเมื่อเกิดข้อผิดพลาดอื่น ๆ
+//           console.error("Other error:", axiosError);
+//         }
+//       } else {
+//         // กระทำเมื่อเกิดข้อผิดพลาดที่ไม่ใช่ axios error
+//         console.error("Non-Axios error:", error);
+//       }
+//       return  '';
+//     }
   
-  }
-);
+//   }
+// );
 
 const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
   reducers: {
-    setLoading: (state, action: PayloadAction<boolean>) => {
+    setLoadingAuth: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
      // cleanState function
@@ -103,9 +103,6 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(login.pending, (state) => {
-      state.loading = true;
-    });
     builder.addCase(login.fulfilled, (state, action) => {
       state.userLogin = action.payload.userLogin;
       state.message = action.payload.message;
@@ -123,5 +120,5 @@ const authSlice = createSlice({
 });
 
 // Action creators
-export const { setLoading , cleanState} = authSlice.actions;
+export const { setLoadingAuth , cleanState} = authSlice.actions;
 export default authSlice.reducer;

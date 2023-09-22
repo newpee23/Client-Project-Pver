@@ -1,12 +1,11 @@
 export type initialStateHome = {
-    allFrom: allFromMaster[] ;
     message: string;
     loading: boolean;
 }
 
 export type allFromMaster = {
-    rec_id: number;
-    form_id: string;
+    id: number;
+    f_id: string;
     member_id: number;
     p0_user: number | null;
     p0_time: Date | null;
@@ -44,4 +43,9 @@ export type allFromMaster = {
     p16_time: Date | null;
     p17_user: number | null;
     p17_time: Date | null;
+}
+
+export type pageCard = {
+    pageuser: number | null;
+    pagetime: Date | null;
 }
