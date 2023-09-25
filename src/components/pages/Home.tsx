@@ -10,18 +10,33 @@ import { useAppSelector } from "../../store/store";
 
 function Home() {
 
-  const user = localStorage.getItem("userLogin");
-  const { loading } = useAppSelector((state) => state?.home);
+  const { loading, message } = useAppSelector((state) => state?.home);
+
   const checkToken = async () => {
+    const user = localStorage.getItem("userLogin");
+
     if (!user) return;
     const parsedData: userLogin = JSON.parse(user);
     await checkTokenUser(parsedData.id);
+
   };
 
   useEffect(() => {
     checkToken();
   }, []);
-  
+
+  const generateQuestionnaire = (): JSX.Element => {
+    return message ? (
+      <div>
+        <div className="flex items-center justify-center h-72 text-purple-700 font-semibold text-2xl">
+          <span>{message}</span>
+        </div>
+      </div>
+    ) : (
+      <Questionnaire />
+    );
+  };
+
   return (
     <>
       <Navbar />
@@ -29,9 +44,9 @@ function Home() {
         <FormHome />
         <DivHr divClass="flex justify-center" className="h-px mt-4 mb-6 bg-gray-400 border-0 dark:bg-gray-700 w-10/12 opacity-20" />
         {loading ? (
-        <Loading setHeight="60vh" />
+          <Loading setHeight="60vh" />
         ) : (
-        <Questionnaire />
+          generateQuestionnaire()
         )}
       </section>
     </>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import CardQuestionnaire from '../atoms/CardQuestionnaire';
 import { allFromMaster } from '../../types/homeType';
 
@@ -13,10 +13,38 @@ const Questionnaire = React.memo(() => {
         setAllFrom(parsedData);
       }
     }
-  }, []); // ดึงข้อมูลเมื่อคอมโพเนนต์ถูกโหลดครั้งแรกเท่านั้น
+  }, []);
+
+  const generateCardItem = useCallback((item: allFromMaster | null): JSX.Element[] => {
+    const cardQuestionnaires: JSX.Element[] = [];
+    if (item?.p0_user) {
+      for (let i = 0; i < 18; i++) {
+        const pageuser = (item as any)[`p${i}_user`] as number | null;
+        const pagetime = (item as any)[`p${i}_time`] as Date | null;
+        cardQuestionnaires.push(
+          <CardQuestionnaire
+            key={`card-${item.id}-${item.f_id}-${i}`}
+            pageuser={pageuser}
+            pagetime={pagetime}
+          />
+        );
+      }
+    } else {
+      for (let i = 0; i < 18; i++) {
+        cardQuestionnaires.push(
+          <CardQuestionnaire
+            key={`card-${i}-${i}-${i}`}
+            pageuser={null}
+            pagetime={null}
+          />
+        );
+      }
+    }
+    return cardQuestionnaires;
+  }, []);
 
   return (
-    allFrom ? (
+    allFrom.length > 0 ? (
       <section>
         {allFrom.map((item, index) => (
           <div key={item.id + item.f_id}>
@@ -25,30 +53,12 @@ const Questionnaire = React.memo(() => {
             </div>
             <div className="sml:pt-5">
               <div className="grid gap-4 m-5 sml:m-10 lgl:m-40 sml:mt-3 lgl:mt-3 grid-cols-1 sml:grid-cols-2 mdl:grid-cols-3 lg:grid-cols-4 lgl:grid-cols-4 content-center">
-                <CardQuestionnaire pageuser={item.p0_user} pagetime={item.p0_time} />
-                <CardQuestionnaire pageuser={item.p1_user} pagetime={item.p1_time} />
-                <CardQuestionnaire pageuser={item.p2_user} pagetime={item.p2_time} />
-                <CardQuestionnaire pageuser={item.p3_user} pagetime={item.p3_time} />
-                <CardQuestionnaire pageuser={item.p4_user} pagetime={item.p4_time} />
-                <CardQuestionnaire pageuser={item.p5_user} pagetime={item.p5_time} />
-                <CardQuestionnaire pageuser={item.p6_user} pagetime={item.p6_time} />
-                <CardQuestionnaire pageuser={item.p7_user} pagetime={item.p7_time} />
-                <CardQuestionnaire pageuser={item.p8_user} pagetime={item.p8_time} />
-                <CardQuestionnaire pageuser={item.p9_user} pagetime={item.p9_time} />
-                <CardQuestionnaire pageuser={item.p10_user} pagetime={item.p10_time} />
-                <CardQuestionnaire pageuser={item.p11_user} pagetime={item.p11_time} />
-                <CardQuestionnaire pageuser={item.p12_user} pagetime={item.p12_time} />
-                <CardQuestionnaire pageuser={item.p13_user} pagetime={item.p13_time} />
-                <CardQuestionnaire pageuser={item.p14_user} pagetime={item.p14_time} />
-                <CardQuestionnaire pageuser={item.p15_user} pagetime={item.p15_time} />
-                <CardQuestionnaire pageuser={item.p16_user} pagetime={item.p16_time} />
-                <CardQuestionnaire pageuser={item.p17_user} pagetime={item.p17_time} />
+                {generateCardItem(item)}
               </div>
             </div>
           </div>
         ))}
       </section>
-
     ) : (
       <div className="flex items-center justify-center h-72 text-purple-700 font-semibold text-2xl">
         <span>ไม่พบข้อมูลแบบสอบถาม</span>
