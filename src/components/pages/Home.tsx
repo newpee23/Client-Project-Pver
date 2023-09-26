@@ -9,6 +9,7 @@ import { checkTokenUser } from "../../api/homeApi";
 import { useAppSelector } from "../../store/store";
 import { allFromMaster } from "../../types/homeType";
 import { clearStorageQuestion } from "../function/localStorage";
+import "../../assets/css/HomeCss.css"
 
 function Home() {
 
@@ -34,26 +35,26 @@ function Home() {
       setFromMaster(true);
     }
   }, [fromMaster]);
-  
+
   const generateQuestionnaire = (): JSX.Element => {
-   
+
     const dataFrom: allFromMaster[] = data ? JSON.parse(data) : [];
     message && clearStorageQuestion();
 
-    return showFromMaster ? <Questionnaire dataFrom={dataFrom}/> :
-    message ? (
-      <div>
-        <div className="flex items-center justify-center h-72 text-purple-700 font-semibold text-2xl">
-          <span>{message}</span>
+    return showFromMaster ? <Questionnaire dataFrom={dataFrom} /> :
+      message ? (
+        <div>
+          <div className="flex items-center justify-center h-72 text-purple-700 font-semibold text-2xl">
+            <span>{message}</span>
+          </div>
         </div>
-      </div>
-    ) : ( data ? <Questionnaire dataFrom={dataFrom}/> :
-      <div>
-      <div className="flex items-center justify-center h-72 text-purple-700 font-semibold text-2xl">
-        <span>ไม่พบข้อมูลแบบสอบถาม</span>
-      </div>
-    </div>
-    );
+      ) : (data ? <Questionnaire dataFrom={dataFrom} /> :
+        <div>
+          <div className="flex items-center justify-center h-72 text-purple-700 font-semibold text-2xl">
+            <span>ไม่พบข้อมูลแบบสอบถาม</span>
+          </div>
+        </div>
+      );
   };
 
   return (

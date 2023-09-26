@@ -44,9 +44,29 @@ export type allFromMaster = {
     p16_time: Date | null;
     p17_user: number | null;
     p17_time: Date | null;
+    p0_user_name: string | null;
+    p1_user_name: string | null;
+    p3_user_name: string | null;
+    p4_user_name: string | null;
+    p5_user_name: string | null;
+    p6_user_name: string | null;
+    p7_user_name: string | null;
+    p8_user_name: string | null;
+    p9_user_name: string | null;
+    p10_user_name: string | null;
+    p11_user_name: string | null;
+    p12_user_name: string | null;
+    p13_user_name: string | null;
+    p14_user_name: string | null;
+    p15_user_name: string | null;
+    p16_user_name: string | null;
+    p17_user_name: string | null;
+    p18_user_name: string | null;
 }
 
 export type pageCard = {
     pageuser: number | null;
-    pagetime: Date | null;
+    pagetime: string | null;
+    pageusername: string | null;
+    i: number;
 }
