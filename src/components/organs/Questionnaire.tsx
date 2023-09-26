@@ -1,20 +1,14 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 import CardQuestionnaire from '../atoms/CardQuestionnaire';
 import { allFromMaster } from '../../types/homeType';
-
-const Questionnaire = React.memo(() => {
-  const [allFrom, setAllFrom] = useState<allFromMaster[]>([]);
-
-  useEffect(() => {
-    const data = localStorage.getItem('question');
-    if (data) {
-      const parsedData = JSON.parse(data);
-      if (parsedData.length > 0) {
-        setAllFrom(parsedData);
-      }
-    }
-  }, []);
-
+import { clearStorageQuestion } from '../function/localStorage';
+interface QuestionnaireProps {
+  dataFrom: allFromMaster[];
+}
+const Questionnaire: React.FC<QuestionnaireProps> = ({ dataFrom }) => {
+  if(dataFrom.length === 0){
+    clearStorageQuestion();
+  }
   const generateCardItem = useCallback((item: allFromMaster | null): JSX.Element[] => {
     const cardQuestionnaires: JSX.Element[] = [];
     if (item?.p0_user) {
@@ -33,7 +27,7 @@ const Questionnaire = React.memo(() => {
       for (let i = 0; i < 18; i++) {
         cardQuestionnaires.push(
           <CardQuestionnaire
-            key={`card-${i}-${i}-${i}`}
+            key={`card-${i}`}
             pageuser={null}
             pagetime={null}
           />
@@ -44,27 +38,30 @@ const Questionnaire = React.memo(() => {
   }, []);
 
   return (
-    allFrom.length > 0 ? (
-      <section>
-        {allFrom.map((item, index) => (
-          <div key={item.id + item.f_id}>
-            <div className="flex items-center justify-center text-purple-700 font-semibold text-2xl">
-              <span>แบบสอบถามเล่มที่ {item.f_id}</span>
-            </div>
-            <div className="sml:pt-5">
-              <div className="grid gap-4 m-5 sml:m-10 lgl:m-40 sml:mt-3 lgl:mt-3 grid-cols-1 sml:grid-cols-2 mdl:grid-cols-3 lg:grid-cols-4 lgl:grid-cols-4 content-center">
-                {generateCardItem(item)}
-              </div>
-            </div>
+
+    <section>
+
+      <div >
+        <div className="flex items-center justify-center text-purple-700 font-semibold text-2xl">
+          <span>แบบสอบถามเล่มที่ </span>
+        </div>
+        <div className="sml:pt-5">
+          <div className="grid gap-4 m-5 sml:m-10 lgl:m-40 sml:mt-3 lgl:mt-3 grid-cols-1 sml:grid-cols-2 mdl:grid-cols-3 lg:grid-cols-4 lgl:grid-cols-4 content-center">
+            {
+              dataFrom.length > 0 ?
+                dataFrom.map((item) => (
+                  generateCardItem(item)
+                )) 
+              : 
+                generateCardItem(null)
+            }
           </div>
-        ))}
-      </section>
-    ) : (
-      <div className="flex items-center justify-center h-72 text-purple-700 font-semibold text-2xl">
-        <span>ไม่พบข้อมูลแบบสอบถาม</span>
+        </div>
       </div>
-    )
+
+    </section>
+
   );
-});
+};
 
 export default Questionnaire;

@@ -25,11 +25,6 @@ export const setLocalQuestionId = (data: string): void => {
     localStorage.setItem(storageQuestionIdKey, data);
 };
 
-// localStorageStatusQuestionnaire
-export const storageStatusQuestionKey: string = 'questionStatus';
-export const setLocalQuestionStatus = (data: string): void => {
-    localStorage.setItem(storageStatusQuestionKey, data);
-};
 
 // สร้างฟังก์ชันเพื่อล้างค่า localStorage ทั้งหมด
 export const clearLocalStorageSingIn = (): void => {
@@ -37,5 +32,9 @@ export const clearLocalStorageSingIn = (): void => {
     localStorage.removeItem('tokenAuth');
     localStorage.removeItem('question');
     localStorage.removeItem('questionId');
-    localStorage.removeItem('questionStatus');
+};
+
+// สร้างฟังก์ชันเพื่อล้างค่า localStorage question 
+export const clearStorageQuestion = (): void => {
+    localStorage.removeItem('question');
 };

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import axios, { AxiosError, AxiosResponse, CancelTokenSource } from "axios";
+import axios, { AxiosResponse, CancelTokenSource } from "axios";
 import { dataLogin, initialStateAuth, resDataLogin } from "../../types/authType";
 import { SERVER_APP_API } from "../../api/config";
 
@@ -11,7 +11,7 @@ const initialState: initialStateAuth = {
   loading: false,
   message: ''
 };
-const token = localStorage?.getItem('tokenAuth');
+// const token = localStorage?.getItem('tokenAuth');
 // สร้างตัวแปรเพื่อใช้ในการยกเลิก
 const cancelSource: CancelTokenSource = axios.CancelToken.source();
 

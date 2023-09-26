@@ -2,9 +2,10 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosError, AxiosResponse, CancelTokenSource } from "axios";
 import { SERVER_APP_API } from "../../api/config";
 import { allFromMaster, initialStateHome } from "../../types/homeType";
-import { setLocalQuestion, setLocalQuestionId, setLocalQuestionStatus } from "../../components/function/localStorage";
+import { setLocalQuestion, setLocalQuestionId } from "../../components/function/localStorage";
 
 const initialState: initialStateHome = {
+  fromMaster: null,
   message: "",
   loading: false,
 };
@@ -28,10 +29,7 @@ export const findQuestionnaire = createAsyncThunk<allFromMaster[] | string, { f_
       );
       setLocalQuestionId(f_id);
       if(response.data.message){
-        setLocalQuestionStatus(response.data.message);
         return response.data.message as string;
-      }else{
-        setLocalQuestionStatus('');
       }
  
       const dataResponse: allFromMaster[] = response.data;
@@ -74,18 +72,20 @@ const homeSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(findQuestionnaire.pending, (state, action) => {
+    builder.addCase(findQuestionnaire.pending, (state) => {
       state.message = '';
     });
     builder.addCase(findQuestionnaire.fulfilled, (state, action) => {
       if (Array.isArray(action.payload)) {
         // state.allFrom = action.payload;
         setLocalQuestion(action.payload);
+        state.fromMaster = action.payload;
       }else{
         if(typeof action.payload === 'string'){
           state.message = action.payload;
         }
         setLocalQuestion([]);
+        state.fromMaster = null;
       }
       
     });

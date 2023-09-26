@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { userLogin } from "../../types/authType";
 import Navbar from "../organs/Navbar";
 import FormHome from "../molecules/home/FormHome";
@@ -7,33 +7,52 @@ import Questionnaire from "../organs/Questionnaire";
 import Loading from "../atoms/Loading";
 import { checkTokenUser } from "../../api/homeApi";
 import { useAppSelector } from "../../store/store";
+import { allFromMaster } from "../../types/homeType";
+import { clearStorageQuestion } from "../function/localStorage";
 
 function Home() {
 
-  const { loading, message } = useAppSelector((state) => state?.home);
+  const { loading, message, fromMaster } = useAppSelector((state) => state?.home);
+  const [showFromMaster, setFromMaster] = useState<boolean>(false);
+  const data = localStorage.getItem('question');
 
   const checkToken = async () => {
     const user = localStorage.getItem("userLogin");
-
     if (!user) return;
     const parsedData: userLogin = JSON.parse(user);
     await checkTokenUser(parsedData.id);
-
   };
 
   useEffect(() => {
     checkToken();
   }, []);
 
+  useEffect(() => {
+    if (fromMaster === null) {
+      setFromMaster(false);
+    } else if (fromMaster && fromMaster?.length > 0) {
+      setFromMaster(true);
+    }
+  }, [fromMaster]);
+  
   const generateQuestionnaire = (): JSX.Element => {
-    return message ? (
+   
+    const dataFrom: allFromMaster[] = data ? JSON.parse(data) : [];
+    message && clearStorageQuestion();
+
+    return showFromMaster ? <Questionnaire dataFrom={dataFrom}/> :
+    message ? (
       <div>
         <div className="flex items-center justify-center h-72 text-purple-700 font-semibold text-2xl">
           <span>{message}</span>
         </div>
       </div>
-    ) : (
-      <Questionnaire />
+    ) : ( data ? <Questionnaire dataFrom={dataFrom}/> :
+      <div>
+      <div className="flex items-center justify-center h-72 text-purple-700 font-semibold text-2xl">
+        <span>ไม่พบข้อมูลแบบสอบถาม</span>
+      </div>
+    </div>
     );
   };
 

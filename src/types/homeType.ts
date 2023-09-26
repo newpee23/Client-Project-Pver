@@ -1,4 +1,5 @@
 export type initialStateHome = {
+    fromMaster: allFromMaster[] | null | string;
     message: string;
     loading: boolean;
 }
