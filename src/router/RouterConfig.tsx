@@ -4,8 +4,9 @@ import { userLogin } from "../types/authType";
 import SingIn from "../components/pages/SingIn";
 import ErrorPage from "../components/pages/ErrorPage";
 import Home from "../components/pages/Home";
-import App from "../App";
+
 import Dashboard from "../components/pages/Dashboard";
+import Page from "../components/pages/Page";
 
 type routersType = {
     path: string;
@@ -28,11 +29,15 @@ if (user) {
                 },
                 {
                     path: "/Home",
-                    element: <Home />,
+                    element:  token ? <Home /> : <Navigate to="/SingIn" />,
                 },
                 {
                     path: "/SingIn",
-                    element: <SingIn />,
+                    element:  <SingIn />,
+                },
+                {
+                    path: "/Page/:status/:i",
+                    element: token ? <Page /> : <Navigate to="/SingIn" />,
                 },
                 {
                     path: "*", // เมื่อมีการเข้าถึงเส้นทางที่ไม่ถูกกำหนดไว้ข้างต้น
@@ -49,7 +54,7 @@ if (user) {
                 },
                 {
                     path: "/Dashboard",
-                    element: <Dashboard />,
+                    element: token ? <Dashboard /> : <Navigate to="/SingIn" />,
                 },
                 {
                     path: "/SingIn",

@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useSelector, useDispatch, TypedUseSelectorHook } from "react-redux";
 import authSlices from "./slices/authSlices";
 import homeSlices from "./slices/homeSlices";
+import pageSlices from "./slices/pageSlices";
 
 const store = configureStore({
   reducer: {
     auth: authSlices,
-    home: homeSlices
+    home: homeSlices,
+    page: pageSlices
   },
 });
 

@@ -4,7 +4,7 @@ import DivButton from "../../atoms/DivButton";
 import DivHr from "../../atoms/DivHr";
 import { useAppDispatch, useAppSelector } from "../../../store/store";
 import { login, setLoadingAuth } from "../../../store/slices/authSlices";
-import DivTextMesErr from "../../atoms/DivTextMesErr";
+
 import AlertErr from "../../atoms/AlertErr";
 
 const FormSingIN = () => {
