@@ -18,7 +18,7 @@ export const findBan = createAsyncThunk<banData[]|string>(
     "findBan/loadAsync", async (): Promise<banData[]|string> => {
       try {
         const response: AxiosResponse = await axios.get(
-          SERVER_APP_API + `/findQuestionnaire/`,
+          SERVER_APP_API + `/findBan/`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -52,16 +52,34 @@ export const findBan = createAsyncThunk<banData[]|string>(
         return [];
       }
     }
-  );
+);
 
 const pageSlice = createSlice({
     name: "page",
     initialState: initialState,
-    reducers: {},
+    reducers: {  
+      setLoadingPage: (state, action: PayloadAction<boolean>) => {
+        state.loading = action.payload;
+      }
+    },
     extraReducers: (builder) => {
-  
+      // findBan
+      builder.addCase(findBan.fulfilled, (state,action) => {
+        if(Array.isArray(action.payload)){
+          state.ban = action.payload;
+        }else{
+          if(typeof action.payload === 'string'){
+            state.message = action.payload;
+          }
+          state.ban = [];
+        }
+      });
+      builder.addCase(findBan.rejected, (state, action) => {
+        state.message = action.error.message || "";
+      });
     },
   });
   
 // Action creators
+export const { setLoadingPage } = pageSlice.actions;
 export default pageSlice.reducer;

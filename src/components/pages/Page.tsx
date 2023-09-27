@@ -1,3 +1,4 @@
+import { useCallback, useEffect } from "react"
 import { useParams } from "react-router-dom";
 import { pageType } from "../../types/pageType";
 import Page0 from "../organs/Page0";
@@ -21,8 +22,14 @@ import Page17 from "../organs/Page17";
 import Page18 from "../organs/Page18";
 import Navbar from "../organs/Navbar";
 
+import { useAppDispatch, useAppSelector } from "../../store/store"
+import { findBan, setLoadingPage } from "../../store/slices/pageSlices"
+import Loading from "../atoms/Loading";
+
 const Page = () => {
 
+    const dispatch = useAppDispatch();
+    const { loading } = useAppSelector((state) => state?.page);
     const { i } = useParams<pageType>();
     const { status } = useParams<pageType>();
     const fId = localStorage.getItem('questionId');
@@ -70,7 +77,38 @@ const Page = () => {
         }
     }
 
-    return (
+    const finddataEffect = useCallback(async () => {
+        try {
+            dispatch(setLoadingPage(true));
+            await dispatch(findBan());
+            // console.log(ban)
+        } catch (error: unknown) {
+            setTimeout(() => {
+                dispatch(setLoadingPage(false));
+            }, 1000);
+        } finally {
+            setTimeout(() => {
+                dispatch(setLoadingPage(false));
+            }, 1000);
+        }
+    }, []);
+
+    const getEffect = () => {
+        switch (i) {
+            case '0':
+                finddataEffect();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    useEffect(() => {
+        getEffect();
+    }, []);
+
+    return (loading ? <Loading setHeight={""} /> :
         <section>
             <Navbar />
             <div className="m-3 sml:m-5 lgl:m-8 lgl:mb-5 p-3 sml:p-5 bg-white border rounded-lg shadow border-l-4 border-r-4 border-r-violet-700 border-l-violet-700">
@@ -81,7 +119,6 @@ const Page = () => {
                 <p className="font-semibold text-purple-800">แบบสอบถามเลขที่ {fId}</p>
             </div>
             {loadPageComponent()}
-        
         </section>
     )
 }

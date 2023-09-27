@@ -53,41 +53,6 @@ export const login = createAsyncThunk<resDataLogin , dataLogin>(
   }
 );
 
-// Check token
-// export const checkTokenUser = createAsyncThunk<string , number>(
-//   "checkToken/loadAsync", async(id: number): Promise<string> => {
-  
-//     try {
-//       const response: AxiosResponse = await axios.get(SERVER_APP_API+`/member/${id}`,{
-//         headers: {
-//           "Content-Type": "application/json",
-//           "token-request": token,
-//         },
-//         cancelToken: cancelSource.token,
-//       })
-    
-//       return response.data;
-//     } catch (error: unknown) {
-//       if (axios.isAxiosError(error)) {
-//         const axiosError = error as AxiosError;
-//         if (axiosError.response && axiosError.response.status === 401) {
-//           // console.log("Unauthorized error:", axiosError.response.data);
-//           const responseDataAsString:string = JSON.stringify(axiosError.response.data);
-//           return responseDataAsString;
-//         } else {
-//           // กระทำเมื่อเกิดข้อผิดพลาดอื่น ๆ
-//           console.error("Other error:", axiosError);
-//         }
-//       } else {
-//         // กระทำเมื่อเกิดข้อผิดพลาดที่ไม่ใช่ axios error
-//         console.error("Non-Axios error:", error);
-//       }
-//       return  '';
-//     }
-  
-//   }
-// );
-
 const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
