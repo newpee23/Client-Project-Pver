@@ -14,6 +14,7 @@ export interface FormDataP0 {
 }
 
 export interface initialStatePage {
+    addressAll: addressData[];
     address: addressData[];
     ban : banData[];
     loading : boolean;
@@ -25,12 +26,15 @@ export type banData = {
     label: string;
 }
 export type addressData = {
-    id : string;
+    id : number;
     name: string;
     ampherName: string;
     ban: string;
     banProvince: string;
     mo: string;
     provinceName: string;
-    tombonName: string;
+    tombonName: number;
+    tambon_code: number;
+    ampher_code: number;
+    province_code: number;
 }

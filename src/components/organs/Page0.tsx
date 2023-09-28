@@ -1,20 +1,25 @@
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, useState ,useEffect , useRef } from "react"
 import { FormDataP0, banData, pageComponents } from "../../types/pageType"
 import DivHeadQuestion from "../atoms/DivHeadQuestion"
 import DivHr from "../atoms/DivHr"
 import InputFieldAuth from "../atoms/InputFieldAuth"
 import { dataInsertP0 } from "../function/initialDataFrom"
-import Select, { SingleValue } from "react-select";
-import { useAppSelector } from "../../store/store"
+import { SingleValue } from "react-select";
+import { useAppDispatch, useAppSelector } from "../../store/store"
 import DropDown from "../atoms/DropDown"
+import { setAddressP0 } from "../../store/slices/pageSlices"
+import InputFieldRef from "../atoms/InputFieldRef"
 // import { useAppSelector } from "../../store/store"
 
 
 const Page0 = (props: pageComponents) => {
-
+  
+  const dispatch = useAppDispatch();
   const { ban } = useAppSelector((state) => state?.page);
+  const { address } = useAppSelector((state) => state?.page);
   const initialDataFrom: FormDataP0 = props.status === "edit" ? { p0F1: "10", p0F2: "20", p0F3: 0 } : dataInsertP0;
   const [datafrom, setDataFrom] = useState<FormDataP0>(initialDataFrom);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -31,6 +36,9 @@ const Page0 = (props: pageComponents) => {
           ...prevData,
           p0F3: selectedOption.value,
         }));
+
+        dispatch(setAddressP0(selectedOption.value));
+   
       } else {
         // Handle multi-select logic here if needed
       }
@@ -39,8 +47,16 @@ const Page0 = (props: pageComponents) => {
         ...prevData,
         p0F3: 0,
       }));
+      dispatch(setAddressP0(0));
     }
   };
+
+  useEffect(() => {
+    if (address.length > 0 && inputRef.current) {
+      inputRef.current.value = address[0].ampherName;
+    }
+  }, [address]);
+  
 
   return (
     <>
@@ -66,38 +82,12 @@ const Page0 = (props: pageComponents) => {
               <div className="min-w-[275px] m-3 mb-0">
               <DropDown label="ชื่อหมู่บ้าน" isClearable={true} onChange={handleDropDownBan} isSearchable={true} required={true} placeholder="เลือกเชื่อหมู่บ้าน" options={ban} name="p0F3" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block" />
               </div>
+              <div className="min-w-[275px] m-3 mb-0">
+              <input type="text" ref={inputRef} className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block"/>
+              </div>
             </div>
             {/* row 1 */}
-            {/* row 1 */}
-            <div className="flex">
-              <div className="min-w-[275px] m-3"></div>
-            </div>
-            <div className="flex">
-              <div className="min-w-[275px] m-3"></div>
-            </div>
-            <div className="flex">
-              <div className="min-w-[275px] m-3"></div>
-            </div>
-            <div className="flex">
-              <div className="min-w-[275px] m-3"></div>
-            </div>
-            <div className="flex">
-              <div className="min-w-[275px] m-3"></div>
-            </div>
-            <div className="flex">
-              <div className="min-w-[275px] m-3"></div>
-            </div>
-            <div className="flex">
-              <div className="min-w-[275px] m-3"></div>
-            </div>
-            <div className="flex">
-              <div className="min-w-[275px] m-3"></div>
-            </div>
-            <div className="flex">
-              <div className="min-w-[275px] m-3"></div>
-            </div>
-      
-            {/* row 1 */}
+           
           </div>
         </div>
       </div>

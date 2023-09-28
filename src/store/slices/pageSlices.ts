@@ -5,6 +5,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: initialStatePage = {
     ban: [],
+    addressAll: [],
     address: [],
     loading: false,
     message: ""
@@ -59,17 +60,21 @@ const pageSlice = createSlice({
     name: "page",
     initialState: initialState,
     reducers: {  
-      setLoadingPage: (state, action: PayloadAction<boolean>) => {
+      setLoadingPage: (state, action: PayloadAction<boolean>): void => {
         state.loading = action.payload;
+      },
+      setAddressP0: (state, action: PayloadAction<number>) => {
+        const address = state.addressAll.find((item) => item.id === action.payload);
+        state.address = address ? [address] : []; // ตั้ง state.address หากเจอไม่เจอก็ให้ค่าเป็น [] ว่าง
       }
     },
     extraReducers: (builder) => {
       // findBan
       builder.addCase(findBan.fulfilled, (state,action) => {
         if(Array.isArray(action.payload)){
-          state.address = action.payload;
+          state.addressAll = action.payload;
           const formattedBan = action.payload.map(item => ({
-            value: parseInt(item.id),
+            value: item.id,
             label: item.banProvince
           }));
           state.ban = formattedBan;
@@ -77,7 +82,7 @@ const pageSlice = createSlice({
           if(typeof action.payload === 'string'){
             state.message = action.payload;
           }
-          state.address = [];
+          state.addressAll = [];
         }
       });
       builder.addCase(findBan.rejected, (state, action) => {
@@ -87,5 +92,5 @@ const pageSlice = createSlice({
   });
   
 // Action creators
-export const { setLoadingPage } = pageSlice.actions;
+export const { setLoadingPage , setAddressP0 } = pageSlice.actions;
 export default pageSlice.reducer;
