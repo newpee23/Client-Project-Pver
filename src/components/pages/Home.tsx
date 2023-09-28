@@ -10,18 +10,28 @@ import { useAppSelector } from "../../store/store";
 import { allFromMaster } from "../../types/homeType";
 import { clearStorageQuestion } from "../function/localStorage";
 import "../../assets/css/HomeCss.css"
+import { backToLogin } from "../function/function";
 
 function Home() {
 
   const { loading, message, fromMaster } = useAppSelector((state) => state?.home);
   const [showFromMaster, setFromMaster] = useState<boolean>(false);
+  const [loadingauth , setLoadingAuth] = useState<boolean>(true);
   const data = localStorage.getItem('question');
 
   const checkToken = async () => {
     const user = localStorage.getItem("userLogin");
     if (!user) return;
     const parsedData: userLogin = JSON.parse(user);
-    await checkTokenUser(parsedData.id);
+    try {
+      await checkTokenUser(parsedData.id);
+    } catch (error) {
+      backToLogin();
+    } finally {
+      setTimeout(() => {
+        setLoadingAuth(false)
+      }, 1000);
+    }
   };
 
   useEffect(() => {
@@ -56,8 +66,8 @@ function Home() {
         </div>
       );
   };
-
-  return (
+ 
+  return (loadingauth ?  <Loading setHeight="" /> :
     <>
       <Navbar />
       <section>

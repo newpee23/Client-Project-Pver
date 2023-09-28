@@ -1,3 +1,5 @@
+import { SingleValue } from "react-select";
+import { banData } from "./pageType";
 
 export type buttonSingIN = {
   divClass: string;
@@ -14,4 +16,21 @@ export type DivHrType = {
 export type DivTxtMesErr = {
   className: string
   text: string;
+}
+
+export type Dropdown = {
+  className: string;
+  name: string;
+  onChange?: (selectedOption: SingleValue<banData>) => void;
+  placeholder?: string;
+  required?: boolean;
+  isClearable?: boolean;
+  isSearchable? : boolean;
+  options: Opprovince[];
+  label: string;
+}
+
+type Opprovince = {
+  value : number;
+  label: string;
 }

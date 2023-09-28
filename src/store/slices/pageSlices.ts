@@ -1,10 +1,11 @@
-import { banData, initialStatePage } from "../../types/pageType";
+import { addressData, initialStatePage } from "../../types/pageType";
 import axios, { AxiosError, AxiosResponse, CancelTokenSource } from "axios";
 import { SERVER_APP_API } from "../../api/config";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: initialStatePage = {
     ban: [],
+    address: [],
     loading: false,
     message: ""
 };
@@ -14,8 +15,8 @@ const token = localStorage?.getItem("tokenAuth");
 const cancelSource: CancelTokenSource = axios.CancelToken.source();
 
 // ดึงข้อมูล Ban ชื่อหมู่บ้าน
-export const findBan = createAsyncThunk<banData[]|string>(
-    "findBan/loadAsync", async (): Promise<banData[]|string> => {
+export const findBan = createAsyncThunk<addressData[]|string>(
+    "findBan/loadAsync", async (): Promise<addressData[]|string> => {
       try {
         const response: AxiosResponse = await axios.get(
           SERVER_APP_API + `/findBan/`,
@@ -66,12 +67,17 @@ const pageSlice = createSlice({
       // findBan
       builder.addCase(findBan.fulfilled, (state,action) => {
         if(Array.isArray(action.payload)){
-          state.ban = action.payload;
+          state.address = action.payload;
+          const formattedBan = action.payload.map(item => ({
+            value: parseInt(item.id),
+            label: item.banProvince
+          }));
+          state.ban = formattedBan;
         }else{
           if(typeof action.payload === 'string'){
             state.message = action.payload;
           }
-          state.ban = [];
+          state.address = [];
         }
       });
       builder.addCase(findBan.rejected, (state, action) => {
