@@ -27,10 +27,11 @@ export type Dropdown = {
   isClearable?: boolean;
   isSearchable? : boolean;
   options: Opprovince[];
-  label: string;
+  label?: string;
+  value?: Opprovince | null;
 }
 
-type Opprovince = {
+export type Opprovince = {
   value : number;
   label: string;
 }

@@ -52,7 +52,7 @@ const CardQuestionnaire = (props: pageCard) => {
                         {props.pageuser ?
                               <Link to={`/Page/edit/${props.i}`}><DivButton textBtn="แก้ไขข้อมูล" type="button" divClass="text-center" className="focus:outline-none text-white bg-btn-save hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2" /></Link>
                             :
-                              <Link to={`/Page/insert/${props.i}`}><DivButton textBtn="บันทึกข้อมูล" type="button" divClass="text-center" className="focus:outline-none text-white bg-purple-500 hover:bg-purple-600 focus:ring-4 focus:ring-purple-300 font-medium rounded-md text-sm px-4 py-2" /></Link>
+                              <Link to={`/Page/insert/${props.i}`}><DivButton textBtn="บันทึกข้อมูล" type="button" divClass="text-center" className="focus:outline-none text-white bg-slate-400 hover:bg-purple-500 focus:ring-4 focus:ring-purple-300 font-medium rounded-md text-sm px-4 py-2" /></Link>
                         }
                     </div>
                 </div>

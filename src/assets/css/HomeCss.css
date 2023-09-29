@@ -25,3 +25,7 @@
 .css-13cymwt-control {
     padding: 2px;
 }
+
+.md-flex-unset {
+    flex-direction: unset;
+  }

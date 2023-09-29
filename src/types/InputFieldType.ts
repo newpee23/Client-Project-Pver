@@ -10,5 +10,5 @@ export type InputAuth = {
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
     placeholder?: string;
     required?: boolean;
-    inputRef?: React.MutableRefObject<HTMLInputElement | null>;
+    readonly?: boolean;
 }

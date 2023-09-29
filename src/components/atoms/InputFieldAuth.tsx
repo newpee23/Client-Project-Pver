@@ -20,9 +20,13 @@ const InputFieldAuth = (props: InputAuth) => {
 
   return (
     <div className={`grid mb-3 md:grid-cols-1 text-left ${isFocused && 'input-focused'}`}>
-      <label className="block mb-2 text-sm font-medium text-gray-900 label">
-        {props.label} {props.required && <span className="text-red-700"><b>*</b></span>}
-      </label>
+      {props.label && (
+        <>
+          <label className="block mb-2 text-sm font-medium text-gray-900 label">
+            {props.label}&nbsp;{props.required && <span className="text-red-700"><b>*</b></span>}
+          </label>
+        </>
+      )}
       <input
         type={isPasswordVisible ? 'text' : props.type}
         name={props.name}
@@ -33,11 +37,12 @@ const InputFieldAuth = (props: InputAuth) => {
         onChange={props.onChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        readOnly={props.readonly || false}
       />
       {props.type === "password" &&
         <div className="relative text-right">
-          {isPasswordVisible ? (<VisibilityOffIcon onClick={() => setIsPasswordVisible(false)} className="z-50 h-5 w-auto bg-icon-password cursor-pointer absolute top-[-30px] right-[14px]" />) 
-          : (<VisibilityIcon onClick={() => setIsPasswordVisible(true)} className="z-50 h-5 w-auto bg-icon-password cursor-pointer absolute top-[-30px] right-[14px]" />)}
+          {isPasswordVisible ? (<VisibilityOffIcon onClick={() => setIsPasswordVisible(false)} className="z-50 h-5 w-auto bg-icon-password cursor-pointer absolute top-[-30px] right-[14px]" />)
+            : (<VisibilityIcon onClick={() => setIsPasswordVisible(true)} className="z-50 h-5 w-auto bg-icon-password cursor-pointer absolute top-[-30px] right-[14px]" />)}
         </div>
       }
     </div>

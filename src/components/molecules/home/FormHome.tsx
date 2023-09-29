@@ -73,7 +73,7 @@ function FormHome({ }: Props) {
                             </svg>
                         </div>
                         <input type="number" id="search" className={`drop-shadow-2xlblock w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg drop-shadow-md bg-gray-50 focus:ring-purple-500-500 ${remark ? 'focus:border-purple-500' : 'focus:border-red-500'} `}  placeholder="กรุณากรอกหัสแบบสอบถาม"  required ref={inputRef} onChange={handleInputChange} />
-                        <button disabled={!remark} type="submit" className={`text-white absolute right-2.5 bottom-2.5 ${remark ? 'bg-amber-500 hover:bg-amber-700' : 'bg-red-600 hover:bg-red-800'} focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-4 py-2 `} >
+                        <button disabled={!remark} type="submit" className={`text-white absolute right-2.5 bottom-2.5 ${remark ? 'bg-purple-500 hover:bg-purple-700' : 'bg-red-600 hover:bg-red-800'} focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-4 py-2 `} >
                             Search
                         </button>
                     </div>

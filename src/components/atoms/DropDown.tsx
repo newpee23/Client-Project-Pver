@@ -16,15 +16,20 @@ const DropDown = (props: Dropdown) => {
     setIsFocused(false);
   };
 
-  return (
+  return (   
     <div className={`grid mb-3 md:grid-cols-1 text-left ${isFocused && 'input-focused'}`}>
-      <label className="block mb-2 text-sm font-medium text-gray-900 label">
-        {props.label} {props.required && <span className="text-red-700"><b>*</b></span>}
-      </label>
+      {props.label && (
+        <>
+          <label className="block mb-2 text-sm font-medium text-gray-900 label">
+            {props.label}&nbsp;{props.required && <span className="text-red-700"><b>*</b></span>}
+          </label>
+        </>
+      )}
       <Select
         className={props.className}
         options={props.options}
         name={props.name}
+        value={props.value}
         placeholder={props.placeholder}
         onChange={props.onChange}
         isClearable={props.isClearable}
