@@ -73,6 +73,10 @@ const Page0 = (props: pageComponents) => {
   const handlePreFixNameF11 = (selectedOption: SingleValue<banData>) => {
     if (selectedOption !== null) {
       if (selectedOption && !Array.isArray(selectedOption)) {
+        const valPrefixName = prefixName.find((item) => item.value === selectedOption.value);
+        if(valPrefixName){
+          setSelectedOption(valPrefixName);
+        }
         setDataFrom((prevData) => ({
           ...prevData,
           p0F11T: selectedOption.value,
@@ -80,6 +84,7 @@ const Page0 = (props: pageComponents) => {
         dispatch(setAddressP0(selectedOption.value));
       }
     } else {
+      setSelectedOption(null);
       setDataFrom((prevData) => ({
         ...prevData,
         p0F11T: 0,
@@ -174,7 +179,7 @@ const Page0 = (props: pageComponents) => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 hover:bg-gray-100">
                 <div className="m-3"></div>
                 <div className="m-3 mb-0">
-                  <InputFieldAuth label="รหัสบ้าน" name="p0F1" type="number" placeholder="รหัสบ้าน ระบุตัวเลขเท่านั้น" required={true} value={datafrom.p0F1} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                  <InputFieldAuth label="รหัสบ้าน" name="p0F1" type="number" placeholder="รหัสบ้าน ระบุตัวเลขเท่านั้น" required={true} value={datafrom.p0F1} onChange={(e) => handleInputChange(e)} className="w-full border border-purple-00 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                 </div>
                 <div className="m-3 mb-0">
                   <InputFieldAuth label="หลังคาเรือนที่" name="p0F2" type="number" placeholder="หลังคาเรือนที่ ระบุตัวเลขเท่านั้น" required={true} value={datafrom.p0F2} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
@@ -206,8 +211,9 @@ const Page0 = (props: pageComponents) => {
               </div>
               {/* row 2 */}
 
+              <DivHr divClass="flex justify-center" className="h-px mt-5 mb-4 bg-purple-600 border-0 w-full" />
+              {/* row 3,4 */}
               <div className="hover:bg-gray-100">
-                {/* row 3 */}
                 <div className="grid grid-cols-1 md:grid-cols-2 pt-2 lg:grid-cols-4 xl:grid-cols-5 ">
                   <div className="m-3 mb-0 flex items-center">
                     <label className="block mb-2 text-sm font-medium text-gray-900 label">
@@ -218,8 +224,6 @@ const Page0 = (props: pageComponents) => {
                     <DropDown label="" isClearable={true} onChange={handlePreFixNameF9} isSearchable={false} required={true} placeholder="เลือกคำนำหน้าชื่อ" options={prefixName} name="p0F9T" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block" />
                   </div>
                 </div>
-                {/* row 3 */}
-                {/* row 4 */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
                   <div className="m-3 hidden lg:block"></div>
                   <div className="m-3 mb-0">
@@ -229,11 +233,11 @@ const Page0 = (props: pageComponents) => {
                     <InputFieldAuth label="" name="p0F10" type="text" placeholder="นามสกุล" required={true} value={datafrom.p0F10} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                   </div>
                 </div>
-                {/* row 4 */}
               </div>
+              {/* row 3,4 */}
 
+              {/* row 5,6 */}
               <div className="hover:bg-gray-100">
-                {/* row 5 */}
                 <div className="grid grid-cols-1 md:grid-cols-2 pt-2 lg:grid-cols-4 xl:grid-cols-5 ">
                   <div className="m-3 mb-0 flex items-center">
                     <label className="block mb-2 text-sm font-medium text-gray-900 label">
@@ -251,8 +255,7 @@ const Page0 = (props: pageComponents) => {
                     {dataErr.isChecked && <label className="ml-2 text-sm font-medium text-red-700"><b>{dataErr.isChecked}</b></label>}
                   </div>
                 </div>
-                {/* row 5 */}
-                {/* row 6 */}
+           
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
                   <div className="m-3 hidden lg:block"></div>
                   <div className="m-3 mb-0">
@@ -262,8 +265,10 @@ const Page0 = (props: pageComponents) => {
                     <InputFieldAuth label="" name="p0F12" type="text" placeholder="นามสกุล" required={true} value={datafrom.p0F12} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                   </div>
                 </div>
-                {/* row 6 */}
               </div>
+              {/* row 5,6*/}
+
+              <DivHr divClass="flex justify-center" className="h-px mt-5 mb-4 bg-purple-600 border-0 w-full" />
 
             </div>
           </div>
