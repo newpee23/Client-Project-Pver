@@ -1,4 +1,5 @@
 import { Opprovince } from "../../types/atomsType";
+import { dataSingUp, dataSingUpErr } from "../../types/authType";
 import { ErrFromDataP0, FormDataP0 } from "../../types/pageType";
 
 export const dataInsertP0: FormDataP0 = {
@@ -46,4 +47,33 @@ export const prefixName: Opprovince[] = [
       value: 5,
       label: "เด็กหญิง"
     }
-  ];
+];
+
+export const dataFromSingUp: dataSingUp = {
+  m_fname: "",
+  m_lname: "",
+  m_idcard: "",
+  m_email: "",
+  m_username: "",
+  m_password: "",
+  m_phone: "",
+  m_address: "",
+  m_level: "m"
+}
+
+export const dataFromSingUpErr: dataSingUpErr= {
+  m_fnameStatus: false,
+  m_fnameTxt: '',
+  m_lnameStatus: false,
+  m_lnameTxt: '',
+  m_usernameStatus: false,
+  m_usernameTxt: '',
+  m_passwordStatus: false,
+  m_passwordTxt: '',
+  m_idcardStatus: false,
+  m_idcardTxt: '',
+  m_emailStatus: false,
+  m_emailTxt: '',
+  m_phoneStatus: false,
+  m_phoneTxt: ''
+};

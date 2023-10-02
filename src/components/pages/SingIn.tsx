@@ -11,6 +11,7 @@ import '../../assets/css/SingInCss.css'
 import FormSingIN from '../molecules/auth/FormSingIN';
 import { useAppSelector } from '../../store/store';
 import Loading from '../atoms/Loading';
+import FormSingUp from '../molecules/auth/FormSingUp';
 
 const SingIn = () => {
   const [value, setValue] = useState<string>('1');
@@ -26,8 +27,8 @@ const SingIn = () => {
       <Loading setHeight=""/>
     ) : (
       <section>
-        <div className="h-screen flex items-center justify-center">
-          <div className="bg-white w-full m-5 p-5 sml:w-[460px] sml:p-10 text-center rounded-lg shadow-shadowDiv">
+        <div className=" mt-10 sml:h-screen sml:mt-0 flex items-center justify-center">
+          <div className="bg-white w-full m-5 p-5 sml:w-[470px] sml:p-10 text-center rounded-lg shadow-shadowDiv">
             <div className="relative mb-5">
               <SupervisedUserCircleIcon className="z-50 h-24 sml:h-32 w-auto absolute top-[-25px] sml:top-[-45px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-icon-login" />
             </div>
@@ -40,7 +41,7 @@ const SingIn = () => {
                   </TabList>
                 </Box>
                 <TabPanel value="1" className="p-0 pt-10"><FormSingIN /></TabPanel>
-                <TabPanel value="2">Item Two</TabPanel>
+                <TabPanel value="2" className="p-0 pt-10"><FormSingUp/></TabPanel>
               </TabContext>
             </Box>
           </div>

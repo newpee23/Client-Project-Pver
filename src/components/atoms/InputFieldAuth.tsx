@@ -38,7 +38,10 @@ const InputFieldAuth = (props: InputAuth) => {
         onFocus={handleFocus}
         onBlur={handleBlur}
         readOnly={props.readonly || false}
+        maxLength={props.maxLength}
+        minLength={props.minLength}
       />
+      
       {props.type === "password" &&
         <div className="relative text-right">
           {isPasswordVisible ? (<VisibilityOffIcon onClick={() => setIsPasswordVisible(false)} className="z-50 h-5 w-auto bg-icon-password cursor-pointer absolute top-[-30px] right-[14px]" />)
