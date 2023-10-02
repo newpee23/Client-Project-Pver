@@ -27,7 +27,7 @@ const SingIn = () => {
       setValue('1');
     }
   }, [message]);
-  console.log(message);
+  
   return (
     loading ? (
       <Loading setHeight="" />

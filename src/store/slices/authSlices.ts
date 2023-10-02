@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosResponse, CancelTokenSource } from "axios";
 import { dataLogin, dataSingUp, initialStateAuth, resDataLogin } from "../../types/authType";
-import { BASEURL, SERVER_APP_API } from "../../api/config";
+import { SERVER_APP_API } from "../../api/config";
 
 import { setLocalTokenUser, setLocalUser } from "../../components/function/localStorage";
 import { checkLevelUser } from "../../components/function/function";

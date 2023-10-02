@@ -8,14 +8,12 @@ import { dataSingUp, dataSingUpErr } from "../../../types/authType";
 import { validateForm } from "../../function/function";
 import { useAppDispatch, useAppSelector } from "../../../store/store";
 import { setLoadingAuth, signUp } from "../../../store/slices/authSlices";
-import { useNavigate } from "react-router-dom";
 import AlertErr from "../../atoms/AlertErr";
 
 
 const FormSingUp = () => {
 
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
     const [formDataSingUp, setFormDataSingUp] = useState<dataSingUp>(dataFromSingUp);
     const [formErr, setFromErr] = useState<dataSingUpErr>(dataFromSingUpErr);
     const { message } = useAppSelector((state) => state?.auth);
