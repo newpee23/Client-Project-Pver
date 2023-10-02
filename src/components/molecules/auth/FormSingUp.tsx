@@ -23,7 +23,20 @@ const FormSingUp = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault();
+        // สร้างอ็อบเจ็กต์ใหม่เพื่อเก็บค่า errors ใหม่
+        const newFormErr: dataSingUpErr = { ...dataFromSingUpErr };
 
+        // value phone
+        const phoneVal: string = formDataSingUp.m_phone;
+        if (phoneVal.length !== 10) {
+            newFormErr.m_phoneTxt = 'ระบุ Phone 10 ตัวอักษรเท่านั้น';
+            newFormErr.m_phoneStatus = true;
+        } else {
+            newFormErr.m_phoneTxt = '';
+            newFormErr.m_phoneStatus = false;
+        }
+        setFromErr(newFormErr);
+  
     }
 
     return (
