@@ -5,12 +5,21 @@ import DivTextarea from "../../atoms/DivTextarea";
 import DivHr from "../../atoms/DivHr";
 import DivButton from "../../atoms/DivButton";
 import { dataSingUp, dataSingUpErr } from "../../../types/authType";
+import { validateForm } from "../../function/function";
+import { useAppDispatch, useAppSelector } from "../../../store/store";
+import { setLoadingAuth, signUp } from "../../../store/slices/authSlices";
+import { useNavigate } from "react-router-dom";
+import AlertErr from "../../atoms/AlertErr";
 
 
 const FormSingUp = () => {
+
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const [formDataSingUp, setFormDataSingUp] = useState<dataSingUp>(dataFromSingUp);
     const [formErr, setFromErr] = useState<dataSingUpErr>(dataFromSingUpErr);
-
+    const { message } = useAppSelector((state) => state?.auth);
+    const [txtalert , setTxtAlert] = useState<string>('');
     const handleInputChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
 
         const { name, value } = e.target;
@@ -23,20 +32,36 @@ const FormSingUp = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault();
-        // สร้างอ็อบเจ็กต์ใหม่เพื่อเก็บค่า errors ใหม่
-        const newFormErr: dataSingUpErr = { ...dataFromSingUpErr };
-
-        // value phone
-        const phoneVal: string = formDataSingUp.m_phone;
-        if (phoneVal.length !== 10) {
-            newFormErr.m_phoneTxt = 'ระบุ Phone 10 ตัวอักษรเท่านั้น';
-            newFormErr.m_phoneStatus = true;
-        } else {
-            newFormErr.m_phoneTxt = '';
-            newFormErr.m_phoneStatus = false;
-        }
+        
+        const newFormErr = validateForm(formDataSingUp);
         setFromErr(newFormErr);
-  
+   
+        if (
+            newFormErr.m_emailStatus === false &&
+            newFormErr.m_fnameStatus === false &&
+            newFormErr.m_idcardStatus === false &&
+            newFormErr.m_lnameStatus === false &&
+            newFormErr.m_passwordStatus === false &&
+            newFormErr.m_phoneStatus === false &&
+            newFormErr.m_usernameStatus === false
+          ) {
+            try {
+                dispatch(setLoadingAuth(true));
+                await dispatch(signUp(formDataSingUp));
+              } catch (error: unknown) {
+                setTimeout(() => {
+                  dispatch(setLoadingAuth(false));
+                }, 1000);
+              } finally {
+               
+                setTimeout(() => {
+                  dispatch(setLoadingAuth(false));
+                }, 1000);
+              }
+          }else{
+            setTxtAlert("กรุณากรอกข้อมูลให้ครบถ้วน");
+          }
+
     }
 
     return (
@@ -70,7 +95,8 @@ const FormSingUp = () => {
                 {formErr.m_emailTxt && (<div className="mt-[-10px] mb-2"><span className="text-xs text-red-700"><b>{formErr.m_emailTxt}</b></span></div>)}
                 <DivTextarea row={2} label="Address" name="m_address" placeholder="Address" onChange={(e) => handleInputChange(e)} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-purple-600 focus:border-purple-600" />
                 <DivHr divClass="flex justify-center" className="h-px mt-4 mb-6 bg-gray-200 border-0 w-10/12" />
-                <DivButton divClass="" type="submit" textBtn="Sing Up" className="text-white w-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 shadow-lg font-medium rounded text-lg px-5 py-2.5 text-center mr-2 mb-2" />
+                {message &&  <AlertErr text={message}/>}{txtalert &&  <AlertErr text={txtalert}/>}
+                <DivButton divClass="" type="submit" textBtn="Sign Up" className="text-white w-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 shadow-lg font-medium rounded text-lg px-5 py-2.5 text-center mr-2 mb-2" />
             </form>
         </div>
     )

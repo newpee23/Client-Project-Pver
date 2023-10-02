@@ -117,3 +117,83 @@ export function checkValueSignUp(data: dataSingUp): dataSingUpErr {
 
   return valCheckData;
 }
+
+export function validateForm(formDataSingUp: dataSingUp): dataSingUpErr {
+  const newFormErr: dataSingUpErr = { ...dataFromSingUpErr };
+
+       // value fname
+       const nameVal: string = formDataSingUp.m_fname;
+       if(nameVal.length < 1 || nameVal.length > 60){
+           newFormErr.m_fnameStatus = true;
+           newFormErr.m_fnameTxt = 'ระบุ Name ระหว่าง 1 - 60 ตัวอักษร';
+       }else{
+           newFormErr.m_fnameStatus = false;
+           newFormErr.m_fnameTxt = '';
+       }
+
+       // value lname
+       const lnameVal: string = formDataSingUp.m_lname;
+       if(lnameVal.length < 1 || lnameVal.length > 60){
+           newFormErr.m_lnameStatus = true;
+           newFormErr.m_lnameTxt = 'ระบุ Surname ระหว่าง 1 - 60 ตัวอักษร';
+       }else{
+           newFormErr.m_lnameStatus = false;
+           newFormErr.m_lnameTxt = '';
+       }
+
+       // value username
+       const userNameVal: string = formDataSingUp.m_username;
+       if(userNameVal.length < 1 && userNameVal.length > 100){
+           newFormErr.m_usernameStatus = true;
+           newFormErr.m_usernameTxt = 'ระบุ Username ระหว่าง 1 - 100 ตัวอักษร';
+       }else{
+           newFormErr.m_usernameStatus = false;
+           newFormErr.m_usernameTxt = '';
+       }
+
+       // value Password
+       const passWordVal: string = formDataSingUp.m_password;
+       if (passWordVal.length < 6) {
+           newFormErr.m_passwordTxt = 'ระบุ Password มากกว่า 6 ตัวอักษร';
+           newFormErr.m_passwordStatus = true;
+       } else if (passWordVal.length > 40) {
+           newFormErr.m_passwordTxt = 'ระบุ Password ระหว่าง 1 - 40 ตัวอักษร';
+           newFormErr.m_passwordStatus = true;
+       } else {
+           newFormErr.m_passwordTxt = '';
+           newFormErr.m_passwordStatus = false;
+       }
+
+       // value idCard
+       const idCardVal: string = formDataSingUp.m_idcard;
+       if (!/^[0-9]{13}$/.test(idCardVal)) {
+            newFormErr.m_idcardTxt = 'ระบุ idCard 13 ตัวเลขเท่านั้น';
+            newFormErr.m_idcardStatus = true;
+        } else {
+            newFormErr.m_idcardTxt = '';
+            newFormErr.m_idcardStatus = false;
+        }
+
+       // value phone
+       const phoneVal: string = formDataSingUp.m_phone;
+       if (!/^[0-9]{10}$/.test(phoneVal)) {
+           newFormErr.m_phoneTxt = 'ระบุ Phone 10 ตัวเลขเท่านั้น';
+           newFormErr.m_phoneStatus = true;
+       } else {
+           newFormErr.m_phoneTxt = '';
+           newFormErr.m_phoneStatus = false;
+       }
+
+       // value email
+       const emailVal: string = formDataSingUp.m_email;
+       const emailPattern: RegExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+       if (emailVal.length < 1 || emailVal.length > 60 || !emailPattern.test(emailVal)) {
+           newFormErr.m_emailTxt = 'ระบุ Email ไม่ถูกต้องหรือระบุ ระหว่าง Email 1 - 60 ตัวอักษร';
+           newFormErr.m_emailStatus = true;
+       } else {
+           newFormErr.m_emailTxt = '';
+           newFormErr.m_emailStatus = false;
+       }
+
+  return newFormErr;
+}

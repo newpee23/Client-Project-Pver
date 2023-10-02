@@ -1,4 +1,4 @@
-import React, { useCallback, useState  } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -16,15 +16,21 @@ import FormSingUp from '../molecules/auth/FormSingUp';
 const SingIn = () => {
   const [value, setValue] = useState<string>('1');
 
-  const { loading  } = useAppSelector((state) => state?.auth);
+  const { loading, message } = useAppSelector((state) => state?.auth);
 
   const handleChange = useCallback((event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   }, []);
 
+  useEffect(() => {
+    if (message === 'User registered successfully') {
+      setValue('1');
+    }
+  }, [message]);
+  console.log(message);
   return (
     loading ? (
-      <Loading setHeight=""/>
+      <Loading setHeight="" />
     ) : (
       <section>
         <div className=" mt-10 sml:h-screen sml:mt-0 flex items-center justify-center">
@@ -41,7 +47,7 @@ const SingIn = () => {
                   </TabList>
                 </Box>
                 <TabPanel value="1" className="p-0 pt-10"><FormSingIN /></TabPanel>
-                <TabPanel value="2" className="p-0 pt-10"><FormSingUp/></TabPanel>
+                <TabPanel value="2" className="p-0 pt-10"><FormSingUp /></TabPanel>
               </TabContext>
             </Box>
           </div>

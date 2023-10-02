@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosResponse, CancelTokenSource } from "axios";
-import { dataLogin, initialStateAuth, resDataLogin } from "../../types/authType";
-import { SERVER_APP_API } from "../../api/config";
+import { dataLogin, dataSingUp, initialStateAuth, resDataLogin } from "../../types/authType";
+import { BASEURL, SERVER_APP_API } from "../../api/config";
 
 import { setLocalTokenUser, setLocalUser } from "../../components/function/localStorage";
 import { checkLevelUser } from "../../components/function/function";
@@ -53,6 +53,39 @@ export const login = createAsyncThunk<resDataLogin , dataLogin>(
   }
 );
 
+// Register function
+export const signUp = createAsyncThunk<{message : string} , dataSingUp>(
+  "sign/loadAsync",
+  async (dataSingUp): Promise<{message : string}> => {
+    try {
+
+      const response: AxiosResponse = await axios.post(
+        SERVER_APP_API + "/register",
+        dataSingUp,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          cancelToken: cancelSource.token,
+        }
+      );
+ 
+      return response.data;
+
+    } catch (error: unknown) {
+      let ErrStr:string = '';
+      if (axios.isCancel(error)) {
+        console.log("Request canceled : ", error);
+        ErrStr = "Request canceled:"+ error;
+      } else {
+        console.log("Error : ", error);
+        ErrStr = "Error : "+ error;
+      }
+      return {message : ErrStr};
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
@@ -79,6 +112,12 @@ const authSlice = createSlice({
       }
     });
     builder.addCase(login.rejected, (state, action) => {
+      state.message =  action.error.message || "";
+    });
+    builder.addCase(signUp.fulfilled, (state, action) => {
+      state.message = action.payload.message;
+    });
+    builder.addCase(signUp.rejected, (state, action) => {
       state.message =  action.error.message || "";
     });
   },

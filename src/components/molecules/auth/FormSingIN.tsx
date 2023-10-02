@@ -15,7 +15,7 @@ const FormSingIN = () => {
   const { message } = useAppSelector((state) => state?.auth);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
-
+    
     if (formDataSingIN.username.trim() !== "" && formDataSingIN.password.trim() !== "") {
       try {
         dispatch(setLoadingAuth(true));
@@ -33,7 +33,7 @@ const FormSingIN = () => {
       setTxtAlert("กรุณากรอก Username และ Password");
     }
   }
-
+  
   return (
 
     <div>
