@@ -99,6 +99,10 @@ const authSlice = createSlice({
         ...initialState,
       };
     },
+      // cleanMessage function
+      cleanMessage: (state) => {
+        state.message = '';
+      },
   },
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, action) => {
@@ -124,5 +128,5 @@ const authSlice = createSlice({
 });
 
 // Action creators
-export const { setLoadingAuth , cleanState} = authSlice.actions;
+export const { setLoadingAuth , cleanState , cleanMessage} = authSlice.actions;
 export default authSlice.reducer;

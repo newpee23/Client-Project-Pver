@@ -26,6 +26,7 @@ const DropDown = (props: Dropdown) => {
         </>
       )}
       <Select
+        isDisabled={props.isDisabled}
         className={props.className}
         options={props.options}
         name={props.name}

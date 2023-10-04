@@ -9,13 +9,14 @@ import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import '../../assets/css/SingInCss.css'
 
 import FormSingIN from '../molecules/auth/FormSingIN';
-import { useAppSelector } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 import Loading from '../atoms/Loading';
 import FormSingUp from '../molecules/auth/FormSingUp';
+import { cleanMessage } from '../../store/slices/authSlices';
 
 const SingIn = () => {
   const [value, setValue] = useState<string>('1');
-
+  const dispatch = useAppDispatch();
   const { loading, message } = useAppSelector((state) => state?.auth);
 
   const handleChange = useCallback((event: React.SyntheticEvent, newValue: string) => {
@@ -27,6 +28,12 @@ const SingIn = () => {
       setValue('1');
     }
   }, [message]);
+
+  useEffect(() => {
+    if (message) {
+      dispatch(cleanMessage());
+    }
+  }, [value]);
   
   return (
     loading ? (

@@ -30,6 +30,15 @@ export interface FormDataP0 {
     p0F15: string;
     p0F16: string;
     p0F17: string;
+    p0F18T: number;
+    p0F18: string;
+    p0F19: string;
+    p0F20T: number;
+    p0F20: string;
+    p0F21: string;
+    p0F22: string;
+    p0F23: string;
+    p0F24: string;
 }
 
 export interface ErrFromDataP0 {
@@ -60,5 +69,56 @@ export type addressData = {
     tambon_code: string;
     ampher_code: string;
     province_code: string;
+}
+
+export interface FromP0Err {
+    p0F1Status: boolean;
+    p0F1Txt: string;
+    p0F2Status: boolean;
+    p0F2Txt: string;
+    p0F3Status: boolean;
+    p0F3Txt: string;
+    p0F4Status: boolean;
+    p0F4Txt: string;
+    p0F9TStatus: boolean;
+    p0F9TTxt: string;
+    p0F9Status: boolean;
+    p0F9Txt: string;
+    p0F10Status: boolean;
+    p0F10Txt: string;
+    p0F11TStatus: boolean;
+    p0F11TTxt: string;
+    p0F11Status: boolean;
+    p0F11Txt: string;
+    p0F12Status: boolean;
+    p0F12Txt: string;
+    p0F13Status: boolean;
+    p0F13Txt: string;
+    p0F14Status: boolean;
+    p0F14Txt: string;
+    p0F15Status: boolean;
+    p0F15Txt: string;
+    p0F16Status: boolean;
+    p0F16Txt: string;
+    p0F17Status: boolean;
+    p0F17Txt: string;
+    p0F18TStatus: boolean;
+    p0F18TTxt: string;
+    p0F18Status: boolean;
+    p0F18Txt: string;
+    p0F19Status: boolean;
+    p0F19Txt: string;
+    p0F20TStatus: boolean;
+    p0F20TTxt: string;
+    p0F20Status: boolean;
+    p0F20Txt: string;
+    p0F21Status: boolean;
+    p0F21Txt: string;
+    p0F22Status: boolean;
+    p0F22Txt: string;
+    p0F23Status: boolean;
+    p0F23Txt: string;
+    p0F24Status: boolean;
+    p0F24Txt: string;
 }
 

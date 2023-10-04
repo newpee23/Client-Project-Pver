@@ -29,6 +29,7 @@ export type Dropdown = {
   options: Opprovince[];
   label?: string;
   value?: Opprovince | null;
+  isDisabled? : boolean;
 }
 
 export type Opprovince = {
