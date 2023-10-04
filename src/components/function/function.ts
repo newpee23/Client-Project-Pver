@@ -204,115 +204,186 @@ export const validateFormP0 = (dataP0: FormDataP0): FromP0Err => {
   const newFormErr: FromP0Err = { ...dataFromP0Err };
 
   // f1 รหัสบ้าน
-  const f1Val:string = dataP0.p0F1;
-  if(!/^[0-9]{10}$/.test(f1Val)){
+  const f1Val: string = dataP0.p0F1;
+  if (!/^[0-9]{10}$/.test(f1Val)) {
     newFormErr.p0F1Status = true;
     newFormErr.p0F1Txt = "ระบุ รหัสบ้าน 10 ตัวเป็นตัวเลขเท่านั้น";
-  }else{
+  } else {
     newFormErr.p0F1Status = false;
     newFormErr.p0F1Txt = "";
   }
 
   // f2 หลังคาเรือนที่
-  const f2Val:string = dataP0.p0F2;
-  if(!/^[0-9]/.test(f2Val)){
+  const f2Val: string = dataP0.p0F2;
+  if (!/^[0-9]/.test(f2Val)) {
     newFormErr.p0F2Status = true;
     newFormErr.p0F2Txt = "ระบุ หลังคาเรือนที่ เป็นตัวเลขเท่านั้น";
-  }else{
+  } else {
     newFormErr.p0F2Status = false;
     newFormErr.p0F2Txt = "";
   }
 
   // f3 address
-  const f3Val:number = dataP0.p0F3;
-  if(f3Val === 0){
+  const f3Val: number = dataP0.p0F3;
+  if (f3Val === 0) {
     newFormErr.p0F3Status = true;
     newFormErr.p0F3Txt = "กรุณาเลือก ชื่อหมู่บ้าน";
-  }else{
+  } else {
     newFormErr.p0F3Status = false;
     newFormErr.p0F3Txt = "";
   }
 
   // f4 บ้านเลขที่
-  const f4Val:string = dataP0.p0F4;
-  if(f4Val.length < 1){
+  const f4Val: string = dataP0.p0F4;
+  if (f4Val.length < 1) {
     newFormErr.p0F4Status = true;
     newFormErr.p0F4Txt = "กรุณาระบุ บ้านเลขที่";
-  }else{
+  } else {
     newFormErr.p0F4Status = false;
     newFormErr.p0F4Txt = "";
   }
 
   //  f9T คำนำหน้า
-  const f9tVal:number = dataP0.p0F9T;
-  if(f9tVal === 0){
+  const f9tVal: number = dataP0.p0F9T;
+  if (f9tVal === 0) {
     newFormErr.p0F9TStatus = true;
     newFormErr.p0F9TTxt = "กรุณาเลือก คำนำหน้าชื่อ";
-  }else{
+  } else {
     newFormErr.p0F9TStatus = false;
     newFormErr.p0F9TTxt = "";
   }
 
   // f9 ชื่อเจ้าของบ้าน
-  const f9Val:string = dataP0.p0F9;
-  if(f9Val.length < 1){
+  const f9Val: string = dataP0.p0F9;
+  if (f9Val.length < 1) {
     newFormErr.p0F9Status = true;
     newFormErr.p0F9Txt = "กรุณาระบุ ชื่อเจ้าของบ้าน";
-  }else{
+  } else {
     newFormErr.p0F9Status = false;
     newFormErr.p0F9Txt = "";
   }
 
   // f10 นามสกุลเจ้าของบ้าน
-  const f10Val:string = dataP0.p0F10;
-  if(f10Val.length < 1){
+  const f10Val: string = dataP0.p0F10;
+  if (f10Val.length < 1) {
     newFormErr.p0F10Status = true;
     newFormErr.p0F10Txt = "กรุณาระบุ นามสกุลเจ้าของบ้าน";
-  }else{
+  } else {
     newFormErr.p0F10Status = false;
     newFormErr.p0F10Txt = "";
   }
 
   // f11T คำนำหน้า
-  const f11tVal:number = dataP0.p0F11T;
-  if(f11tVal === 0){
+  const f11tVal: number = dataP0.p0F11T;
+  if (f11tVal === 0) {
     newFormErr.p0F11TStatus = true;
     newFormErr.p0F11TTxt = "กรุณาเลือก คำนำหน้าชื่อ";
-  }else{
+  } else {
     newFormErr.p0F11TStatus = false;
     newFormErr.p0F11TTxt = "";
   }
 
   // f11 ชื่อผู้ให้ข้อมูล
-  const f11Val:string = dataP0.p0F11;
-  if(f11Val.length < 1){
+  const f11Val: string = dataP0.p0F11;
+  if (f11Val.length < 1) {
     newFormErr.p0F11Status = true;
     newFormErr.p0F11Txt = "กรุณาระบุ ชื่อผู้ให้ข้อมูล";
-  }else{
+  } else {
     newFormErr.p0F11Status = false;
     newFormErr.p0F11Txt = "";
   }
 
   // f12 นามสกุลผู้ให้ข้อมูล
-  const f12Val:string = dataP0.p0F12;
-  if(f12Val.length < 1){
+  const f12Val: string = dataP0.p0F12;
+  if (f12Val.length < 1) {
     newFormErr.p0F10Status = true;
     newFormErr.p0F10Txt = "กรุณาระบุ นามสกุลผู้ให้ข้อมูล";
-  }else{
+  } else {
     newFormErr.p0F10Status = false;
     newFormErr.p0F10Txt = "";
   }
 
   // f13 หมายเลขโทรศัพท์ที่ติดต่อได้
-  const f13Val:string = dataP0.p0F13;
-  if(!/^[0-9]{10}$/.test(f13Val)){
+  const f13Val: string = dataP0.p0F13;
+  if (!/^[0-9]{10}$/.test(f13Val)) {
     newFormErr.p0F13Status = true;
     newFormErr.p0F13Txt = "ระบุ หมายเลขโทรศัพท์ 10 ตัว เป็นเลขเท่านั้น";
-  }else{
+  } else {
     newFormErr.p0F13Status = false;
     newFormErr.p0F13Txt = "";
   }
 
-  //f14  
+  //f14 จำนวนครอบครัวในครัวเรือน
+  const f14Val: number = parseInt(dataP0.p0F14);
+  if (f14Val < 1) {
+    newFormErr.p0F14Status = true;
+    newFormErr.p0F14Txt = "กรุณาระบุ จำนวนครอบครัว ตั้งแต่ 1 เป็นต้นไป";
+  } else {
+    newFormErr.p0F14Status = false;
+    newFormErr.p0F14Txt = "";
+  }
+
+  // f15 จำนวนสมาชิกทั้งหมดในครัวเรือน
+  const f15Val = parseInt(dataP0.p0F15);
+  if (f15Val < 1) {
+    newFormErr.p0F15Status = true;
+    newFormErr.p0F15Txt = "กรุณาระบุ จำนวนสมาชิก ตั้งแต่ 1 เป็นต้นไป";
+  } else {
+    newFormErr.p0F15Status = false;
+    newFormErr.p0F15Txt = "";
+  }
+
+  //f16 f17 จำนวนเพศชายและหญิง
+  const f16Val = parseInt(dataP0.p0F16);
+  const f17Val = parseInt(dataP0.p0F17);
+  if (!/^[0-9]$/.test(f16Val.toString()) && f16Val < 1) {
+    newFormErr.p0F16Status = true;
+    newFormErr.p0F16Txt = "กรุณาระบุ เพศชาย เป็นตัวเลขตั้งแต่ 1 เป็นต้นไป";
+  } else if (!/^[0-9]$/.test(f17Val.toString()) && f17Val < 1) {
+    newFormErr.p0F17Status = true;
+    newFormErr.p0F17Txt = "กรุณาระบุ เพศหญิง เป็นตัวเลขตั้งแต่ 1 เป็นต้นไป";
+  } else {
+    let totalGender = (f16Val + f17Val);
+    if (totalGender > f15Val) {
+      newFormErr.p0F16Status = true;
+      newFormErr.p0F16Txt = "ไม่สามารถระบุ จำนวนเพศ เกินจำนวนสมาชิกในครัวเรือนได้";
+    } else {
+      newFormErr.p0F16Status = false;
+      newFormErr.p0F16Txt = "";
+      newFormErr.p0F17Status = false;
+      newFormErr.p0F17Txt = "";
+    }
+  }
+
+  // f18t ชื่อผู้สำรวจ 1.
+  const f18tVal: number = dataP0.p0F18T;
+  if (f18tVal === 0) {
+    newFormErr.p0F18TStatus = true;
+    newFormErr.p0F18TTxt = "กรุณาเลือก คำนำหน้าชื่อ";
+  } else {
+    newFormErr.p0F18TStatus = false;
+    newFormErr.p0F18TTxt = "";
+  }
+
+  // f18 ชื่อผู้สำรวจ
+  const f18Val: string = dataP0.p0F18;
+  if (f18Val.length < 1) {
+    newFormErr.p0F18Status = true;
+    newFormErr.p0F18Txt = "กรุณาระบุ ชื่อผู้สำรวจ";
+  } else {
+    newFormErr.p0F18Status = false;
+    newFormErr.p0F18Txt = "";
+  }
+
+  // f19 นามสกุลผู้สำรวจ
+  const f19Val: string = dataP0.p0F19;
+  if (f19Val.length < 1) {
+    newFormErr.p0F19Status = true;
+    newFormErr.p0F19Txt = "กรุณาระบุ นามสกุลผู้สำรวจ";
+  } else {
+    newFormErr.p0F19Status = false;
+    newFormErr.p0F19Txt = "";
+  }
+
   return newFormErr;
 }

@@ -26,26 +26,27 @@ const Page0 = (props: pageComponents) => {
   const [selectedOptionP0F11T, setSelectedOptionP0F11T] = useState<Opprovince | null>(null);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-
     const { name, value } = e.target;
-    if(isChecked){   
-      if(name === 'p0F9' || name === 'p0F10'){
-        setDataFrom((prevData) => ({
-          ...prevData,
-          p0F11T: 0,
-          p0F11: "",
-          p0F12: "",
-        }));
-        setSelectedOptionP0F11T(null);
-        setIsChecked(false);
-      }
-    }else{
+  
+    const updateData = (newValue: any = value) => {
       setDataFrom((prevData) => ({
         ...prevData,
-        [name]: value,
+        [name]: newValue.trim(),
       }));
+    };
+  
+    if (isChecked && (name === 'p0F9' || name === 'p0F10')) {
+      setDataFrom((prevData) => ({
+        ...prevData,
+        p0F11T: 0,
+        p0F11: "",
+        p0F12: "",
+      }));
+      setSelectedOptionP0F11T(null);
+      setIsChecked(false);
+    } else {
+      updateData();
     }
-    
   };
 
   const handleDropDownBan = (selectedOption: SingleValue<banData>) => {
@@ -151,7 +152,7 @@ const Page0 = (props: pageComponents) => {
     event.preventDefault();
 
     const newFormErr = validateFormP0(datafrom);
-   
+    console.log(newFormErr);
   }
 
   useEffect(() => {
@@ -432,7 +433,7 @@ const Page0 = (props: pageComponents) => {
                         </label>
                       </div>
                       <div className="ml-2 mr-2">
-                        <InputFieldAuth label="" name="p0F23" type="time" required={true} value={datafrom.p0F23} onChange={(e) => handleInputChange(e)} className="w-full border min-w-[150px] border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                        <InputFieldAuth label="" name="p0F23" type="time" required={true} value={datafrom.p0F23} onChange={(e) => handleInputChange(e)} className="w-full border min-w-[100px] border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                       </div>
                       <div className="flex items-center">
                         <label className="block mb-2 text-sm font-medium text-gray-900 label mt-[-5px]">
@@ -447,7 +448,7 @@ const Page0 = (props: pageComponents) => {
                         </label>
                       </div>
                       <div className="ml-2 mr-2">
-                        <InputFieldAuth label="" name="p0F24" type="time" required={true} value={datafrom.p0F24} onChange={(e) => handleInputChange(e)} className="w-full min-w-[150px] border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                        <InputFieldAuth label="" name="p0F24" type="time" required={true} value={datafrom.p0F24} onChange={(e) => handleInputChange(e)} className="w-full min-w-[100px] border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                       </div>
                       <div className="flex items-center">
                         <label className="block mb-2 text-sm font-medium text-gray-900 label mt-[-5px]">
@@ -459,7 +460,7 @@ const Page0 = (props: pageComponents) => {
                 </div>
                 {/* row 12 */}
               </div>
-
+          
               <DivHr divClass="flex justify-center" className="h-px mt-1 mb-1 bg-gray-200 border-0 w-full" />
               {isCheckFrom ? ''
                 :

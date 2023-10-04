@@ -120,5 +120,6 @@ export interface FromP0Err {
     p0F23Txt: string;
     p0F24Status: boolean;
     p0F24Txt: string;
+    
 }
 
