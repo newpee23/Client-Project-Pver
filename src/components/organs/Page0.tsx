@@ -16,7 +16,7 @@ const Page0 = (props: pageComponents) => {
   const { ban } = useAppSelector((state) => state?.page);
   const { address } = useAppSelector((state) => state?.page);
 
-  const initialDataFrom: FormDataP0 = props.status === "edit" ? { p0F1: "10", p0F2: "20", p0F3: 0, p0F4: "", p0F5: "", p0F6: "", p0F6Name: "", p0F7: "", p0F7Name: "", p0F8: "", p0F8Name: "", p0F9T: 0, p0F9: "", p0F10: "", p0F11T: 0, p0F11: "", p0F12: "" } : dataInsertP0;
+  const initialDataFrom: FormDataP0 = props.status === "edit" ? { p0F1: "", p0F2: "", p0F3: 0, p0F4: "", p0F5: "", p0F6: "", p0F6Name: "", p0F7: "", p0F7Name: "", p0F8: "", p0F8Name: "", p0F9T: 0, p0F9: "", p0F10: "", p0F11T: 0, p0F11: "", p0F12: "", p0F13: "", p0F14: "", p0F15: "", p0F16: "", p0F17: "" } : dataInsertP0;
   const [datafrom, setDataFrom] = useState<FormDataP0>(initialDataFrom);
   const [dataErr, setDataErr] = useState<ErrFromDataP0>(dataErrPage0);
   const [isChecked, setIsChecked] = useState(false);
@@ -74,7 +74,7 @@ const Page0 = (props: pageComponents) => {
     if (selectedOption !== null) {
       if (selectedOption && !Array.isArray(selectedOption)) {
         const valPrefixName = prefixName.find((item) => item.value === selectedOption.value);
-        if(valPrefixName){
+        if (valPrefixName) {
           setSelectedOption(valPrefixName);
         }
         setDataFrom((prevData) => ({
@@ -96,7 +96,7 @@ const Page0 = (props: pageComponents) => {
   const setF11F12FromChecked = () => {
     if (datafrom.p0F9T && datafrom.p0F9 && datafrom.p0F10) {
       const valPrefixName = prefixName.find((item) => item.value === datafrom.p0F9T);
-      if(valPrefixName){
+      if (valPrefixName) {
         setSelectedOption(valPrefixName);
       }
       setDataFrom((prevData) => ({
@@ -105,7 +105,7 @@ const Page0 = (props: pageComponents) => {
         p0F11: datafrom.p0F9,
         p0F12: datafrom.p0F10,
       }));
-      if(dataErr.isChecked){
+      if (dataErr.isChecked) {
         setDataErr((ErrData) => ({
           ...ErrData,
           isChecked: "",
@@ -117,7 +117,7 @@ const Page0 = (props: pageComponents) => {
           p0F12: "",
         }));
       }
-   
+
     } else {
       setDataErr((ErrData) => ({
         ...ErrData,
@@ -126,7 +126,6 @@ const Page0 = (props: pageComponents) => {
       setIsChecked(!isChecked)
     }
   }
-
 
   const setAddress = (data: addressData[]) => {
     setDataFrom((prevData) => ({
@@ -151,7 +150,7 @@ const Page0 = (props: pageComponents) => {
   useEffect(() => {
     if (isChecked) {
       setF11F12FromChecked();
-    }else{
+    } else {
       setDataFrom((prevData) => ({
         ...prevData,
         p0F11T: 0,
@@ -172,7 +171,6 @@ const Page0 = (props: pageComponents) => {
         <div>
           <DivHeadQuestion head="หน้าหลัก" status={props.status} />
           <DivHr divClass="flex justify-center" className="h-px bg-gray-200 border-0 w-full" />
-
           <div className="p-5">
             <div className="overflow-x-auto w-full">
               {/* row 1 */}
@@ -185,12 +183,12 @@ const Page0 = (props: pageComponents) => {
                   <InputFieldAuth label="หลังคาเรือนที่" name="p0F2" type="number" placeholder="หลังคาเรือนที่ ระบุตัวเลขเท่านั้น" required={true} value={datafrom.p0F2} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                 </div>
                 <div className="m-3 mb-0">
-                  <DropDown label="ชื่อหมู่บ้าน" isClearable={true} onChange={handleDropDownBan} isSearchable={true} required={true} placeholder="เลือกเชื่อหมู่บ้าน" options={ban} name="p0F3" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block" />
+                  <DropDown label="ชื่อหมู่บ้าน" isClearable={true} onChange={handleDropDownBan} isSearchable={true} required={true} placeholder="เลือกชื่อหมู่บ้าน" options={ban} name="p0F3" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block" />
                 </div>
                 <div className="m-3 hidden md:block"></div>
               </div>
               {/* row 1 */}
-
+              <DivHr divClass="flex justify-center" className="h-px mt-1 mb-1 bg-gray-200 border-0 w-full" />
               {/* row 2 */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 hover:bg-gray-100">
                 <div className="m-3 mb-0">
@@ -210,8 +208,7 @@ const Page0 = (props: pageComponents) => {
                 </div>
               </div>
               {/* row 2 */}
-
-              <DivHr divClass="flex justify-center" className="h-px mt-5 mb-4 bg-purple-600 border-0 w-full" />
+              <DivHr divClass="flex justify-center" className="h-px mt-1 mb-1 bg-gray-200 border-0 w-full" />
               {/* row 3,4 */}
               <div className="hover:bg-gray-100">
                 <div className="grid grid-cols-1 md:grid-cols-2 pt-2 lg:grid-cols-4 xl:grid-cols-5 ">
@@ -235,7 +232,7 @@ const Page0 = (props: pageComponents) => {
                 </div>
               </div>
               {/* row 3,4 */}
-
+              <DivHr divClass="flex justify-center" className="h-px mt-1 mb-1 bg-gray-200 border-0 w-full" />
               {/* row 5,6 */}
               <div className="hover:bg-gray-100">
                 <div className="grid grid-cols-1 md:grid-cols-2 pt-2 lg:grid-cols-4 xl:grid-cols-5 ">
@@ -255,7 +252,6 @@ const Page0 = (props: pageComponents) => {
                     {dataErr.isChecked && <label className="ml-2 text-sm font-medium text-red-700"><b>{dataErr.isChecked}</b></label>}
                   </div>
                 </div>
-           
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
                   <div className="m-3 hidden lg:block"></div>
                   <div className="m-3 mb-0">
@@ -267,10 +263,112 @@ const Page0 = (props: pageComponents) => {
                 </div>
               </div>
               {/* row 5,6*/}
-
-              <DivHr divClass="flex justify-center" className="h-px mt-5 mb-4 bg-purple-600 border-0 w-full" />
-
+              <DivHr divClass="flex justify-center" className="h-px mt-1 mb-1 bg-gray-200 border-0 w-full" />
+              {/* row 7 */}
+              <div className="hover:bg-gray-100">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                  <div className="m-3 mb-0 flex items-center">
+                    <label className="block mb-2 text-sm font-medium text-gray-900 label">
+                      หมายเลขโทรศัพท์ที่ติดต่อได้ (บ้าน/มือถือ)
+                    </label>
+                  </div>
+                  <div className="m-3 mb-0">
+                    <InputFieldAuth label="" name="p0F13" type="text" placeholder="หมายเลขโทรศัพท์" value={datafrom.p0F13} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                  </div>
+                </div>
+              </div>
+              {/* row 7 */}
+              <DivHr divClass="flex justify-center" className="h-px mt-1 mb-1 bg-gray-200 border-0 w-full" />
+              {/* row 8,9 */}
+              <div className="hover:bg-gray-100">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                  <div className="m-3 mb-0 flex items-center">
+                    <label className="block mb-2 text-sm font-medium text-gray-900 label mt-[-5px]">
+                      จำนวนครอบครัวในครัวเรือน <span className="text-red-700"><b>*</b></span>
+                    </label>
+                  </div>
+                  <div className="m-3 mb-0">
+                    <InputFieldAuth label="" name="p0F14" type="number" required={true} placeholder="จำนวนครอบครัว" value={datafrom.p0F14} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                  </div>
+                  <div className="m-3 mb-0 items-center  hidden lg:flex">
+                    <label className="block mb-2 text-sm font-medium text-gray-900 label mt-[-5px]">
+                      ครอบครัว
+                    </label>
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                  <div className="m-3 mb-0 flex items-center">
+                    <label className="block mb-2 text-sm font-medium text-gray-900 label mt-[-5px]">
+                      จำนวนสมาชิกทั้งหมดในครัวเรือน <span className="text-red-700"><b>*</b></span>
+                    </label>
+                  </div>
+                  <div className="m-3 mb-0">
+                    <InputFieldAuth label="" name="p0F15" type="number" required={true} placeholder="จำนวนคน" value={datafrom.p0F15} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                  </div>
+                  <div className="m-3 mb-0 items-center hidden lg:flex">
+                    <label className="block mb-2 text-sm font-medium text-gray-900 label mt-[-5px]">
+                      คน
+                    </label>
+                  </div>
+                  <div className="m-3 mb-0 flex">
+                    <div className="flex items-center">
+                      <label className="block mb-2 text-sm font-medium text-gray-900 label mt-[-5px]">
+                        ชาย
+                      </label>
+                    </div>
+                    <div className="ml-2 mr-2">
+                      <InputFieldAuth label="" name="p0F16" type="number" required={true} placeholder="จำนวนเพศชาย" value={datafrom.p0F16} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                    </div>
+                    <div className="flex items-center">
+                      <label className="block mb-2 text-sm font-medium text-gray-900 label mt-[-5px]">
+                        คน
+                      </label>
+                    </div>
+                  </div>
+                  <div className="m-3 mb-0 flex">
+                    <div className="flex items-center">
+                      <label className="block mb-2 text-sm font-medium text-gray-900 label mt-[-5px]">
+                        หญิง
+                      </label>
+                    </div>
+                    <div className="ml-2 mr-2">
+                      <InputFieldAuth label="" name="p0F17" type="number" required={true} placeholder="จำนวนเพศหญิง" value={datafrom.p0F17} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                    </div>
+                    <div className="flex items-center">
+                      <label className="block mb-2 text-sm font-medium text-gray-900 label mt-[-5px]">
+                        คน
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <DivHr divClass="flex justify-center" className="h-px mt-1 mb-1 bg-gray-200 border-0 w-full" />
+              {/* row 8,9 */}
             </div>
+            <div>
+              <div className="flex justify-between bg-violet-800">
+                <div className="text:md md:text-lg p-2 sml:p-3 tracking-tight text-white ">สำหรับทีมสำรวจข้อมูล</div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 hover:bg-gray-100">
+                <div className="m-3 mb-0 flex items-center">
+                  <label className="block mb-2 text-sm font-medium text-gray-900 label">
+                    ชื่อผู้สำรวจ 1. <span className="text-red-700"><b>*</b></span>
+                  </label>
+                </div>
+                <div className="m-3 mb-0">
+                  <InputFieldAuth label="" name="p0F1" type="number" placeholder="รหัสบ้าน ระบุตัวเลขเท่านั้น" required={true} value={datafrom.p0F1} onChange={(e) => handleInputChange(e)} className="max-w-[335px] w-full border border-purple-00 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                </div>
+                <div className="m-3 mb-0 flex items-center justify-end">
+                  <label className="block mb-2 text-sm font-medium text-gray-900 label">
+                    ชื่อผู้สำรวจ 1. <span className="text-red-700"><b>*</b></span>
+                  </label>
+                </div>
+                <div className="m-3 mb-0">
+                  <InputFieldAuth label="" name="p0F1" type="number" placeholder="รหัสบ้าน ระบุตัวเลขเท่านั้น" required={true} value={datafrom.p0F1} onChange={(e) => handleInputChange(e)} className="max-w-[335px] w-full border border-purple-00 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

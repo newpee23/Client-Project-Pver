@@ -20,6 +20,11 @@ export const dataInsertP0: FormDataP0 = {
     p0F11T: 0,
     p0F11: "",
     p0F12: "",
+    p0F13: "",
+    p0F14: "",
+    p0F15: "",
+    p0F16: "",
+    p0F17: "",
 }
 
 export const dataErrPage0: ErrFromDataP0 = {

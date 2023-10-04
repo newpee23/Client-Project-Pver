@@ -25,6 +25,11 @@ export interface FormDataP0 {
     p0F11T: number;
     p0F11: string;
     p0F12: string;
+    p0F13: string;
+    p0F14: string;
+    p0F15: string;
+    p0F16: string;
+    p0F17: string;
 }
 
 export interface ErrFromDataP0 {
