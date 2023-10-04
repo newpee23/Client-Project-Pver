@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../store/store"
 import DropDown from "../atoms/DropDown"
 import { setAddressP0 } from "../../store/slices/pageSlices"
 import { Opprovince } from "../../types/atomsType"
+import DivButton from "../atoms/DivButton"
 
 const Page0 = (props: pageComponents) => {
 
@@ -345,30 +346,108 @@ const Page0 = (props: pageComponents) => {
               <DivHr divClass="flex justify-center" className="h-px mt-1 mb-1 bg-gray-200 border-0 w-full" />
               {/* row 8,9 */}
             </div>
+
             <div>
               <div className="flex justify-between bg-violet-800">
                 <div className="text:md md:text-lg p-2 sml:p-3 tracking-tight text-white ">สำหรับทีมสำรวจข้อมูล</div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 hover:bg-gray-100">
-                <div className="m-3 mb-0 flex items-center">
-                  <label className="block mb-2 text-sm font-medium text-gray-900 label">
-                    ชื่อผู้สำรวจ 1. <span className="text-red-700"><b>*</b></span>
-                  </label>
+              {/* row 10 */}
+              <div className="hover:bg-gray-100">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 pt-5">
+                  <div className="m-3 mb-0 flex items-center">
+                    <label className="block mb-2 text-sm font-medium text-gray-900 label">
+                      ชื่อผู้สำรวจ 1. (เลือกคำนำหน้าชื่อ) <span className="text-red-700"><b>*</b></span>
+                    </label>
+                  </div>
+                  <div className="max-w-full md:max-w-[180px] m-3 mb-0">
+                    <DropDown label="" isClearable={true} onChange={handlePreFixNameF9} isSearchable={false} required={true} placeholder="เลือกคำนำหน้าชื่อ" options={prefixName} name="p0F9T" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block" />
+                  </div>
                 </div>
-                <div className="m-3 mb-0">
-                  <InputFieldAuth label="" name="p0F1" type="number" placeholder="รหัสบ้าน ระบุตัวเลขเท่านั้น" required={true} value={datafrom.p0F1} onChange={(e) => handleInputChange(e)} className="max-w-[335px] w-full border border-purple-00 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
-                </div>
-                <div className="m-3 mb-0 flex items-center justify-end">
-                  <label className="block mb-2 text-sm font-medium text-gray-900 label">
-                    ชื่อผู้สำรวจ 1. <span className="text-red-700"><b>*</b></span>
-                  </label>
-                </div>
-                <div className="m-3 mb-0">
-                  <InputFieldAuth label="" name="p0F1" type="number" placeholder="รหัสบ้าน ระบุตัวเลขเท่านั้น" required={true} value={datafrom.p0F1} onChange={(e) => handleInputChange(e)} className="max-w-[335px] w-full border border-purple-00 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                  <div className="m-3 hidden lg:block"></div>
+                  <div className="m-3 mb-0">
+                    <InputFieldAuth label="" name="p0F9" type="text" placeholder="ชื่อ" required={true} value={datafrom.p0F9} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                  </div>
+                  <div className="m-3 mb-0">
+                    <InputFieldAuth label="" name="p0F10" type="text" placeholder="นามสกุล" required={true} value={datafrom.p0F10} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                  </div>
                 </div>
               </div>
+              {/* row 10 */}
+              <DivHr divClass="flex justify-center" className="h-px mt-1 mb-1 bg-gray-200 border-0 w-full" />
+              {/* row 11 */}
+              <div className="hover:bg-gray-100">
+                <div className="grid grid-cols-1 md:grid-cols-2 pt-2 lg:grid-cols-4 xl:grid-cols-5 ">
+                  <div className="m-3 mb-0 flex items-center">
+                    <label className="block mb-2 text-sm font-medium text-gray-900 label">
+                      ชื่อผู้สำรวจ 2. (เลือกคำนำหน้าชื่อ)
+                    </label>
+                  </div>
+                  <div className="max-w-full md:max-w-[180px] m-3 mb-0">
+                    <DropDown label="" isClearable={true} onChange={handlePreFixNameF9} isSearchable={false} required={true} placeholder="เลือกคำนำหน้าชื่อ" options={prefixName} name="p0F9T" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                  <div className="m-3 hidden lg:block"></div>
+                  <div className="m-3 mb-0">
+                    <InputFieldAuth label="" name="p0F9" type="text" placeholder="ชื่อ" value={datafrom.p0F9} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                  </div>
+                  <div className="m-3 mb-0">
+                    <InputFieldAuth label="" name="p0F10" type="text" placeholder="นามสกุล" value={datafrom.p0F10} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                  </div>
+                </div>
+              </div>
+              {/* row 11 */}
+              <DivHr divClass="flex justify-center" className="h-px mt-1 mb-1 bg-gray-200 border-0 w-full" />
+              {/* row 12 */}
+              <div className="hover:bg-gray-100">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                  <div className="m-3 mb-0 flex items-center">
+                    <label className="block mb-2 text-sm font-medium text-gray-900 label mt-[-5px]">
+                      สำรวจ ณ วันที่ <span className="text-red-700"><b>*</b></span>
+                    </label>
+                  </div>
+                  <div className="m-3 mb-0">
+                    <InputFieldAuth label="" name="p0F15" type="date" required={true} placeholder="จำนวนคน" value={datafrom.p0F15} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                  </div>
+                  <div className="m-3 mb-0 hidden lg:block"></div>
+                  <div className="m-3 mb-0 flex justify-start">
+                    <div className="flex items-center">
+                      <label className="block mb-2 text-sm font-medium text-gray-900 label mt-[-5px]">
+                        เริ่มสำรวจเวลา
+                      </label>
+                    </div>
+                    <div className="ml-2 mr-2">
+                      <InputFieldAuth label="" name="p0F16" type="time" required={true} placeholder="จำนวนเพศชาย" value={datafrom.p0F16} onChange={(e) => handleInputChange(e)} className="w-full border min-w-[150px] border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                    </div>
+                    <div className="flex items-center">
+                      <label className="block mb-2 text-sm font-medium text-gray-900 label mt-[-5px]">
+                        น.
+                      </label>
+                    </div>
+                  </div>
+                  <div className="m-3 mb-0 flex justify-start">
+                    <div className="flex items-center">
+                      <label className="block mb-2 text-sm font-medium text-gray-900 label mt-[-5px]">
+                        เสร็จเวลา
+                      </label>
+                    </div>
+                    <div className="ml-2 mr-2">
+                      <InputFieldAuth label="" name="p0F16" type="time" required={true} placeholder="จำนวนเพศชาย" value={datafrom.p0F16} onChange={(e) => handleInputChange(e)} className="w-full min-w-[150px] border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                    </div>
+                    <div className="flex items-center">
+                      <label className="block mb-2 text-sm font-medium text-gray-900 label mt-[-5px]">
+                        น.
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* row 12 */}
+              <DivHr divClass="flex justify-center" className="h-px mt-1 mb-1 bg-gray-200 border-0 w-full" />
+              <DivButton textBtn="ตรวจสอบข้อมูล" type="button" divClass="text-center" className="mt-5 focus:outline-none text-white bg-amber-500 hover:bg-amber-600 focus:ring-4 focus:ring-amber-300 font-medium rounded-md text-sm px-4 py-2" />
+            
             </div>
-
           </div>
         </div>
       </div>
