@@ -6,6 +6,7 @@ export type buttonSingIN = {
   className: string;
   type?: "button" | "submit" | "reset";
   textBtn: string;
+  onClick?: () => void;
 };
 
 export type DivHrType = {

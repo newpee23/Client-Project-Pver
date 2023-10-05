@@ -72,6 +72,7 @@ export type addressData = {
 }
 
 export interface FromP0Err {
+    [key: string]: boolean|string;
     p0F1Status: boolean;
     p0F1Txt: string;
     p0F2Status: boolean;

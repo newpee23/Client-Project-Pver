@@ -6,13 +6,13 @@ type Props = {
 
 function AlertErr(prop: Props) {
 
-  const checkStatus = (): string =>{
+  const checkStatus = (): string => {
     let status = 'red';
-    if(prop.text === 'User registered successfully'){
+    if (prop.text === 'User registered successfully') {
       status = 'green';
     }
     return status;
-}
+  }
 
   return (
     <div className={`flex items-center flex-col sml:flex-row p-4 mb-4 text-sm ${checkStatus() === 'green' ? 'text-green-800' : 'text-red-800'} rounded-lg ${checkStatus() === 'green' ? 'bg-green-50' : 'bg-red-50'}`} role="alert">
@@ -23,7 +23,7 @@ function AlertErr(prop: Props) {
         <span className="sr-only">Info</span>
         <span className="font-medium mr-2">แจ้งเตือน!</span>
       </div>
-      <DivTextMesErr className={`text-center text-sm ${checkStatus() === 'green' ? 'text-green-700' : 'text-red-700'}`} text={prop.text}/>
+      <DivTextMesErr className={`text-center text-sm ${checkStatus() === 'green' ? 'text-green-700' : 'text-red-700'}`} text={prop.text} />
     </div>
   )
 }

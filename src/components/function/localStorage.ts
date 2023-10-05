@@ -25,7 +25,6 @@ export const setLocalQuestionId = (data: string): void => {
     localStorage.setItem(storageQuestionIdKey, data);
 };
 
-
 // สร้างฟังก์ชันเพื่อล้างค่า localStorage ทั้งหมด
 export const clearLocalStorageSingIn = (): void => {
     localStorage.removeItem('userLogin');

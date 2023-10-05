@@ -5,10 +5,11 @@ import DivTextarea from "../../atoms/DivTextarea";
 import DivHr from "../../atoms/DivHr";
 import DivButton from "../../atoms/DivButton";
 import { dataSingUp, dataSingUpErr } from "../../../types/authType";
-import { validateForm } from "../../function/function";
+
 import { useAppDispatch, useAppSelector } from "../../../store/store";
 import { setLoadingAuth, signUp } from "../../../store/slices/authSlices";
 import AlertErr from "../../atoms/AlertErr";
+import { validateForm } from "../../function/validateForm";
 
 
 const FormSingUp = () => {
