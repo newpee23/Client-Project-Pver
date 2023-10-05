@@ -33,7 +33,7 @@ const Page0 = (props: pageComponents) => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
   
-    const updateData = (newValue: any = value) => {
+    const updateData = (newValue: string = value) => {
       setDataFrom((prevData) => ({
         ...prevData,
         [name]: newValue.trim(),
