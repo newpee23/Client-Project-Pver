@@ -13,6 +13,7 @@ import DivButton from "../atoms/DivButton"
 import { validateFormP0 } from "../function/validateForm"
 import DivTextMesErr from "../atoms/DivTextMesErr"
 import LoadingCheck from "../atoms/LoadingCheck"
+import { savePage0 } from "../../api/pageApi"
 
 
 const Page0 = (props: pageComponents) => {
@@ -156,23 +157,25 @@ const Page0 = (props: pageComponents) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
+    await savePage0(datafrom);
     console.log("handleSubmit");
   }
 
   const handleCheckFrom = () => {
     setLoadingPage(true);
     const newFormErr = validateFormP0(datafrom);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     if(newFormErr.p0F1Status && newFormErr.p0F2Status && newFormErr.p0F3Status && newFormErr.p0F4Status && newFormErr.p0F9TStatus && newFormErr.p0F9Status
       && newFormErr.p0F10Status && newFormErr.p0F11TStatus && newFormErr.p0F11Status && newFormErr.p0F12Status && newFormErr.p0F13Status && newFormErr.p0F14Status && newFormErr.p0F15Status && newFormErr.p0F16Status
       && newFormErr.p0F17Status && newFormErr.p0F18TStatus && newFormErr.p0F18Status && newFormErr.p0F19Status && newFormErr.p0F20TStatus && newFormErr.p0F20Status && newFormErr.p0F21Status && newFormErr.p0F22Status
-      && newFormErr.p0F23Status && newFormErr.p0F24Status){
-        setIsCheckFrom(true);
-      } else{
+      && newFormErr.p0F23Status && newFormErr.p0F24Status){ 
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         setErrTxtErr(newFormErr);
         setIsCheckFrom(false)
+      } else{
+        setIsCheckFrom(true);
       }
-   
+     
     setTimeout(() => {
       setLoadingPage(false);
     }, 1000);

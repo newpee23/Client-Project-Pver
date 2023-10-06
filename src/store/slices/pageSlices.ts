@@ -20,7 +20,7 @@ export const findBan = createAsyncThunk<addressData[]|string>(
     "findBan/loadAsync", async (): Promise<addressData[]|string> => {
       try {
         const response: AxiosResponse = await axios.get(
-          SERVER_APP_API + `/findBan/`,
+          SERVER_APP_API + `/findBan`,
           {
             headers: {
               "Content-Type": "application/json",

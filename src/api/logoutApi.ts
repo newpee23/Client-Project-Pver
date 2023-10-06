@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse, CancelTokenSource } from "axios";
+import axios, { AxiosResponse, CancelTokenSource } from "axios";
 import { SERVER_APP_API } from "./config";
 
 // สร้างตัวแปรเพื่อใช้ในการยกเลิก
