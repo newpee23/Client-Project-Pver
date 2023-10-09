@@ -157,6 +157,7 @@ const Page0 = (props: pageComponents) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
+
     await savePage0(datafrom);
     console.log("handleSubmit");
   }
@@ -165,17 +166,20 @@ const Page0 = (props: pageComponents) => {
     setLoadingPage(true);
     const newFormErr = validateFormP0(datafrom);
 
-    if(newFormErr.p0F1Status && newFormErr.p0F2Status && newFormErr.p0F3Status && newFormErr.p0F4Status && newFormErr.p0F9TStatus && newFormErr.p0F9Status
-      && newFormErr.p0F10Status && newFormErr.p0F11TStatus && newFormErr.p0F11Status && newFormErr.p0F12Status && newFormErr.p0F13Status && newFormErr.p0F14Status && newFormErr.p0F15Status && newFormErr.p0F16Status
-      && newFormErr.p0F17Status && newFormErr.p0F18TStatus && newFormErr.p0F18Status && newFormErr.p0F19Status && newFormErr.p0F20TStatus && newFormErr.p0F20Status && newFormErr.p0F21Status && newFormErr.p0F22Status
-      && newFormErr.p0F23Status && newFormErr.p0F24Status){ 
+    if(newFormErr.p0F1Status || newFormErr.p0F2Status || newFormErr.p0F3Status || newFormErr.p0F4Status || newFormErr.p0F9TStatus || newFormErr.p0F9Status
+      || newFormErr.p0F10Status || newFormErr.p0F11TStatus || newFormErr.p0F11Status || newFormErr.p0F12Status || newFormErr.p0F13Status || newFormErr.p0F14Status || newFormErr.p0F15Status || newFormErr.p0F16Status
+      || newFormErr.p0F17Status || newFormErr.p0F18TStatus || newFormErr.p0F18Status || newFormErr.p0F19Status || newFormErr.p0F20TStatus || newFormErr.p0F20Status || newFormErr.p0F21Status || newFormErr.p0F22Status
+      || newFormErr.p0F23Status || newFormErr.p0F24Status){ 
         window.scrollTo({ top: 0, behavior: 'smooth' });
         setErrTxtErr(newFormErr);
         setIsCheckFrom(false)
       } else{
+        if(datafrom.p0F13 === "")setDataFrom((prevData) => ({...prevData, p0F13: "-",}));
+        if(datafrom.p0F20 === "")setDataFrom((prevData) => ({...prevData, p0F20: "-",}));
+        if(datafrom.p0F21 === "")setDataFrom((prevData) => ({...prevData, p0F21: "-",}));
         setIsCheckFrom(true);
       }
-     
+   
     setTimeout(() => {
       setLoadingPage(false);
     }, 1000);
@@ -494,7 +498,7 @@ const Page0 = (props: pageComponents) => {
                         </label>
                       </div>
                       <div className="ml-2 mr-2">
-                        <InputFieldAuth label="" name="p0F23" type="time" required={true} value={datafrom.p0F23} onChange={(e) => handleInputChange(e)} className="w-full border min-w-[100px] border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                        <InputFieldAuth label="" name="p0F23" type="time" required={true} readonly={isCheckFrom} value={datafrom.p0F23} onChange={(e) => handleInputChange(e)} className="w-full border min-w-[100px] border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                         {errTxtErr.p0F23Txt && <DivTextMesErr className="text-sm mb-2 text-red-700 font-semibold" text={errTxtErr.p0F23Txt}/>}
                       </div>
                       <div className="flex items-center">
@@ -510,7 +514,7 @@ const Page0 = (props: pageComponents) => {
                         </label>
                       </div>
                       <div className="ml-2 mr-2">
-                        <InputFieldAuth label="" name="p0F24" type="time" required={true} value={datafrom.p0F24} onChange={(e) => handleInputChange(e)} className="w-full min-w-[100px] border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                        <InputFieldAuth label="" name="p0F24" type="time" required={true} readonly={isCheckFrom} value={datafrom.p0F24} onChange={(e) => handleInputChange(e)} className="w-full min-w-[100px] border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                         {errTxtErr.p0F24Txt && <DivTextMesErr className="text-sm mb-2 text-red-700 font-semibold" text={errTxtErr.p0F24Txt}/>}
                       </div>
                       <div className="flex items-center">
