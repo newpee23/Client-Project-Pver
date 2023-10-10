@@ -231,9 +231,10 @@ export const validateFormP0 = (dataP0: FormDataP0): FromP0Err => {
     const f16Val = parseInt(dataP0.p0F16) ? parseInt(dataP0.p0F16) : 0;
     const f17Val = parseInt(dataP0.p0F17) ? parseInt(dataP0.p0F17) : 0;
     const totalGender = (f16Val + f17Val);
+ 
     if(totalGender !== 0){
         if(totalGender !== f15Val){
-            if(f16Val < 1 || f17Val < 1) setNewFormErr({name:"p0F16",status:false,txt:"กรุณาระบุ จำนวนเพศให้เท่ากับ จำนวนสมาชิก"});
+            setNewFormErr({name:"p0F16",status:true,txt:"กรุณาระบุ จำนวนเพศให้เท่ากับ จำนวนสมาชิก"});
         }else{
             setNewFormErr({name:"p0F16",status:false,txt:""});
         }

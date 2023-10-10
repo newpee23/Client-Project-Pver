@@ -14,7 +14,7 @@ import { validateFormP0 } from "../function/validateForm"
 import DivTextMesErr from "../atoms/DivTextMesErr"
 import LoadingCheck from "../atoms/LoadingCheck"
 import { savePage0 } from "../../api/pageApi"
-
+import ModalSave from "../atoms/modalSave"
 
 const Page0 = (props: pageComponents) => {
 
@@ -29,6 +29,7 @@ const Page0 = (props: pageComponents) => {
   const [loadingPage, setLoadingPage] = useState<boolean>(false);
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [isCheckFrom, setIsCheckFrom] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedOptionP0F11T, setSelectedOptionP0F11T] = useState<Opprovince | null>(null);
  
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -138,7 +139,7 @@ const Page0 = (props: pageComponents) => {
           ...prevData,
           [field]: selectedOption.value,
         }));
-        dispatch(setAddressP0(selectedOption.value));
+        // dispatch(setAddressP0(selectedOption.value));
       }
     } else {
       if(field === 'p0F9T' && isChecked){
@@ -151,25 +152,25 @@ const Page0 = (props: pageComponents) => {
         ...prevData,
         [field]: 0,
       }));
-      dispatch(setAddressP0(0));
+      // dispatch(setAddressP0(0));
     }
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
-    event.preventDefault();
-
+  const handleSubmit = async (): Promise<void> => {
     await savePage0(datafrom);
     console.log("handleSubmit");
   }
 
-  const handleCheckFrom = () => {
+  const handleCheckFrom = (): void => {
     setLoadingPage(true);
+    setErrTxtErr(dataFromP0Err);
     const newFormErr = validateFormP0(datafrom);
-
+   
     if(newFormErr.p0F1Status || newFormErr.p0F2Status || newFormErr.p0F3Status || newFormErr.p0F4Status || newFormErr.p0F9TStatus || newFormErr.p0F9Status
       || newFormErr.p0F10Status || newFormErr.p0F11TStatus || newFormErr.p0F11Status || newFormErr.p0F12Status || newFormErr.p0F13Status || newFormErr.p0F14Status || newFormErr.p0F15Status || newFormErr.p0F16Status
       || newFormErr.p0F17Status || newFormErr.p0F18TStatus || newFormErr.p0F18Status || newFormErr.p0F19Status || newFormErr.p0F20TStatus || newFormErr.p0F20Status || newFormErr.p0F21Status || newFormErr.p0F22Status
       || newFormErr.p0F23Status || newFormErr.p0F24Status){ 
+       
         window.scrollTo({ top: 0, behavior: 'smooth' });
         setErrTxtErr(newFormErr);
         setIsCheckFrom(false)
@@ -187,9 +188,21 @@ const Page0 = (props: pageComponents) => {
   }
 
   const btnSaveShow = (): JSX.Element => {
+    if(!isCheckFrom && !loadingPage){
+      const btn: JSX.Element = (
+        <div>
+          <DivButton textBtn="ตรวจสอบข้อมูล" type="button" onClick={handleCheckFrom} divClass="text-center" className="mt-5 focus:outline-none text-white bg-amber-500 hover:bg-amber-600 focus:ring-4 focus:ring-amber-300 font-medium rounded-md text-md px-4 py-2" />
+          <DivTextMesErr className="text-center text-sm text-amber-700 mt-2" text="(กรุณาตรวจสอบข้อมูล)"/>
+        </div>
+      );
+      return btn;
+    }
     const btn: JSX.Element = (
       <div>
-        <DivButton textBtn="บันทึกข้อมูล" type="submit" divClass="text-center" className="mt-5 focus:outline-none text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-md text-sm px-4 py-2" />
+        <div className="flex justify-center">
+          <DivButton textBtn="แก้ไขข้อมูล" onClick={() => setIsCheckFrom(!isCheckFrom)} type="button" divClass="text-center" className="mt-5 mr-1 focus:outline-none text-white bg-slate-600 hover:bg-slate-700 focus:ring-4 focus:ring-slate-300 font-medium rounded-md text-md px-4 py-2" />
+          <DivButton textBtn="บันทึกข้อมูล" onClick={() => setIsModalOpen(true)} type="button" divClass="text-center" className="mt-5 ml-1 focus:outline-none text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-md text-md px-4 py-2" />
+        </div>
         <DivTextMesErr className="text-center text-sm text-green-700 mt-2" text="(ตรวจสอบข้อมูลเรียบร้อย)" />
       </div>
     );
@@ -227,7 +240,7 @@ const Page0 = (props: pageComponents) => {
           <DivHeadQuestion head="หน้าหลัก" status={props.status} />
           <DivHr divClass="flex justify-center" className="h-px bg-gray-200 border-0 w-full" />
           <div className="p-5">
-            <form onSubmit={handleSubmit}>
+            <form>
 
               {/* div หน้าหลัก */}
               <div className="overflow-x-auto w-full">
@@ -235,15 +248,15 @@ const Page0 = (props: pageComponents) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 hover:bg-gray-100">
                   <div className="m-3"></div>
                   <div className="m-3 mb-0">
-                    <InputFieldAuth label="รหัสบ้าน" name="p0F1" type="number" placeholder="รหัสบ้าน ระบุตัวเลขเท่านั้น" maxLength={9999999999} required={true} value={datafrom.p0F1} onChange={(e) => handleInputChange(e)} className="w-full border border-purple-00 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                    <InputFieldAuth label="รหัสบ้าน" readonly={isCheckFrom} name="p0F1" type="number" placeholder="รหัสบ้าน ระบุตัวเลขเท่านั้น" maxLength={9999999999} required={true} value={datafrom.p0F1} onChange={(e) => handleInputChange(e)} className="w-full border border-purple-00 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                     {errTxtErr.p0F1Txt && <DivTextMesErr className="text-sm mb-2 text-red-700 font-semibold" text={errTxtErr.p0F1Txt}/>}
                   </div>
                   <div className="m-3 mb-0">
-                    <InputFieldAuth label="หลังคาเรือนที่" minLength={0} name="p0F2" type="number" placeholder="หลังคาเรือนที่ ระบุตัวเลขเท่านั้น" required={true} value={datafrom.p0F2} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                    <InputFieldAuth label="หลังคาเรือนที่" readonly={isCheckFrom} minLength={0} name="p0F2" type="number" placeholder="หลังคาเรือนที่ ระบุตัวเลขเท่านั้น" required={true} value={datafrom.p0F2} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                     {errTxtErr.p0F2Txt && <DivTextMesErr className="text-sm mb-2 text-red-700 font-semibold" text={errTxtErr.p0F2Txt}/>}
                   </div>
                   <div className="m-3 mb-0">
-                    <DropDown label="ชื่อหมู่บ้าน" isClearable={true} onChange={handleDropDownBan} isSearchable={true} required={true} placeholder="เลือกชื่อหมู่บ้าน" options={ban} name="p0F3" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block" />
+                    <DropDown label="ชื่อหมู่บ้าน" isClearable={true} isDisabled={isCheckFrom} onChange={handleDropDownBan} isSearchable={true} required={true} placeholder="เลือกชื่อหมู่บ้าน" options={ban} name="p0F3" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block" />
                     {errTxtErr.p0F3Txt && <DivTextMesErr className="text-sm mb-2 text-red-700 font-semibold" text={errTxtErr.p0F3Txt}/>}
                   </div>
                   <div className="m-3 hidden md:block"></div>
@@ -253,7 +266,7 @@ const Page0 = (props: pageComponents) => {
                 {/* row บ้านเลขที่ */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 hover:bg-gray-100">
                   <div className="m-3 mb-0">
-                    <InputFieldAuth label="บ้านเลขที่" name="p0F4" type="text" placeholder="บ้านเลขที่" required={true} value={datafrom.p0F4} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                    <InputFieldAuth label="บ้านเลขที่" readonly={isCheckFrom} name="p0F4" type="text" placeholder="บ้านเลขที่" required={true} value={datafrom.p0F4} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                     {errTxtErr.p0F4Txt && <DivTextMesErr className="text-sm mb-2 text-red-700 font-semibold" text={errTxtErr.p0F4Txt}/>}
                   </div>
                   <div className="m-3 mb-0">
@@ -280,18 +293,18 @@ const Page0 = (props: pageComponents) => {
                       </label>
                     </div>
                     <div className="max-w-full md:max-w-[180px] m-3 mb-0">
-                      <DropDown label="" isClearable={true} onChange={(selectedOption) => handlePreFixName(selectedOption, "p0F9T")} isSearchable={false} required={true} placeholder="เลือกคำนำหน้าชื่อ" options={prefixName} name="p0F9T" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block" />
+                      <DropDown label="" isClearable={true} isDisabled={isCheckFrom} onChange={(selectedOption) => handlePreFixName(selectedOption, "p0F9T")} isSearchable={false} required={true} placeholder="เลือกคำนำหน้าชื่อ" options={prefixName} name="p0F9T" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block" />
                       {errTxtErr.p0F9TTxt && <DivTextMesErr className="text-sm mb-2 text-red-700 font-semibold" text={errTxtErr.p0F9TTxt}/>}
                     </div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
                     <div className="m-3 hidden lg:block"></div>
                     <div className="m-3 mb-0">
-                      <InputFieldAuth label="" name="p0F9" type="text" placeholder="ชื่อ" required={true} value={datafrom.p0F9} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                      <InputFieldAuth label="" name="p0F9" type="text" placeholder="ชื่อ" readonly={isCheckFrom} required={true} value={datafrom.p0F9} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                       {errTxtErr.p0F9Txt && <DivTextMesErr className="text-sm mb-2 text-red-700 font-semibold" text={errTxtErr.p0F9Txt}/>}
                     </div>
                     <div className="m-3 mb-0">
-                      <InputFieldAuth label="" name="p0F10" type="text" placeholder="นามสกุล" required={true} value={datafrom.p0F10} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                      <InputFieldAuth label="" name="p0F10" type="text" placeholder="นามสกุล" readonly={isCheckFrom} required={true} value={datafrom.p0F10} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                       {errTxtErr.p0F10Txt && <DivTextMesErr className="text-sm mb-2 text-red-700 font-semibold" text={errTxtErr.p0F10Txt}/>}
                     </div>
                   </div>
@@ -312,7 +325,7 @@ const Page0 = (props: pageComponents) => {
                     </div>
                     <div className="m-3 mb-0">
                       <div className="flex items-center">
-                        <input id="link-checkbox" checked={isChecked} onChange={() => setIsChecked(!isChecked)} type="checkbox" value="" className="w-5 h-5 text-purple-600 accent-purple-700 rounded focus:ring-purple-500 cursor-pointer" />
+                        <input id="link-checkbox" checked={isChecked} disabled={isCheckFrom} onChange={() => setIsChecked(!isChecked)} type="checkbox" value="" className="w-5 h-5 text-purple-600 accent-purple-700 rounded focus:ring-purple-500 cursor-pointer" />
                         <label className="ml-2 text-sm font-medium text-gray-900">ใช้ข้อมูลเดียวกับ <span className="text-purple-600 hover:underline">ชื่อเจ้าของบ้าน</span></label>
                       </div>
                       {dataErr.isChecked && <label className="ml-2 text-sm font-medium text-red-700"><b>{dataErr.isChecked}</b></label>}
@@ -341,7 +354,7 @@ const Page0 = (props: pageComponents) => {
                       </label>
                     </div>
                     <div className="m-3 mb-0">
-                      <InputFieldAuth label="" name="p0F13" type="text" placeholder="หมายเลขโทรศัพท์" value={datafrom.p0F13} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                      <InputFieldAuth label="" name="p0F13" readonly={isCheckFrom} type="text" placeholder="หมายเลขโทรศัพท์" value={datafrom.p0F13} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                       {errTxtErr.p0F13Txt && <DivTextMesErr className="text-sm mb-2 text-red-700 font-semibold" text={errTxtErr.p0F13Txt}/>}
                     </div>
                   </div>
@@ -357,7 +370,7 @@ const Page0 = (props: pageComponents) => {
                       </label>
                     </div>
                     <div className="m-3 mb-0">
-                      <InputFieldAuth label="" name="p0F14" type="number" required={true} placeholder="จำนวนครอบครัว" value={datafrom.p0F14} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                      <InputFieldAuth label="" name="p0F14" type="number" required={true} readonly={isCheckFrom} placeholder="จำนวนครอบครัว" value={datafrom.p0F14} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                       {errTxtErr.p0F14Txt && <DivTextMesErr className="text-sm text-red-700 font-semibold" text={errTxtErr.p0F14Txt}/>}
                     </div>
                     <div className="m-3 mb-0 items-center  hidden lg:flex">
@@ -373,7 +386,7 @@ const Page0 = (props: pageComponents) => {
                       </label>
                     </div>
                     <div className="m-3 mb-0">
-                      <InputFieldAuth label="" name="p0F15" type="number" required={true} placeholder="จำนวนคน" value={datafrom.p0F15} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                      <InputFieldAuth label="" name="p0F15" type="number" required={true} readonly={isCheckFrom} placeholder="จำนวนคน" value={datafrom.p0F15} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                       {errTxtErr.p0F15Txt && <DivTextMesErr className="text-sm mb-2 text-red-700 font-semibold" text={errTxtErr.p0F15Txt}/>}
                     </div>
                     <div className="m-3 mb-0 items-center hidden lg:flex">
@@ -388,7 +401,7 @@ const Page0 = (props: pageComponents) => {
                         </label>
                       </div>
                       <div className="ml-2 mr-2">
-                        <InputFieldAuth label=""  name="p0F16" type="number" required={true} placeholder="จำนวนเพศชาย" value={datafrom.p0F16} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                        <InputFieldAuth label=""  name="p0F16" type="number" required={true} readonly={isCheckFrom} placeholder="จำนวนเพศชาย" value={datafrom.p0F16} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                         {errTxtErr.p0F16Txt && <DivTextMesErr className="text-sm mb-2 text-red-700 font-semibold" text={errTxtErr.p0F16Txt}/>}
                       </div>
                       <div className="flex items-center">
@@ -404,7 +417,7 @@ const Page0 = (props: pageComponents) => {
                         </label>
                       </div>
                       <div className="ml-2 mr-2">
-                        <InputFieldAuth label="" name="p0F17" type="number" required={true} placeholder="จำนวนเพศหญิง" value={datafrom.p0F17} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                        <InputFieldAuth label="" name="p0F17" type="number" required={true} readonly={isCheckFrom} placeholder="จำนวนเพศหญิง" value={datafrom.p0F17} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                         {errTxtErr.p0F17Txt && <DivTextMesErr className="text-sm mb-2 text-red-700 font-semibold" text={errTxtErr.p0F17Txt}/>}
                       </div>
                       <div className="flex items-center">
@@ -433,18 +446,18 @@ const Page0 = (props: pageComponents) => {
                       </label>
                     </div>
                     <div className="max-w-full md:max-w-[180px] m-3 mb-0">
-                      <DropDown label="" isClearable={true} onChange={(selectedOption) => handlePreFixName(selectedOption, "p0F18T")} isSearchable={false} required={true} placeholder="เลือกคำนำหน้าชื่อ" options={prefixName} name="p0F18T" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block" />
+                      <DropDown label="" isClearable={true} isDisabled={isCheckFrom} onChange={(selectedOption) => handlePreFixName(selectedOption, "p0F18T")} isSearchable={false} required={true} placeholder="เลือกคำนำหน้าชื่อ" options={prefixName} name="p0F18T" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block" />
                       {errTxtErr.p0F18TTxt && <DivTextMesErr className="text-sm mb-2 text-red-700 font-semibold" text={errTxtErr.p0F18TTxt}/>}
                     </div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
                     <div className="m-3 hidden lg:block"></div>
                     <div className="m-3 mb-0">
-                      <InputFieldAuth label="" name="p0F18" type="text" placeholder="ชื่อ" required={true} value={datafrom.p0F18} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                      <InputFieldAuth label="" name="p0F18" type="text" placeholder="ชื่อ" required={true} readonly={isCheckFrom} value={datafrom.p0F18} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                       {errTxtErr.p0F18Txt && <DivTextMesErr className="text-sm mb-2 text-red-700 font-semibold" text={errTxtErr.p0F18Txt}/>}
                     </div>
                     <div className="m-3 mb-0">
-                      <InputFieldAuth label="" name="p0F19" type="text" placeholder="นามสกุล" required={true} value={datafrom.p0F19} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                      <InputFieldAuth label="" name="p0F19" type="text" placeholder="นามสกุล" required={true} readonly={isCheckFrom} value={datafrom.p0F19} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                       {errTxtErr.p0F19Txt && <DivTextMesErr className="text-sm mb-2 text-red-700 font-semibold" text={errTxtErr.p0F19Txt}/>}
                     </div>
                   </div>
@@ -460,18 +473,18 @@ const Page0 = (props: pageComponents) => {
                       </label>
                     </div>
                     <div className="max-w-full md:max-w-[180px] m-3 mb-0">
-                      <DropDown label="" isClearable={true} onChange={(selectedOption) => handlePreFixName(selectedOption, "p0F20T")} isSearchable={false} required={false} placeholder="เลือกคำนำหน้าชื่อ" options={prefixName} name="p0F20T" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block" />
+                      <DropDown label="" isClearable={true} isDisabled={isCheckFrom} onChange={(selectedOption) => handlePreFixName(selectedOption, "p0F20T")} isSearchable={false} required={false} placeholder="เลือกคำนำหน้าชื่อ" options={prefixName} name="p0F20T" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block" />
                       {errTxtErr.p0F20TTxt && <DivTextMesErr className="text-sm mb-2 text-red-700 font-semibold" text={errTxtErr.p0F20TTxt}/>}
                     </div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
                     <div className="m-3 hidden lg:block"></div>
                     <div className="m-3 mb-0">
-                      <InputFieldAuth label="" name="p0F20" type="text" required={false}  placeholder="ชื่อ" value={datafrom.p0F20} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                      <InputFieldAuth label="" name="p0F20" type="text" required={false} readonly={isCheckFrom}  placeholder="ชื่อ" value={datafrom.p0F20} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                       {errTxtErr.p0F20Txt && <DivTextMesErr className="text-sm mb-2 text-red-700 font-semibold" text={errTxtErr.p0F20Txt}/>}
                     </div>
                     <div className="m-3 mb-0">
-                      <InputFieldAuth label="" name="p0F21" type="text" required={false} placeholder="นามสกุล" value={datafrom.p0F21} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                      <InputFieldAuth label="" name="p0F21" type="text" required={false} readonly={isCheckFrom} placeholder="นามสกุล" value={datafrom.p0F21} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                       {errTxtErr.p0F21Txt && <DivTextMesErr className="text-sm mb-2 text-red-700 font-semibold" text={errTxtErr.p0F21Txt}/>}
                     </div>
                   </div>
@@ -487,7 +500,7 @@ const Page0 = (props: pageComponents) => {
                       </label>
                     </div>
                     <div className="m-3 mb-0">
-                      <InputFieldAuth label="" name="p0F22" type="date" required={true} placeholder="จำนวนคน" value={datafrom.p0F22} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                      <InputFieldAuth label="" name="p0F22" type="date" required={true} readonly={isCheckFrom} placeholder="จำนวนคน" value={datafrom.p0F22} onChange={(e) => handleInputChange(e)} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                       {errTxtErr.p0F22Txt && <DivTextMesErr className="text-sm mb-2 text-red-700 font-semibold" text={errTxtErr.p0F22Txt}/>}
                     </div>
                     <div className="m-3 mb-0 hidden lg:block"></div>
@@ -531,10 +544,7 @@ const Page0 = (props: pageComponents) => {
               {/* btnSave */}
               <DivHr divClass="flex justify-center" className="h-px mt-1 mb-1 bg-gray-200 border-0 w-full" />
               {!isCheckFrom && !loadingPage &&
-                <div>
-                  <DivButton textBtn="ตรวจสอบข้อมูล" type="button" onClick={handleCheckFrom} divClass="text-center" className="mt-5 focus:outline-none text-white bg-amber-500 hover:bg-amber-600 focus:ring-4 focus:ring-amber-300 font-medium rounded-md text-sm px-4 py-2" />
-                  <DivTextMesErr className="text-center text-sm text-amber-700 mt-2" text="(กรุณาตรวจสอบข้อมูล)"/>
-                </div>
+                btnSaveShow()
               }
               {loadingPage ? (<LoadingCheck setHeight="h-auto mt-5" color="amber" txt="กำลังตรวจสอบข้อมูล"/>) : isCheckFrom && btnSaveShow() }
            
@@ -542,6 +552,7 @@ const Page0 = (props: pageComponents) => {
           </div>
         </div>
       </div>
+      <ModalSave isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} handleSubmit={handleSubmit} />
     </>
   )
 }
