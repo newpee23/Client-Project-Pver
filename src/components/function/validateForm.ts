@@ -1,5 +1,5 @@
 import { dataSingUp, dataSingUpErr } from "../../types/authType";
-import { FormDataP0, FromP0Err } from "../../types/pageType";
+import { FormDataP0, FromP0Err, messageSubmitP0 } from "../../types/pageType";
 import { compareTimes } from "./function";
 import { dataFromP0Err, dataFromSingUpErr } from "./initialDataFrom";
 
@@ -296,4 +296,36 @@ export const validateFormP0 = (dataP0: FormDataP0): FromP0Err => {
     }
    
     return newFormErr;
+}
+
+//  สร้าง string Err หลังจากบันทึก
+export const submitStrErr = (dataErr: messageSubmitP0): string => {
+    const keysToInclude: (keyof messageSubmitP0)[] = [
+        'p0F1Txt',
+        'p0F2Txt',
+        'p0F9TTxt',
+        'p0F11TTxt',
+        'p0F13Txt',
+        'p0F14Txt',
+        'p0F15Txt',
+        'p0F16Txt',
+        'p0F17Txt',
+        'p0F18TTxt',
+        'p0F23Txt'
+      ];
+    
+      let str: string = '';
+    
+      keysToInclude.forEach(key => {
+        if (dataErr[key]) {
+          str += dataErr[key] + ' , ';
+        }
+      });
+    
+      // ตัดเครื่องหมาย ',' ที่อยู่ข้างหลัง
+      if (str.length > 0) {
+        str = str.slice(0, -3);
+      }
+    
+      return str;
 }

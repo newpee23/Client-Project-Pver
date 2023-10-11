@@ -120,7 +120,24 @@ export interface FromP0Err {
     p0F23Status: boolean;
     p0F23Txt: string;
     p0F24Status: boolean;
-    p0F24Txt: string;
-    
+    p0F24Txt: string; 
 }
 
+export interface resultSubmitP0 {
+    message: string | messageSubmitP0;
+    status: boolean;
+}
+
+export type messageSubmitP0 = {
+    p0F1Txt: string;
+    p0F2Txt: string;
+    p0F9TTxt: string;
+    p0F11TTxt: string;
+    p0F13Txt: string;
+    p0F14Txt: string;
+    p0F15Txt: string;
+    p0F16Txt: string;
+    p0F17Txt: string;
+    p0F18TTxt: string;
+    p0F23Txt: string;
+}

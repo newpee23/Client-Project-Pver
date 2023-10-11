@@ -1,5 +1,6 @@
 import { ChangeEvent, useState, useEffect } from "react"
-import { ErrFromDataP0, FormDataP0, FromP0Err, addressData, banData, pageComponents } from "../../types/pageType"
+import { useNavigate } from "react-router-dom";
+import { ErrFromDataP0, FormDataP0, FromP0Err, addressData, banData, pageComponents, resultSubmitP0 } from "../../types/pageType"
 import DivHeadQuestion from "../atoms/DivHeadQuestion"
 import DivHr from "../atoms/DivHr"
 import InputFieldAuth from "../atoms/InputFieldAuth"
@@ -10,14 +11,16 @@ import DropDown from "../atoms/DropDown"
 import { setAddressP0 } from "../../store/slices/pageSlices"
 import { Opprovince } from "../../types/atomsType"
 import DivButton from "../atoms/DivButton"
-import { validateFormP0 } from "../function/validateForm"
+import { submitStrErr, validateFormP0 } from "../function/validateForm"
 import DivTextMesErr from "../atoms/DivTextMesErr"
 import LoadingCheck from "../atoms/LoadingCheck"
 import { savePage0 } from "../../api/pageApi"
-import ModalSave from "../atoms/modalSave"
+import ModalSave from "../atoms/ModalSave"
+import SubmitErr from "../atoms/SubmitErr"
 
 const Page0 = (props: pageComponents) => {
 
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { ban } = useAppSelector((state) => state?.page);
   const { address } = useAppSelector((state) => state?.page);
@@ -26,12 +29,13 @@ const Page0 = (props: pageComponents) => {
   const [datafrom, setDataFrom] = useState<FormDataP0>(initialDataFrom);
   const [dataErr, setDataErr] = useState<ErrFromDataP0>(dataErrPage0);
   const [errTxtErr, setErrTxtErr] = useState<FromP0Err>(dataFromP0Err);
+  const [submitStatus, setSubmitStatus] = useState<resultSubmitP0>({message: "",status: false});
   const [loadingPage, setLoadingPage] = useState<boolean>(false);
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [isCheckFrom, setIsCheckFrom] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedOptionP0F11T, setSelectedOptionP0F11T] = useState<Opprovince | null>(null);
- 
+  
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
   
@@ -157,8 +161,12 @@ const Page0 = (props: pageComponents) => {
   };
 
   const handleSubmit = async (): Promise<void> => {
-    await savePage0(datafrom);
-    console.log("handleSubmit");
+    const resultSubmit: resultSubmitP0 = await savePage0(datafrom);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // setTimeout(() => {
+    //   navigate("/Page/edit/0");
+    // }, 3000);
+    if(resultSubmit) setSubmitStatus(resultSubmit);
   }
 
   const handleCheckFrom = (): void => {
@@ -209,6 +217,18 @@ const Page0 = (props: pageComponents) => {
     return btn;
   };
 
+  const showErrSubmit = ():JSX.Element => {
+
+    const strErr: string = typeof submitStatus.message !== "string" ? submitStrErr(submitStatus.message) : '';
+ 
+    const showErr: JSX.Element = (
+      <div className="m-3 sml:m-5 sml:mt-0 lgl:m-8 lgl:mb-5 lgl:mt-0 p-3 sml:p-5 bg-white border rounded-lg shadow border-l-4 border-r-4 border-r-violet-700 border-l-violet-700">
+        <SubmitErr text={(typeof submitStatus.message === "string") ? submitStatus.message : strErr} className={`flex items-center flex-col sml:flex-row p-4 text-sm ${submitStatus.status ? 'text-green-800' : 'text-red-800'} rounded-lg ${submitStatus.status ? 'bg-green-50' : 'bg-red-50'}`} status={submitStatus.status}/>
+      </div>
+    );
+    return showErr;
+  }
+
   useEffect(() => {
     if (address.length > 0) {
       setAddress(address);
@@ -235,6 +255,7 @@ const Page0 = (props: pageComponents) => {
         <p className="font-semibold text-purple-800">หมายเหตุ</p>
         <p className="text-sm"><span className="text-red-600">* กรุณากรอกข้อมูล</span> หากเป็นการระบุตัวเลขแล้ว<u className="text-purple-800">ไม่มีข้อมูลใส่ 0</u> หากเป็นการระบุตัวอักษรแล้ว<u className="text-purple-800">ไม่มีข้อมูลใส่ -</u></p>
       </div>
+      {isCheckFrom && showErrSubmit()}
       <div className="m-3 sml:m-5 sml:mt-0 lgl:m-8 lgl:mb-5 lgl:mt-0 bg-white border border-gray-200 rounded-xl shadow">
         <div>
           <DivHeadQuestion head="หน้าหลัก" status={props.status} />
