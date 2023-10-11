@@ -17,6 +17,8 @@ import LoadingCheck from "../atoms/LoadingCheck"
 import { savePage0 } from "../../api/pageApi"
 import ModalSave from "../atoms/ModalSave"
 import SubmitErr from "../atoms/SubmitErr"
+import { findQuestionnaire } from "../../store/slices/homeSlices";
+import { userLogin } from "../../types/authType";
 
 const Page0 = (props: pageComponents) => {
 
@@ -163,10 +165,18 @@ const Page0 = (props: pageComponents) => {
   const handleSubmit = async (): Promise<void> => {
     const resultSubmit: resultSubmitP0 = await savePage0(datafrom);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    // setTimeout(() => {
-    //   navigate("/Page/edit/0");
-    // }, 3000);
+ 
     if(resultSubmit) setSubmitStatus(resultSubmit);
+
+    if(resultSubmit.status === true)  {
+      const user = localStorage.getItem('userLogin');
+      const data = localStorage.getItem('questionId');
+      const parsedData: userLogin = user && JSON.parse(user);
+      const fId: string = data && JSON.parse(data);
+
+      await dispatch(findQuestionnaire({ f_id: fId , id: parsedData.id }));
+      navigate("/Page/edit/0");
+    }
   }
 
   const handleCheckFrom = (): void => {
@@ -255,7 +265,7 @@ const Page0 = (props: pageComponents) => {
         <p className="font-semibold text-purple-800">หมายเหตุ</p>
         <p className="text-sm"><span className="text-red-600">* กรุณากรอกข้อมูล</span> หากเป็นการระบุตัวเลขแล้ว<u className="text-purple-800">ไม่มีข้อมูลใส่ 0</u> หากเป็นการระบุตัวอักษรแล้ว<u className="text-purple-800">ไม่มีข้อมูลใส่ -</u></p>
       </div>
-      {isCheckFrom && showErrSubmit()}
+      {isCheckFrom && submitStatus.message && showErrSubmit()}
       <div className="m-3 sml:m-5 sml:mt-0 lgl:m-8 lgl:mb-5 lgl:mt-0 bg-white border border-gray-200 rounded-xl shadow">
         <div>
           <DivHeadQuestion head="หน้าหลัก" status={props.status} />
