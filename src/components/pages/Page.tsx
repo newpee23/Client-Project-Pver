@@ -23,7 +23,7 @@ import Page18 from "../organs/Page18";
 import Navbar from "../organs/Navbar";
 
 import { useAppDispatch, useAppSelector } from "../../store/store"
-import { findBan, findPage0EditData, setLoadingPage } from "../../store/slices/pageSlices"
+import { cleanStatePageEdit, findBan, findPage0EditData, setLoadingPage } from "../../store/slices/pageSlices"
 import Loading from "../atoms/Loading";
 
 
@@ -84,6 +84,8 @@ const Page = () => {
             await dispatch(findBan());
             if(status === "edit"){
                 await dispatch(findPage0EditData(fId ? fId :'0'));
+            }else{
+                dispatch(cleanStatePageEdit());
             }
             // console.log(ban)
         } catch (error: unknown) {

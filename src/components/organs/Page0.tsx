@@ -36,12 +36,7 @@ const Page0 = (props: pageComponents) => {
   const [isCheckFrom, setIsCheckFrom] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedOptionP0F11T, setSelectedOptionP0F11T] = useState<Opprovince | null>(null);
-  const [selectedOptionP0, setSelectedOptionP0] = useState<OpprovinceSelet>({
-    selectP03: null,
-    selectP09t: null,
-    selectP018t: null,
-    selectP020t: null,
-  });
+  const [selectedOptionP0, setSelectedOptionP0] = useState<OpprovinceSelet>({selectP03: null, selectP09t: null,selectP018t: null,selectP020t: null,});
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -257,6 +252,16 @@ const Page0 = (props: pageComponents) => {
       setSelectedOptionP0((prevData) => ({
         ...prevData,
         selectP03: { label: address[0].ban, value: address[0].id },
+      }));
+      setDataFrom((prevData) => ({
+        ...prevData,
+      p0F5: address[0].mo,
+      p0F6: address[0].tambon_code,
+      p0F6Name: address[0].tombonName,
+      p0F7: address[0].ampher_code,
+      p0F7Name: address[0].ampherName,
+      p0F8: address[0].province_code,
+      p0F8Name: address[0].provinceName,
       }));
     }
   }, [address]);

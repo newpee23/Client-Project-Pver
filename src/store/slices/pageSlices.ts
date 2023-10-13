@@ -106,6 +106,10 @@ const pageSlice = createSlice({
       setLoadingPage: (state, action: PayloadAction<boolean>): void => {
         state.loading = action.payload;
       },
+      cleanStatePageEdit: (state) => {
+        // Reset the properties of interest to their initial values
+        state.editDataPage0 = { message: dataInsertP0, status: false };
+      },
       setAddressP0: (state, action: PayloadAction<number>) => {
         const address = state.addressAll.find((item) => item.id == action.payload);
         state.address = address ? [address] : []; // ตั้ง state.address หากเจอไม่เจอก็ให้ค่าเป็น [] ว่าง
@@ -147,5 +151,5 @@ const pageSlice = createSlice({
 });
   
 // Action creators
-export const { setLoadingPage , setAddressP0 } = pageSlice.actions;
+export const { setLoadingPage , setAddressP0 , cleanStatePageEdit } = pageSlice.actions;
 export default pageSlice.reducer;
