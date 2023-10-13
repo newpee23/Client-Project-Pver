@@ -51,6 +51,7 @@ export interface initialStatePage {
     ban : banData[];
     loading : boolean;
     message : string;
+    editDataPage0 : { message:FormDataP0 | string , status: boolean };
 }
 
 export type banData = {

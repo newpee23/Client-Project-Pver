@@ -23,8 +23,9 @@ import Page18 from "../organs/Page18";
 import Navbar from "../organs/Navbar";
 
 import { useAppDispatch, useAppSelector } from "../../store/store"
-import { findBan, setLoadingPage } from "../../store/slices/pageSlices"
+import { findBan, findPage0EditData, setLoadingPage } from "../../store/slices/pageSlices"
 import Loading from "../atoms/Loading";
+
 
 const Page = () => {
 
@@ -81,6 +82,9 @@ const Page = () => {
         try {
             dispatch(setLoadingPage(true));
             await dispatch(findBan());
+            if(status === "edit"){
+                await dispatch(findPage0EditData(fId ? fId :'0'));
+            }
             // console.log(ban)
         } catch (error: unknown) {
             setTimeout(() => {
@@ -105,7 +109,7 @@ const Page = () => {
     }
 
     useEffect(() => {
-        getEffect();
+        return () => {getEffect();}
     }, []);
 
     return (loading ? <Loading setHeight={""} /> :

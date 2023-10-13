@@ -34,8 +34,9 @@ function Home() {
     }
   };
 
+
   useEffect(() => {
-    checkToken();
+    return () => {checkToken();}
   }, []);
 
   useEffect(() => {

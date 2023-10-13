@@ -19,7 +19,6 @@ const getFIdFromLocalStorage = () => {
   return localStorage?.getItem('questionId') || '';
 }
 
-
 export const savePage0 = async (data: FormDataP0): Promise<resultSubmitP0> => {
   const user = getUserFromLocalStorage();
   const fId = getFIdFromLocalStorage();
@@ -55,3 +54,32 @@ export const savePage0 = async (data: FormDataP0): Promise<resultSubmitP0> => {
   }
 };
 
+export const findEditPage0Data = async (fId: string) => {
+
+  const token = getTokenFromLocalStorage();
+
+  if (!token) {
+    logOutPage();
+  }
+  
+  try {
+    const response: AxiosResponse = await axios.get(
+      SERVER_APP_API + `/findPage0/${fId}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "token-request": token,
+        },
+        cancelToken: cancelSource.token,
+      }
+    );
+  
+    return response.data;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return { message:`เกิดข้อผิดพลาด: ${error.message}`,status: false };
+    } else {
+      return { message:`เกิดข้อผิดพลาดไม่รู้จัก`,status: false };
+    }
+  }
+};

@@ -10,14 +10,14 @@ export type buttonSingIN = {
 };
 
 export type DivHrType = {
-    divClass: string;
-    className: string
-}
+  divClass: string;
+  className: string;
+};
 
 export type DivTxtMesErr = {
-  className: string
+  className: string;
   text: string;
-}
+};
 
 export type Dropdown = {
   className: string;
@@ -26,14 +26,21 @@ export type Dropdown = {
   placeholder?: string;
   required?: boolean;
   isClearable?: boolean;
-  isSearchable? : boolean;
+  isSearchable?: boolean;
   options: Opprovince[];
   label?: string;
   value?: Opprovince | null;
-  isDisabled? : boolean;
-}
+  isDisabled?: boolean;
+};
 
 export type Opprovince = {
-  value : number;
+  value: number;
   label: string;
-}
+};
+
+export type OpprovinceSelet = {
+  selectP03: Opprovince | null;
+  selectP09t: Opprovince | null;
+  selectP018t: Opprovince | null;
+  selectP020t: Opprovince | null;
+};
