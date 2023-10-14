@@ -19,6 +19,7 @@ import ModalSave from "../atoms/ModalSave"
 import SubmitErr from "../atoms/SubmitErr"
 import { findQuestionnaire } from "../../store/slices/homeSlices";
 import { userLogin } from "../../types/authType";
+import HomeIcon from '@mui/icons-material/Home';
 
 const Page0 = (props: pageComponents) => {
 
@@ -36,7 +37,8 @@ const Page0 = (props: pageComponents) => {
   const [isCheckFrom, setIsCheckFrom] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedOptionP0F11T, setSelectedOptionP0F11T] = useState<Opprovince | null>(null);
-  const [selectedOptionP0, setSelectedOptionP0] = useState<OpprovinceSelet>({selectP03: null, selectP09t: null,selectP018t: null,selectP020t: null,});
+  const [selectedOptionP0, setSelectedOptionP0] = useState<OpprovinceSelet>({ selectP03: null, selectP09t: null, selectP018t: null, selectP020t: null, });
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -153,13 +155,13 @@ const Page0 = (props: pageComponents) => {
         setSelectedOptionP0F11T(null);
       }
       if (field === 'p0F9T') {
-        setSelectedOptionP0((prevData) => ({...prevData,selectP09t: null,}));
+        setSelectedOptionP0((prevData) => ({ ...prevData, selectP09t: null, }));
       }
       if (field === 'p0F18T') {
-        setSelectedOptionP0((prevData) => ({...prevData,selectP018t: null,}));
+        setSelectedOptionP0((prevData) => ({ ...prevData, selectP018t: null, }));
       }
       if (field === 'p0F20T') {
-        setSelectedOptionP0((prevData) => ({...prevData,selectP020t: null,}));
+        setSelectedOptionP0((prevData) => ({ ...prevData, selectP020t: null, }));
       }
       setDataFrom((prevData) => ({
         ...prevData,
@@ -181,9 +183,11 @@ const Page0 = (props: pageComponents) => {
       const fId = localStorage.getItem('questionId');
       if (fId) {
         await dispatch(findQuestionnaire({ f_id: fId, id: parsedData.id }));
-        navigate("/Page/edit/0");
+        if (props.status === "insert") {
+          navigate("/Page/edit/0");
+          setIsCheckFrom(!isCheckFrom);
+        }
       }
-      navigate("/");
     }
   }
 
@@ -212,7 +216,7 @@ const Page0 = (props: pageComponents) => {
     }, 1000);
 
   }
-
+ 
   const btnSaveShow = (): JSX.Element => {
     if (!isCheckFrom && !loadingPage) {
       const btn: JSX.Element = (
@@ -227,7 +231,7 @@ const Page0 = (props: pageComponents) => {
       <div>
         <div className="flex justify-center">
           <DivButton textBtn="แก้ไขข้อมูล" onClick={() => setIsCheckFrom(!isCheckFrom)} type="button" divClass="text-center" className="mt-5 mr-1 focus:outline-none text-white bg-slate-600 hover:bg-slate-700 focus:ring-4 focus:ring-slate-300 font-medium rounded-md text-md px-4 py-2" />
-          <DivButton textBtn="บันทึกข้อมูล" onClick={() => setIsModalOpen(true)} type="button" divClass="text-center" className="mt-5 ml-1 focus:outline-none text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-md text-md px-4 py-2" />
+          <DivButton textBtn="บันทึกข้อมูล" onClick={() => setIsModalOpen(true)} type="button" divClass="text-center" className={`mt-5 ml-1 focus:outline-none text-white ${props.status === "insert" ? "bg-green-500 hover:bg-green-600 focus:ring-green-300" : "bg-amber-500 hover:bg-amber-600 focus:ring-amber-300"} focus:ring-4  font-medium rounded-md text-md px-4 py-2`} />
         </div>
         <DivTextMesErr className="text-center text-sm text-green-700 mt-2" text="(ตรวจสอบข้อมูลเรียบร้อย)" />
       </div>
@@ -241,54 +245,71 @@ const Page0 = (props: pageComponents) => {
 
     const showErr: JSX.Element = (
       <div className="m-3 sml:m-5 sml:mt-0 lgl:m-8 lgl:mb-5 lgl:mt-0 p-3 sml:p-5 bg-white border rounded-lg shadow border-l-4 border-r-4 border-r-violet-700 border-l-violet-700">
-        <SubmitErr text={(typeof submitStatus.message === "string") ? submitStatus.message : strErr} className={`flex items-center flex-col sml:flex-row p-4 text-sm ${submitStatus.status ? 'text-green-800' : 'text-red-800'} rounded-lg ${submitStatus.status ? 'bg-green-50' : 'bg-red-50'}`} status={submitStatus.status} />
+        <SubmitErr text={(typeof submitStatus.message === "string") ? submitStatus.message : strErr} className={`flex items-center w-full flex-col sml:flex-row p-4 text-sm ${submitStatus.status ? 'text-green-800' : 'text-red-800'} rounded-lg ${submitStatus.status ? 'bg-green-50' : 'bg-red-50'}`} status={submitStatus.status} />
+        {submitStatus.status ? <div className="relative">
+          <div className="hidden sml:block">
+            <DivButton textBtn="กลับหน้าหลัก" onClick={backToHome} type="button" divClass="text-center" className="absolute top-[-25px] sml:top-[-40px] right-0 sml:right-5 w-[120px] m-0 focus:outline-none text-white bg-slate-600 hover:bg-slate-700 focus:ring-4 focus:ring-slate-300 font-medium rounded-md text-sm px-2 py-1" />
+          </div>
+          <div className="relative sml:hidden">
+            <HomeIcon className="absolute top-[-40px] right-[5px] sml:right-5"  onClick={backToHome}/>
+          </div>
+        </div> : null}
       </div>
     );
+
     return showErr;
   }
 
+  const backToHome = () => {
+    navigate("/");
+  }
+
   useEffect(() => {
-    if (address.length > 0 ) {
+    if (address.length > 0) {
       setSelectedOptionP0((prevData) => ({
         ...prevData,
         selectP03: { label: address[0].ban, value: address[0].id },
       }));
       setDataFrom((prevData) => ({
         ...prevData,
-      p0F5: address[0].mo,
-      p0F6: address[0].tambon_code,
-      p0F6Name: address[0].tombonName,
-      p0F7: address[0].ampher_code,
-      p0F7Name: address[0].ampherName,
-      p0F8: address[0].province_code,
-      p0F8Name: address[0].provinceName,
+        p0F5: address[0].mo,
+        p0F6: address[0].tambon_code,
+        p0F6Name: address[0].tombonName,
+        p0F7: address[0].ampher_code,
+        p0F7Name: address[0].ampherName,
+        p0F8: address[0].province_code,
+        p0F8Name: address[0].provinceName,
       }));
     }
+
   }, [address]);
 
   useEffect(() => {
-   
-      if (isChecked) {
-        setF11F12FromChecked();
-      } else {
-        setDataFrom((prevData) => ({
-          ...prevData,
-          p0F11T: 0,
-          p0F11: "",
-          p0F12: "",
-        }));
-        setSelectedOptionP0F11T(null);
-      }
- 
+
+    if (isChecked) {
+      setF11F12FromChecked();
+    } else {
+      setDataFrom((prevData) => ({
+        ...prevData,
+        p0F11T: 0,
+        p0F11: "",
+        p0F12: "",
+      }));
+      setSelectedOptionP0F11T(null);
+    }
+
   }, [isChecked]);
 
   useEffect(() => {
-  
-      if (typeof editDataPage0.message !== 'string') {
+    return () => {
+      if (typeof editDataPage0.message !== 'string' && editDataPage0.message.p0F1) {
         const banId: number = editDataPage0.message.p0F3;
         setDataFrom(editDataPage0.message);
         dispatch(setAddressP0(banId));
 
+        if (editDataPage0.message.p0F9T === editDataPage0.message.p0F11T && editDataPage0.message.p0F9 === editDataPage0.message.p0F11 && editDataPage0.message.p0F10 === editDataPage0.message.p0F12) {
+          setIsChecked(true);
+        }
         if (editDataPage0.message.p0F9T) {
 
           const f9T: number = editDataPage0.message.p0F9T;
@@ -301,35 +322,37 @@ const Page0 = (props: pageComponents) => {
           const valPrefixNameFf18T = prefixName.find((item) => item.value === f18T);
           const valPrefixNameFf20T = prefixName.find((item) => item.value === f20T);
 
-          if (valPrefixNameF9T && valPrefixNameFf11T && valPrefixNameFf18T && valPrefixNameFf20T) {
+          if (valPrefixNameF9T && valPrefixNameFf11T && valPrefixNameFf18T) {
+
             setSelectedOptionP0((prevData) => ({
               ...prevData,
-  
+
               selectP09t: { label: valPrefixNameF9T.label, value: valPrefixNameF9T.value },
               selectP018t: { label: valPrefixNameFf18T.label, value: valPrefixNameFf18T.value },
-              selectP020t: { label: valPrefixNameFf20T.label, value: valPrefixNameFf20T.value },
+              selectP020t: valPrefixNameFf20T ? { label: valPrefixNameFf20T.label, value: valPrefixNameFf20T.value } : null,
             }));
             setSelectedOptionP0F11T((prevData) => ({
               ...prevData,
               label: valPrefixNameFf11T.label, value: valPrefixNameFf11T.value,
             }))
           }
-        
         }
+        
       }
-   
+    }
+
   }, [editDataPage0]);
- 
+
   return (
     <>
       <div className="m-3 sml:m-5 sml:mt-0 lgl:m-8 lgl:mb-5 lgl:mt-0 p-3 sml:p-5 bg-white border rounded-lg shadow border-l-4 border-r-4 border-r-violet-700 border-l-violet-700">
         <p className="font-semibold text-purple-800">หมายเหตุ</p>
         <p className="text-sm"><span className="text-red-600">* กรุณากรอกข้อมูล</span> หากเป็นการระบุตัวเลขแล้ว<u className="text-purple-800">ไม่มีข้อมูลใส่ 0</u> หากเป็นการระบุตัวอักษรแล้ว<u className="text-purple-800">ไม่มีข้อมูลใส่ -</u></p>
       </div>
-      {isCheckFrom && submitStatus.message && showErrSubmit()}
+      {submitStatus.message ? showErrSubmit() : null}
       <div className="m-3 sml:m-5 sml:mt-0 lgl:m-8 lgl:mb-5 lgl:mt-0 bg-white border border-gray-200 rounded-xl shadow">
         <div>
-          <DivHeadQuestion head="หน้าหลัก" status={props.status} editPage="0"/>
+          <DivHeadQuestion head={props.status === "insert" ? "หน้าหลัก / เพิ่มข้อมูล" : "หน้าหลัก / แก้ไขข้อมูล"} status={props.status} editPage="0" />
           <DivHr divClass="flex justify-center" className="h-px bg-gray-200 border-0 w-full" />
           <div className="p-5">
             <form>

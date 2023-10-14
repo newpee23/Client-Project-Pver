@@ -23,7 +23,7 @@ import Page18 from "../organs/Page18";
 import Navbar from "../organs/Navbar";
 
 import { useAppDispatch, useAppSelector } from "../../store/store"
-import { cleanStatePageEdit, findBan, findPage0EditData, setLoadingPage } from "../../store/slices/pageSlices"
+import { cleanStatePageEdit, findBan, findPage0EditData, setAddressP0, setLoadingPage } from "../../store/slices/pageSlices"
 import Loading from "../atoms/Loading";
 
 
@@ -86,6 +86,7 @@ const Page = () => {
                 await dispatch(findPage0EditData(fId ? fId :'0'));
             }else{
                 dispatch(cleanStatePageEdit());
+                dispatch(setAddressP0(0));
             }
             // console.log(ban)
         } catch (error: unknown) {

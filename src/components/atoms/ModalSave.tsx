@@ -28,9 +28,10 @@ const ModalSave: React.FC<ModalProps> = ({ isOpen, onClose, handleSubmit }) => {
                             <svg className="mx-auto mb-4 card-icon-bg-dont-save w-12 h-12" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                             </svg>
-                            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                            <h3 className="text-lg font-normal text-gray-500 dark:text-gray-400">
                                 คุณต้องการบันทึกข้อมูลใช่หรือไม่?
                             </h3>
+                            <p className="mb-5 text-sm text-violet-500">(หากต้องการแก้ไขกรุณากดปุ่มแก้ไขข้อมูล)</p>
                             <button type="button" className="text-white bg-violet-500 hover:bg-violet-700 focus:ring-4 focus:outline-none focus:ring-violet-300 dark:focus:ring-violet-700 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2" onClick={handleYesClick}>
                                 ใช่, บันทึกข้อมูล
                             </button>
