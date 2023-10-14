@@ -83,3 +83,38 @@ export const findEditPage0Data = async (fId: string) => {
     }
   }
 };
+
+export const updatePage0 = async (data: FormDataP0): Promise<resultSubmitP0> => {
+  const user = getUserFromLocalStorage();
+  const fId = getFIdFromLocalStorage();
+  const token = getTokenFromLocalStorage();
+
+  if (!user || !fId) {
+    logOutPage();
+  }
+
+  const parsedData: userLogin = JSON.parse(user);
+  const requestData: { data: FormDataP0; member_id: number, fId: string } = { "data": data, "member_id": parsedData.id, "fId": fId };
+  
+  try {
+    const response: AxiosResponse = await axios.put(
+      SERVER_APP_API + `/update/updatePage0`,
+      requestData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "token-request": token,
+        },
+        cancelToken: cancelSource.token,
+      }
+    );
+  
+    return response.data as resultSubmitP0;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return { message:`เกิดข้อผิดพลาด: ${error.message}`,status: false };
+    } else {
+      return { message:`เกิดข้อผิดพลาดไม่รู้จัก`,status: false };
+    }
+  }
+};

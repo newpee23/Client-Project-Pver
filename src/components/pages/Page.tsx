@@ -21,19 +21,25 @@ import Page16 from "../organs/Page16";
 import Page17 from "../organs/Page17";
 import Page18 from "../organs/Page18";
 import Navbar from "../organs/Navbar";
-
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store/store"
 import { cleanStatePageEdit, findBan, findPage0EditData, setAddressP0, setLoadingPage } from "../../store/slices/pageSlices"
 import Loading from "../atoms/Loading";
+import DivButton from "../atoms/DivButton";
 
 
 const Page = () => {
 
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { loading } = useAppSelector((state) => state?.page);
     const { i } = useParams<pageType>();
     const { status } = useParams<pageType>();
     const fId = localStorage.getItem('questionId');
+
+    const backToHome = () => {
+        navigate("/");
+    }
 
     const loadPageComponent = (): JSX.Element => {
         switch (i) {
@@ -122,8 +128,9 @@ const Page = () => {
                 <h5 className="mb-2 text-xl md:text-2xl font-bold tracking-tight text-purple-800">ระบบบันทึกข้อมูลสภาพการดำรงชีวิตประชากรชาวเขาภาคเหนือ</h5>
                 <p className="font-normal text-gray-700">ของประชากรหมู่บ้านเป้าหมาย ตามแผนปฏิบัติการด้านการแก้ไขปัญหายาเสพติดชายแดนภาคเหนือแบบเบ็ดเสร็จ (พ.ศ.2562 – 2565)</p>
             </div>
-            <div className="m-3 sml:m-5 sml:mt-0 lgl:m-8 lgl:mb-5 lgl:mt-0 p-3 sml:p-5 bg-white border rounded-lg shadow border-l-4 border-r-4 border-r-violet-700 border-l-violet-700">
+            <div className="flex justify-between m-3 sml:m-5 sml:mt-0 lgl:m-8 lgl:mb-5 lgl:mt-0 p-3 sml:p-5 bg-white border rounded-lg shadow border-l-4 border-r-4 border-r-violet-700 border-l-violet-700">
                 <p className="font-semibold text-purple-800">แบบสอบถามเลขที่ {fId}</p>
+                <DivButton textBtn="กลับหน้าหลัก" onClick={backToHome} type="button" divClass="text-center" className="w-[120px] m-0 focus:outline-none text-white bg-slate-600 hover:bg-slate-700 focus:ring-4 focus:ring-slate-300 font-medium rounded-md text-sm px-2 py-1" />
             </div>
             {loadPageComponent()}
         </section>

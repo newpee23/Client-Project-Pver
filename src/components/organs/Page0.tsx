@@ -1,6 +1,6 @@
 import { ChangeEvent, useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
-import { ErrFromDataP0, FormDataP0, FromP0Err, addressData, banData, pageComponents, resultSubmitP0 } from "../../types/pageType"
+import { ErrFromDataP0, FormDataP0, FromP0Err, banData, pageComponents, resultSubmitP0 } from "../../types/pageType"
 import DivHeadQuestion from "../atoms/DivHeadQuestion"
 import DivHr from "../atoms/DivHr"
 import InputFieldAuth from "../atoms/InputFieldAuth"
@@ -14,12 +14,11 @@ import DivButton from "../atoms/DivButton"
 import { submitStrErr, validateFormP0 } from "../function/validateForm"
 import DivTextMesErr from "../atoms/DivTextMesErr"
 import LoadingCheck from "../atoms/LoadingCheck"
-import { savePage0 } from "../../api/pageApi"
+import { savePage0, updatePage0 } from "../../api/pageApi"
 import ModalSave from "../atoms/ModalSave"
 import SubmitErr from "../atoms/SubmitErr"
 import { findQuestionnaire } from "../../store/slices/homeSlices";
 import { userLogin } from "../../types/authType";
-import HomeIcon from '@mui/icons-material/Home';
 
 const Page0 = (props: pageComponents) => {
 
@@ -172,7 +171,8 @@ const Page0 = (props: pageComponents) => {
   };
 
   const handleSubmit = async (): Promise<void> => {
-    const resultSubmit: resultSubmitP0 = await savePage0(datafrom);
+
+    const resultSubmit: resultSubmitP0 = props.status === "insert" ? await savePage0(datafrom) : await updatePage0(datafrom);
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     if (resultSubmit) setSubmitStatus(resultSubmit);
@@ -186,6 +186,8 @@ const Page0 = (props: pageComponents) => {
         if (props.status === "insert") {
           navigate("/Page/edit/0");
           setIsCheckFrom(!isCheckFrom);
+        } else {
+          setIsCheckFrom(false);
         }
       }
     }
@@ -216,7 +218,7 @@ const Page0 = (props: pageComponents) => {
     }, 1000);
 
   }
- 
+
   const btnSaveShow = (): JSX.Element => {
     if (!isCheckFrom && !loadingPage) {
       const btn: JSX.Element = (
@@ -246,22 +248,10 @@ const Page0 = (props: pageComponents) => {
     const showErr: JSX.Element = (
       <div className="m-3 sml:m-5 sml:mt-0 lgl:m-8 lgl:mb-5 lgl:mt-0 p-3 sml:p-5 bg-white border rounded-lg shadow border-l-4 border-r-4 border-r-violet-700 border-l-violet-700">
         <SubmitErr text={(typeof submitStatus.message === "string") ? submitStatus.message : strErr} className={`flex items-center w-full flex-col sml:flex-row p-4 text-sm ${submitStatus.status ? 'text-green-800' : 'text-red-800'} rounded-lg ${submitStatus.status ? 'bg-green-50' : 'bg-red-50'}`} status={submitStatus.status} />
-        {submitStatus.status ? <div className="relative">
-          <div className="hidden sml:block">
-            <DivButton textBtn="กลับหน้าหลัก" onClick={backToHome} type="button" divClass="text-center" className="absolute top-[-25px] sml:top-[-40px] right-0 sml:right-5 w-[120px] m-0 focus:outline-none text-white bg-slate-600 hover:bg-slate-700 focus:ring-4 focus:ring-slate-300 font-medium rounded-md text-sm px-2 py-1" />
-          </div>
-          <div className="relative sml:hidden">
-            <HomeIcon className="absolute top-[-40px] right-[5px] sml:right-5"  onClick={backToHome}/>
-          </div>
-        </div> : null}
       </div>
     );
 
     return showErr;
-  }
-
-  const backToHome = () => {
-    navigate("/");
   }
 
   useEffect(() => {
@@ -301,43 +291,41 @@ const Page0 = (props: pageComponents) => {
   }, [isChecked]);
 
   useEffect(() => {
-    return () => {
-      if (typeof editDataPage0.message !== 'string' && editDataPage0.message.p0F1) {
-        const banId: number = editDataPage0.message.p0F3;
-        setDataFrom(editDataPage0.message);
-        dispatch(setAddressP0(banId));
 
-        if (editDataPage0.message.p0F9T === editDataPage0.message.p0F11T && editDataPage0.message.p0F9 === editDataPage0.message.p0F11 && editDataPage0.message.p0F10 === editDataPage0.message.p0F12) {
-          setIsChecked(true);
+    if (typeof editDataPage0.message !== 'string' && editDataPage0.message.p0F1) {
+      const banId: number = editDataPage0.message.p0F3;
+      setDataFrom(editDataPage0.message);
+      dispatch(setAddressP0(banId));
+
+      if (editDataPage0.message.p0F9T === editDataPage0.message.p0F11T && editDataPage0.message.p0F9 === editDataPage0.message.p0F11 && editDataPage0.message.p0F10 === editDataPage0.message.p0F12) {
+        setIsChecked(true);
+      }
+      if (editDataPage0.message.p0F9T) {
+
+        const f9T: number = editDataPage0.message.p0F9T;
+        const f11T: number = editDataPage0.message.p0F11T;
+        const f18T: number = editDataPage0.message.p0F18T;
+        const f20T: number = editDataPage0.message.p0F20T;
+
+        const valPrefixNameF9T = prefixName.find((item) => item.value === f9T);
+        const valPrefixNameFf11T = prefixName.find((item) => item.value === f11T);
+        const valPrefixNameFf18T = prefixName.find((item) => item.value === f18T);
+        const valPrefixNameFf20T = prefixName.find((item) => item.value === f20T);
+
+        if (valPrefixNameF9T && valPrefixNameFf11T && valPrefixNameFf18T) {
+
+          setSelectedOptionP0((prevData) => ({
+            ...prevData,
+
+            selectP09t: { label: valPrefixNameF9T.label, value: valPrefixNameF9T.value },
+            selectP018t: { label: valPrefixNameFf18T.label, value: valPrefixNameFf18T.value },
+            selectP020t: valPrefixNameFf20T ? { label: valPrefixNameFf20T.label, value: valPrefixNameFf20T.value } : null,
+          }));
+          setSelectedOptionP0F11T((prevData) => ({
+            ...prevData,
+            label: valPrefixNameFf11T.label, value: valPrefixNameFf11T.value,
+          }))
         }
-        if (editDataPage0.message.p0F9T) {
-
-          const f9T: number = editDataPage0.message.p0F9T;
-          const f11T: number = editDataPage0.message.p0F11T;
-          const f18T: number = editDataPage0.message.p0F18T;
-          const f20T: number = editDataPage0.message.p0F20T;
-
-          const valPrefixNameF9T = prefixName.find((item) => item.value === f9T);
-          const valPrefixNameFf11T = prefixName.find((item) => item.value === f11T);
-          const valPrefixNameFf18T = prefixName.find((item) => item.value === f18T);
-          const valPrefixNameFf20T = prefixName.find((item) => item.value === f20T);
-
-          if (valPrefixNameF9T && valPrefixNameFf11T && valPrefixNameFf18T) {
-
-            setSelectedOptionP0((prevData) => ({
-              ...prevData,
-
-              selectP09t: { label: valPrefixNameF9T.label, value: valPrefixNameF9T.value },
-              selectP018t: { label: valPrefixNameFf18T.label, value: valPrefixNameFf18T.value },
-              selectP020t: valPrefixNameFf20T ? { label: valPrefixNameFf20T.label, value: valPrefixNameFf20T.value } : null,
-            }));
-            setSelectedOptionP0F11T((prevData) => ({
-              ...prevData,
-              label: valPrefixNameFf11T.label, value: valPrefixNameFf11T.value,
-            }))
-          }
-        }
-        
       }
     }
 
