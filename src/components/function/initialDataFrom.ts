@@ -142,3 +142,351 @@ export const dataFromP0Err:FromP0Err = {
   p0F24Status: false,
   p0F24Txt: '',
 }
+
+// P1F5
+export const dataSelectP1F5: Opprovince[] = [
+  {
+    value: 1,
+    label: "เจ้าบ้าน",
+  },
+  {
+    value: 2,
+    label: "สามี/ภรรยา",
+  },
+  {
+    value: 3,
+    label: "บิดา/มารดา",
+  },
+  {
+    value: 4,
+    label: "พี่/น้อง",
+  },
+  {
+    value: 5,
+    label: "บุตร",
+  },
+  {
+    value: 6,
+    label: "หลาน",
+  },
+  {
+    value: 7,
+    label: "หัวหน้าครอบครัว",
+  },
+  {
+    value: 8,
+    label: "ผู้อาศัย",
+  },
+  {
+    value: 9,
+    label: "อื่นๆ",
+  },
+];
+
+// P1F9
+export const dataSelectP1F9: Opprovince[] = [
+  {
+    value: 1,
+    label: "ไม่มีบัตรใด ๆ",
+  },
+  {
+    value: 2,
+    label: "ท.ร.14(คนไทยมีสัญชาติไทย)",
+  },
+  {
+    value: 3,
+    label: "ท.ร.14(ไม่มีสัญชาติ/ต่างด้าว)",
+  },
+  {
+    value: 4,
+    label: "ท.ร.13(ไม่มีสัญชาติอาศัยชั่วคราว)",
+  },
+  {
+    value: 5,
+    label: "อื่นๆ",
+  },
+];
+
+// P1F10
+export const dataSelectP1F10: Opprovince[] = [
+  {
+    value: 1,
+    label: "โสด",
+  },
+  {
+    value: 2,
+    label: "สมรส",
+  },
+  {
+    value: 3,
+    label: "ม่าย",
+  },
+  {
+    value: 4,
+    label: "หย่า",
+  },
+  {
+    value: 5,
+    label: "แยกกันอยู่",
+  },
+  {
+    value: 6,
+    label: "สมรสแต่ไม่ได้จดทะเบียน",
+  },
+  {
+    value: 7,
+    label: "ไม่ทราบ",
+  },
+];
+
+// P1F11
+export const dataSelectP1F11: Opprovince[] = [
+  {
+    value: 1,
+    label: "ไม่ทำ",
+  },
+  {
+    value: 2,
+    label: "เป็นหมัน/หมดวัย",
+  },
+  {
+    value: 3,
+    label: "เป็นหมัน(ชาย)",
+  },
+  {
+    value: 4,
+    label: "เป็นหมัน(หญิง)",
+  },
+  {
+    value: 5,
+    label: "ใส่ห่วง",
+  },
+  {
+    value: 6,
+    label: "ฝังยา",
+  },
+  {
+    value: 7,
+    label: "ฉีดยา",
+  },
+  {
+    value: 8,
+    label: "ยาคุม",
+  },
+  {
+    value: 9,
+    label: "ถุงยาง",
+  },
+  {
+    value: 10,
+    label: "อื่นๆ",
+  },
+];
+
+// P1F12
+export const dataSelectP1F12: Opprovince[] = [
+  {
+    value: 1,
+    label: "พุทธ",
+  },
+  {
+    value: 2,
+    label: "คริสต์",
+  },
+  {
+    value: 3,
+    label: "อิสลาม",
+  },
+  {
+    value: 4,
+    label: "ผี(บรรพบุรุษ)",
+  },
+  {
+    value: 5,
+    label: "ไม่นับถือ",
+  },
+  {
+    value: 6,
+    label: "อื่นๆ",
+  },
+];
+
+// P1F13
+export const dataSelectP1F13: Opprovince[] = [
+  {
+    value: 1,
+    label: "ยังไม่ถึงวัยศึกษา",
+  },
+  {
+    value: 2,
+    label: "ไม่ได้เรียน",
+  },
+  {
+    value: 3,
+    label: "อนุบาล",
+  },
+  {
+    value: 4,
+    label: "ประถมศึกษา",
+  },
+  {
+    value: 5,
+    label: "มัธยมศึกษาตอนต้น",
+  },
+  {
+    value: 6,
+    label: "มัธยมศึกษาตอนปลาย",
+  },
+  {
+    value: 7,
+    label: "ปวช.",
+  },
+  {
+    value: 8,
+    label: "ปวท./ปวส.",
+  },
+  {
+    value: 9,
+    label: "ปริญญาตรี",
+  },
+  {
+    value: 10,
+    label: "ปริญญาโท",
+  },
+  {
+    value: 11,
+    label: "ปริญญาเอก",
+  },
+];
+
+// P1F18
+export const dataSelectP1F18: Opprovince[] = [
+  {
+    value: 1,
+    label: "ในหมู่บ้าน",
+  },
+  {
+    value: 2,
+    label: "นอกหมู่บ้าน(มากกว่า 6 เดือน)",
+  }
+];
+
+// P1 สถานภาพการทำงาน
+export const dataSelectP1F19: Opprovince[] = [
+  {
+    value: 1,
+    label: "ทำงาน",
+  },
+  {
+    value: 2,
+    label: "เด็ก/เยาวชนกำลังเรียน",
+  },
+  {
+    value: 3,
+    label: "เด็ก/เยาวชนไม่ได้เรียน",
+  },
+  {
+    value: 4,
+    label: "เด็กเล็กยังไม่ถึงวัยเรียน",
+  },
+  {
+    value: 5,
+    label: "คนพิการ/ป่วย/ไม่สามารถทำงานได้",
+  },
+  {
+    value: 6,
+    label: "วัยชรา",
+  },
+  {
+    value: 7,
+    label: "ตั้งครรภ์",
+  },
+  {
+    value: 8,
+    label: "ว่างงาน(ต้องการทำงาน)",
+  },
+  {
+    value: 9,
+    label: "ว่างงาน(ไม่ต้องการทำงาน)",
+  },
+  {
+    value: 10,
+    label: "อื่นๆ",
+  }
+];
+
+// P1 อาชีพหลักและอาชีพรอง
+export const dataSelectP1F20: Opprovince[] = [
+  {
+    value: 1,
+    label: "อาชีพหลัก",
+  },
+  {
+    value: 2,
+    label: "อาชีพรอง",
+  }
+];
+
+// P1 สถานที่ทำงาน
+export const dataSelectP1F22: Opprovince[] = [
+  {
+    value: 1,
+    label: "ในหมู่บ้าน",
+  },
+  {
+    value: 2,
+    label: "ในตำบล",
+  },
+  {
+    value: 3,
+    label: "ในอำเภอ",
+  },
+  {
+    value: 4,
+    label: "ในจังหวัด",
+  },
+  {
+    value: 5,
+    label: "ต่างจังหวัด",
+  },
+  {
+    value: 6,
+    label: "ต่างประเทศ",
+  }
+];
+
+// P1 อาชีพ
+export const dataSelectP1F29: Opprovince[] = [
+  {
+    value: 1,
+    label: "เกษตรกร",
+  },
+  {
+    value: 2,
+    label: "รับจ้าง",
+  },
+  {
+    value: 3,
+    label: "ค้าขาย",
+  },
+  {
+    value: 4,
+    label: "รับราชการ",
+  },
+  {
+    value: 5,
+    label: "ลูกจ้าง/พนักงานราชการ",
+  },
+  {
+    value: 6,
+    label: "ลูกจ้างเอกชน",
+  },
+  {
+    value: 7,
+    label: "นักธุรกิจ/นายจ้าง",
+  },
+  {
+    value: 8,
+    label: "อื่นๆ",
+  }
+];
