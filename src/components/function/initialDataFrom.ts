@@ -63,6 +63,17 @@ export const prefixName: Opprovince[] = [
     }
 ];
 
+export const genderSelect: Opprovince[] = [
+  {
+    value: 1,
+    label: "ชาย"
+  },
+  {
+    value: 2,
+    label: "หญิง"
+  }
+];
+
 export const dataFromSingUp: dataSingUp = {
   m_fname: "",
   m_lname: "",
@@ -488,5 +499,17 @@ export const dataSelectP1F29: Opprovince[] = [
   {
     value: 8,
     label: "อื่นๆ",
+  }
+];
+
+// P1 ใช่หรือไม่
+export const dataSelectConform: Opprovince[] = [
+  {
+    value: 1,
+    label: "ได้",
+  },
+  {
+    value: 2,
+    label: "ไม่ได้",
   }
 ];

@@ -26,7 +26,7 @@ import { useAppDispatch, useAppSelector } from "../../store/store"
 import { cleanStatePageEdit, findBan, findPage0EditData, setAddressP0, setLoadingPage } from "../../store/slices/pageSlices"
 import Loading from "../atoms/Loading";
 import DivButton from "../atoms/DivButton";
-
+import "../../assets/css/PageCss.css";
 
 const Page = () => {
 
