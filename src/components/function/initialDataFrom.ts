@@ -1,6 +1,6 @@
 import { Opprovince } from "../../types/atomsType";
 import { dataSingUp, dataSingUpErr } from "../../types/authType";
-import { ErrFromDataP0, FormDataP0, FromP0Err } from "../../types/pageType";
+import { ErrFromDataP0, FormDataP0, FormDataP1Type, FromP0Err } from "../../types/pageType";
 
 export const dataInsertP0: FormDataP0 = {
     p0F1: "",
@@ -513,3 +513,36 @@ export const dataSelectConform: Opprovince[] = [
     label: "ไม่ได้",
   }
 ];
+
+// dataPage1 
+export const dataInsertP1:FormDataP1Type = {
+  p1F1: null,
+  p1F2T: null,
+  p1F2: "",
+  p1F3: "",
+  p1F4: "",
+  p1F5: null,
+  p1F6: "",
+  p1F7: "",
+  p1F8: null,
+  p1F9: null,
+  p1F10: null,
+  p1F11: null,
+  p1F12: null,
+  p1F13: null,
+  p1F14: null,
+  p1F15: null,
+  p1F16: null,
+  p1F17: null,
+  p1F18: null,
+  p1F19: null,
+  p1F20: null,
+  p1F21: null,
+  p1F22: "",
+  p1F23: "",
+  p1F24: null,
+  p1F25: null,
+  p1F26: null,
+  p1F27: "",
+  p1F28: ""
+}

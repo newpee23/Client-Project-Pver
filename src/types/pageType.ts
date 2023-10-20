@@ -150,3 +150,36 @@ export interface findPage1F1Type {
     message: string | Opprovince[];
     status: boolean;
 }
+
+export interface FormDataP1Type {
+    p1F1: Opprovince | null;
+    p1F2T: Opprovince | null;
+    p1F2: string;
+    p1F3: string;
+    p1F4: string;
+    p1F5: Opprovince | null;
+    p1F6: string;
+    p1F7: string;
+    p1F8: Opprovince | null;
+    p1F9: Opprovince | null;
+    p1F10: Opprovince | null;
+    p1F11: Opprovince | null;
+    p1F12: Opprovince | null;
+    p1F13: Opprovince | null;
+    p1F14: Opprovince | null;
+    p1F15: Opprovince | null;
+    p1F16: Opprovince | null;
+    p1F17: Opprovince | null;
+    p1F18: Opprovince | null;
+    p1F19: Opprovince | null;
+    p1F20: Opprovince | null;
+    p1F21: Opprovince | null;
+    p1F22: string;
+    p1F23: string;
+    p1F24: Opprovince | null;
+    p1F25: Opprovince | null;
+    p1F26: Opprovince | null;
+    p1F27: string;
+    p1F28: string;
+ 
+}
