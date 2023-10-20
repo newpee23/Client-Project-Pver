@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { ChangeEvent, useState } from "react"
 import { useAppSelector } from "../../store/store"
 import { Opprovince } from "../../types/atomsType"
 import { FormDataP1Type, pageComponents } from "../../types/pageType"
@@ -8,19 +8,41 @@ import DivHr from "../atoms/DivHr"
 import DropDown from "../atoms/DropDown"
 import InputFieldAuth from "../atoms/InputFieldAuth"
 import { dataSelectP1F19, dataSelectP1F18, dataSelectP1F13, dataSelectP1F12, dataSelectP1F11, dataSelectP1F10, dataSelectP1F9, dataSelectP1F5, genderSelect, prefixName, dataSelectP1F20, dataSelectP1F22, dataSelectP1F29, dataSelectConform, dataInsertP1 } from "../function/initialDataFrom"
+import { SingleValue } from "react-select"
 
 
 const Page1 = (props: pageComponents) => {
 
   const { page1 } = useAppSelector((state) => state?.page);
-  const [dataFromPage1 , setDataFromPage1] = useState<FormDataP1Type>(dataInsertP1);
+  const [dataFromPage1, setDataFromPage1] = useState<FormDataP1Type>(dataInsertP1);
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    console.log(value);
+    setDataFrom(name,value);
+  };
+
+  const handleChangeDropDown = (selectedOption: SingleValue<Opprovince>, field: string) => {
+    setDataFromPage1((prevData) => ({
+      ...prevData,
+      [field]: selectedOption,
+    }));
+  };
+
+  const setDataFrom = (name: string,value: string) => {
+    setDataFromPage1((prevData) => ({ ...prevData, [name]: value.trim(), }));
+  }
+
+  const handleCheckFrom = () => {
+    console.log(dataFromPage1);
+  }
 
   const theadPage1 = (): JSX.Element => {
     const thead: JSX.Element = (
       <thead>
         <tr className="bg-purple-100 text-gray-900">
           <th rowSpan={2} className="min-w-[200px] align-top text-center">ครอบครัวที่</th>
-          <th rowSpan={1} className="min-w-[200px]">1.คำนำหน้า ชื่อ-นามสกุล</th>
+          <th rowSpan={1} className="min-w-[230px]">1.คำนำหน้า ชื่อ-นามสกุล</th>
           <th rowSpan={2} className="min-w-[250px] align-top">1.1.ชื่อ-นามสกุล</th>
           <th rowSpan={2} className="min-w-[270px] align-top">3.ความสัมพันธ์กับเจ้าบ้าน</th>
           <th rowSpan={1} className="min-w-[200px]">4.วัน/เดือน/ปี ค.ศ. เกิด</th>
@@ -67,110 +89,109 @@ const Page1 = (props: pageComponents) => {
 
       <div className="m-3 sml:m-5 sml:mt-0 lgl:m-8 lgl:mb-5 lgl:mt-0 bg-white border border-gray-200 rounded-xl shadow">
         <div>
-          <DivHeadQuestion head={"ตอนที่ 1 ข้อมูลพื้นฐานเกี่ยวกับสมาชิกในครัวเรือน / เพิ่มข้อมูล"} status={props.status} editPage="0" />
+          <DivHeadQuestion head={"ตอนที่ 1 ข้อมูลพื้นฐานเกี่ยวกับสมาชิกในครัวเรือน"} status="edit" editPage="1" />
           <DivHr divClass="flex justify-center" className="h-px bg-gray-200 border-0 w-full" />
 
-          <div className="my-5 py-5 px-5 relative overflow-x-auto">
-            <table className="table-auto text-sm text-left text-gray-500">
+          <div className="my-5 py-5 px-5 overflow-x-auto min-h-[550px]">
+            <div className="text-md text-purple-800 my-5">
+              <p>เพิ่มข้อมูลเกี่ยวกับสมาชิกในครัวเรือน</p>
+            </div>
+            <table className="text-sm text-left text-gray-500">
               {theadPage1()}
               <tbody>
                 <tr className="hover-tr">
                   <td className="align-top">
-                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F1} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกครอบครัวที่" options={page1.message.length > 0 ? page1.message as Opprovince[] : []} name="p0F1" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
+                    <DropDown label="" isClearable={true} onChange={(selectedOption) => handleChangeDropDown(selectedOption, "p1F1")} value={dataFromPage1.p1F1} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกครอบครัวที่" options={page1.message.length > 0 ? page1.message as Opprovince[] : []} name="p1F1" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
                   </td>
                   <td>
-                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F2T} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกคำนำหน้า" options={prefixName} name="p0F2T" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
-                    <InputFieldAuth label="" readonly={false} minLength={0} value={dataFromPage1.p1F2} name="p0F2" type="text" placeholder="หมายเลขบัตรประชาชน" required={true} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F2T} onChange={(selectedOption) => handleChangeDropDown(selectedOption, "p1F2T")} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกคำนำหน้า" options={prefixName} name="p1F2T" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
+                    <InputFieldAuth label="" onChange={(e) => handleInputChange(e)} readonly={false} maxLength={13} minLength={1} value={dataFromPage1.p1F2} name="p1F2" type="text" placeholder="หมายเลขบัตรประชาชน(13หลัก)" required={true} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                   </td>
                   <td>
-                    <InputFieldAuth label="" readonly={false} value={dataFromPage1.p1F3} minLength={0} name="p0F3" type="text" placeholder="ชื่อ" required={true} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5 mt-3" />
-                    <InputFieldAuth label="" readonly={false} value={dataFromPage1.p1F4} minLength={0} name="p0F4" type="text" placeholder="นามสกุล" required={true} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                    <InputFieldAuth label="" readonly={false} onChange={(e) => handleInputChange(e)} value={dataFromPage1.p1F3} minLength={0} name="p1F3" type="text" placeholder="ชื่อ" required={true} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5 mt-3" />
+                    <InputFieldAuth label="" readonly={false} onChange={(e) => handleInputChange(e)} value={dataFromPage1.p1F4} minLength={0} name="p1F4" type="text" placeholder="นามสกุล" required={true} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                   </td>
                   <td className="align-top">
-                    <DropDown label="" isClearable={true}  value={dataFromPage1.p1F5} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกความสัมพันธ์กับเจ้าบ้าน" options={dataSelectP1F5} name="p1F5" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
+                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F5} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกความสัมพันธ์กับเจ้าบ้าน" options={dataSelectP1F5} name="p1F5" onChange={(selectedOption) => handleChangeDropDown(selectedOption, "p1F5")} className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
                   </td>
                   <td>
-                    <InputFieldAuth label="" readonly={false} minLength={0} name="p1F6" value={dataFromPage1.p1F6} type="date" placeholder="" required={true} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5 mt-3" />
-                    <InputFieldAuth label="" readonly={false} minLength={0} name="p1F7" type="number" value={dataFromPage1.p1F7} placeholder="อายุ" required={true} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
+                    <InputFieldAuth label="" readonly={false} onChange={(e) => handleInputChange(e)} minLength={0} name="p1F6" value={dataFromPage1.p1F6} type="date" placeholder="" required={true} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5 mt-3" />
+                    <InputFieldAuth label="" readonly={false} onChange={(e) => handleInputChange(e)} minLength={0} name="p1F7" type="number" value={dataFromPage1.p1F7} placeholder="อายุ" required={true} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5" />
                   </td>
                   <td className="align-top">
-                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F8} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกเพศ" options={genderSelect} name="p1F8" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
+                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F8} onChange={(selectedOption) => handleChangeDropDown(selectedOption, "p1F8")} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกเพศ" options={genderSelect} name="p1F8" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
                   </td>
                   <td className="align-top">
-                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F9} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกการทะเบียนราษฎร์" options={dataSelectP1F9} name="p1F9" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
+                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F9} onChange={(selectedOption) => handleChangeDropDown(selectedOption, "p1F9")} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกการทะเบียนราษฎร์" options={dataSelectP1F9} name="p1F9" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
                   </td>
                   <td className="align-top">
-                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F10} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกสถานภาพ" options={dataSelectP1F10} name="p1F10" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
+                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F10} onChange={(selectedOption) => handleChangeDropDown(selectedOption, "p1F10")} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกสถานภาพ" options={dataSelectP1F10} name="p1F10" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
                   </td>
                   <td className="align-top">
-                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F11} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกการวางแผนครอบครัว" options={dataSelectP1F11} name="p1F11" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
+                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F11} onChange={(selectedOption) => handleChangeDropDown(selectedOption, "p1F11")} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกการวางแผนครอบครัว" options={dataSelectP1F11} name="p1F11" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
                   </td>
                   <td className="align-top">
-                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F12} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกศาสนา/ความเชื่อ" options={dataSelectP1F12} name="p1F12" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
+                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F12} onChange={(selectedOption) => handleChangeDropDown(selectedOption, "p1F12")} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกศาสนา/ความเชื่อ" options={dataSelectP1F12} name="p1F12" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
                   </td>
                   <td className="align-top">
-                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F13} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกระดับการศึกษา" options={dataSelectP1F13} name="p1F13" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
+                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F13} onChange={(selectedOption) => handleChangeDropDown(selectedOption, "p1F13")} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกระดับการศึกษา" options={dataSelectP1F13} name="p1F13" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
                   </td>
                   <td className="align-top">
-                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F14} isDisabled={false} isSearchable={true} required={true} placeholder="การฟัง" options={dataSelectConform} name="p1F13" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
+                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F14} onChange={(selectedOption) => handleChangeDropDown(selectedOption, "p1F14")} isDisabled={false} isSearchable={true} required={true} placeholder="การฟัง" options={dataSelectConform} name="p1F13" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
                   </td>
                   <td className="align-top">
-                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F15} isDisabled={false} isSearchable={true} required={true} placeholder="การพูด" options={dataSelectConform} name="p1F15" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
+                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F15} onChange={(selectedOption) => handleChangeDropDown(selectedOption, "p1F15")} isDisabled={false} isSearchable={true} required={true} placeholder="การพูด" options={dataSelectConform} name="p1F15" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
                   </td>
                   <td className="align-top">
-                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F16} isDisabled={false} isSearchable={true} required={true} placeholder="การอ่าน" options={dataSelectConform} name="p1F16" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
+                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F16} onChange={(selectedOption) => handleChangeDropDown(selectedOption, "p1F16")} isDisabled={false} isSearchable={true} required={true} placeholder="การอ่าน" options={dataSelectConform} name="p1F16" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
                   </td>
                   <td className="align-top">
-                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F17} isDisabled={false} isSearchable={true} required={true} placeholder="การเขียน" options={dataSelectConform} name="p1F17" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
+                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F17} onChange={(selectedOption) => handleChangeDropDown(selectedOption, "p1F17")} isDisabled={false} isSearchable={true} required={true} placeholder="การเขียน" options={dataSelectConform} name="p1F17" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
                   </td>
                   <td className="align-top">
-                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F18} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกอาศัยอยู่ที่" options={dataSelectP1F18} name="p1F18" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
+                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F18} onChange={(selectedOption) => handleChangeDropDown(selectedOption, "p1F18")} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกอาศัยอยู่ที่" options={dataSelectP1F18} name="p1F18" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
                   </td>
                   <td className="align-top">
-                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F19} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกสถานภาพการทำงานปัจจุบัน" options={dataSelectP1F19} name="p1F19" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
+                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F19} onChange={(selectedOption) => handleChangeDropDown(selectedOption, "p1F19")} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกสถานภาพการทำงานปัจจุบัน" options={dataSelectP1F19} name="p1F19" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
                   </td>
                   <td className="align-top">
-                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F20} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกอาชีพ" options={dataSelectP1F29} name="p1F20" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
+                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F20} onChange={(selectedOption) => handleChangeDropDown(selectedOption, "p1F20")} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกอาชีพ" options={dataSelectP1F29} name="p1F20" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
                   </td>
                   <td className="align-top">
-                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F21} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกสถานที่ทำงาน" options={dataSelectP1F22} name="p1F21" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
+                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F21} onChange={(selectedOption) => handleChangeDropDown(selectedOption, "p1F21")} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกสถานที่ทำงาน" options={dataSelectP1F22} name="p1F21" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
                   </td>
                   <td className="align-top">
-                    <InputFieldAuth label="" readonly={false} value={dataFromPage1.p1F22} minLength={0} name="p1F22" type="number" placeholder="รายได้ต่อเดือน" required={true} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5 mt-3" />
+                    <InputFieldAuth label="" readonly={false} onChange={(e) => handleInputChange(e)} value={dataFromPage1.p1F22} minLength={0} name="p1F22" type="number" placeholder="รายได้ต่อเดือน" required={true} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5 mt-3" />
                   </td>
                   <td className="align-top">
-                    <InputFieldAuth label="" readonly={false} value={dataFromPage1.p1F23} minLength={0} name="p1F23" type="number" placeholder="รายได้ต่อปี" required={true} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5 mt-3" />
+                    <InputFieldAuth label="" readonly={false} onChange={(e) => handleInputChange(e)} value={dataFromPage1.p1F23} minLength={0} name="p1F23" type="number" placeholder="รายได้ต่อปี" required={true} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5 mt-3" />
                   </td>
                   <td className="align-top">
-                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F24} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกสถานภาพการทำงานในปีหน้า" options={dataSelectP1F19} name="p1F24" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
+                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F24} onChange={(selectedOption) => handleChangeDropDown(selectedOption, "p1F24")} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกสถานภาพการทำงานในปีหน้า" options={dataSelectP1F19} name="p1F24" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
                   </td>
                   <td className="align-top">
-                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F25} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกอาชีพ" options={dataSelectP1F29} name="p1F25" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
+                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F25} onChange={(selectedOption) => handleChangeDropDown(selectedOption, "p1F25")} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกอาชีพ" options={dataSelectP1F29} name="p1F25" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
                   </td>
                   <td className="align-top">
-                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F26} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกสถานที่ทำงาน" options={dataSelectP1F22} name="p1F26" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
+                    <DropDown label="" isClearable={true} value={dataFromPage1.p1F26} onChange={(selectedOption) => handleChangeDropDown(selectedOption, "p1F26")} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกสถานที่ทำงาน" options={dataSelectP1F22} name="p1F26" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
                   </td>
                   <td className="align-top">
-                    <InputFieldAuth label="" readonly={false} minLength={0} value={dataFromPage1.p1F27} name="p1F27" type="number" placeholder="รายได้ต่อเดือน" required={true} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5 mt-3" />
+                    <InputFieldAuth label="" readonly={false} minLength={0} onChange={(e) => handleInputChange(e)} value={dataFromPage1.p1F27} name="p1F27" type="number" placeholder="รายได้ต่อเดือน" required={true} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5 mt-3" />
                   </td>
                   <td className="align-top">
-                    <InputFieldAuth label="" readonly={false} minLength={0} value={dataFromPage1.p1F28} name="p1F28" type="number" placeholder="รายได้ต่อปี" required={true} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5 mt-3" />
+                    <InputFieldAuth label="" readonly={false} minLength={0} onChange={(e) => handleInputChange(e)} value={dataFromPage1.p1F28} name="p1F28" type="number" placeholder="รายได้ต่อปี" required={true} className="w-full border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block p-2.5 mt-3" />
                   </td>
                 </tr>
                 <tr>
                   <td colSpan={23}></td>
                   <td colSpan={3}>
-                    <DivButton textBtn="บันทึกข้อมูล" type="button" divClass="text-center" className={`focus:outline-none text-white bg-green-500 hover:bg-green-600 focus:ring-green-300 focus:ring-4 font-medium rounded-md text-md px-5 py-3`} />
+                    <DivButton textBtn="บันทึกข้อมูล" type="button" onClick={handleCheckFrom} divClass="text-center" className={`focus:outline-none text-white bg-green-500 hover:bg-green-600 focus:ring-green-300 focus:ring-4 font-medium rounded-md text-md px-5 py-3`} />
                   </td>
                 </tr>
               </tbody>
-            </table>
-          </div>
-
-          <div className="my-5 py-5 px-5 relative overflow-x-auto">
-            <table className="table-auto text-sm text-left text-gray-500">
               {theadPage1()}
             </table>
+
           </div>
 
         </div>
