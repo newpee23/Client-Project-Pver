@@ -1,6 +1,6 @@
 import axios, { AxiosResponse, CancelTokenSource } from "axios";
 import { SERVER_APP_API } from "./config";
-import { FormDataP0, resultSubmitP0 } from "../types/pageType";
+import { FormDataP0, findPage1F1Type, resultSubmitP0 } from "../types/pageType";
 import { userLogin } from "../types/authType";
 import { logOutPage } from "./logoutApi";
 
@@ -110,6 +110,36 @@ export const updatePage0 = async (data: FormDataP0): Promise<resultSubmitP0> => 
     );
   
     return response.data as resultSubmitP0;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return { message:`เกิดข้อผิดพลาด: ${error.message}`,status: false };
+    } else {
+      return { message:`เกิดข้อผิดพลาดไม่รู้จัก`,status: false };
+    }
+  }
+};
+
+export const findPage1F1async = async (fId: string):Promise<findPage1F1Type> => {
+
+  const token = getTokenFromLocalStorage();
+
+  if (!token) {
+    logOutPage();
+  }
+  
+  try {
+    const response: AxiosResponse = await axios.get(
+      SERVER_APP_API + `/findPage1F1/${fId}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "token-request": token,
+        },
+        cancelToken: cancelSource.token,
+      }
+    );
+  
+    return response.data as findPage1F1Type;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       return { message:`เกิดข้อผิดพลาด: ${error.message}`,status: false };

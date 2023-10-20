@@ -21,16 +21,17 @@ import Page16 from "../organs/Page16";
 import Page17 from "../organs/Page17";
 import Page18 from "../organs/Page18";
 import Navbar from "../organs/Navbar";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store/store"
-import { cleanStatePageEdit, findBan, findPage0EditData, setAddressP0, setLoadingPage } from "../../store/slices/pageSlices"
+import { cleanStatePageEdit, findBan, findPage0EditData, findPage0F1, setAddressP0, setLoadingPage } from "../../store/slices/pageSlices"
 import Loading from "../atoms/Loading";
 import DivButton from "../atoms/DivButton";
 import "../../assets/css/PageCss.css";
+import { BASEURL } from "../../api/config";
 
 const Page = () => {
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { loading } = useAppSelector((state) => state?.page);
     const { i } = useParams<pageType>();
@@ -38,7 +39,8 @@ const Page = () => {
     const fId = localStorage.getItem('questionId');
 
     const backToHome = () => {
-        navigate("/");
+        // navigate("/Home");
+        window.location.replace(BASEURL);
     }
 
     const loadPageComponent = (): JSX.Element => {
@@ -106,10 +108,28 @@ const Page = () => {
         }
     }, []);
 
+    const finddataPage1Effect = useCallback(async () => {
+        try {
+            dispatch(setLoadingPage(true));
+            await dispatch(findPage0F1(fId ? fId : '0'));
+        } catch (error: unknown) {
+            setTimeout(() => {
+                dispatch(setLoadingPage(false));
+            }, 1000);
+        } finally {
+            setTimeout(() => {
+                dispatch(setLoadingPage(false));
+            }, 1000);
+        }
+    }, []);
+
     const getEffect = () => {
         switch (i) {
             case '0':
                 finddataEffect();
+                break;
+            case '1':
+                finddataPage1Effect();
                 break;
 
             default:

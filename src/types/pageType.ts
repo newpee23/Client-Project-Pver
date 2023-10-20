@@ -1,3 +1,5 @@
+import { Opprovince } from "./atomsType";
+
 export type pageType = {
     status: string;
     i: string;
@@ -52,6 +54,7 @@ export interface initialStatePage {
     loading : boolean;
     message : string;
     editDataPage0 : { message:FormDataP0 | string , status: boolean };
+    page1: { message: Opprovince[] | string , status: boolean };
 }
 
 export type banData = {
@@ -141,4 +144,9 @@ export type messageSubmitP0 = {
     p0F17Txt: string;
     p0F18TTxt: string;
     p0F23Txt: string;
+}
+
+export interface findPage1F1Type {
+    message: string | Opprovince[];
+    status: boolean;
 }

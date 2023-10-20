@@ -1,3 +1,5 @@
+import { useAppSelector } from "../../store/store"
+import { Opprovince } from "../../types/atomsType"
 import { pageComponents } from "../../types/pageType"
 import DivButton from "../atoms/DivButton"
 import DivHeadQuestion from "../atoms/DivHeadQuestion"
@@ -6,24 +8,10 @@ import DropDown from "../atoms/DropDown"
 import InputFieldAuth from "../atoms/InputFieldAuth"
 import { dataSelectP1F19, dataSelectP1F18, dataSelectP1F13, dataSelectP1F12, dataSelectP1F11, dataSelectP1F10, dataSelectP1F9, dataSelectP1F5, genderSelect, prefixName, dataSelectP1F20, dataSelectP1F22, dataSelectP1F29, dataSelectConform } from "../function/initialDataFrom"
 
+
 const Page1 = (props: pageComponents) => {
-  const songData = [
-    {
-      song: 'The Sliding Mr. Bones (Next Stop, Pottersville)',
-      artist: 'Malcolm Lockyer',
-      year: '1961',
-    },
-    {
-      song: 'Witchy Woman',
-      artist: 'The Eagles',
-      year: '1972',
-    },
-    {
-      song: 'Shining Star',
-      artist: 'Earth, Wind, and Fire',
-      year: '1975',
-    },
-  ];
+ 
+  const { page1 } = useAppSelector((state) => state?.page);
 
   return (
     <>
@@ -34,7 +22,7 @@ const Page1 = (props: pageComponents) => {
 
       <div className="m-3 sml:m-5 sml:mt-0 lgl:m-8 lgl:mb-5 lgl:mt-0 bg-white border border-gray-200 rounded-xl shadow">
         <div>
-          <DivHeadQuestion head={props.status === "insert" ? "ตอนที่ 1 ข้อมูลพื้นฐานเกี่ยวกับสมาชิกในครัวเรือน / เพิ่มข้อมูล" : "ตอนที่ 1 ข้อมูลพื้นฐานเกี่ยวกับสมาชิกในครัวเรือน / แก้ไขข้อมูล"} status={props.status} editPage="0" />
+          <DivHeadQuestion head={"ตอนที่ 1 ข้อมูลพื้นฐานเกี่ยวกับสมาชิกในครัวเรือน / เพิ่มข้อมูล"} status={props.status} editPage="0" />
           <DivHr divClass="flex justify-center" className="h-px bg-gray-200 border-0 w-full" />
 
             <div className="my-5 py-5 px-5 relative overflow-x-auto">
@@ -79,7 +67,7 @@ const Page1 = (props: pageComponents) => {
                 <tbody>
                   <tr className="hover-tr">
                     <td className="align-top">
-                      <DropDown label="" isClearable={true} value={null} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกครอบครัวที่" options={[]} name="p0F3" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
+                      <DropDown label="" isClearable={true} value={null} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกครอบครัวที่" options={page1.message.length > 0 ? page1.message as Opprovince[] : []} name="p0F3" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
                     </td>
                     <td>
                       <DropDown label="" isClearable={true} value={null} isDisabled={false} isSearchable={true} required={true} placeholder="เลือกคำนำหน้า" options={prefixName} name="p0F3" className="w-full text-gray-900 text-sm rounded-md focus:ring-purple-600 focus:border-purple-600 block mt-3" />
