@@ -152,6 +152,7 @@ export interface findPage1F1Type {
 }
 
 export interface FormDataP1Type {
+    [key: string]: string | Opprovince | null;
     p1F1: Opprovince | null;
     p1F2T: Opprovince | null;
     p1F2: string;
@@ -181,5 +182,99 @@ export interface FormDataP1Type {
     p1F26: Opprovince | null;
     p1F27: string;
     p1F28: string;
- 
+}
+
+export interface FormDataP1ReadOnlyType {
+    p1F1: boolean;
+    p1F2T: boolean;
+    p1F2: boolean;
+    p1F3: boolean;
+    p1F4: boolean;
+    p1F5: boolean;
+    p1F6: boolean;
+    p1F7: boolean;
+    p1F8: boolean;
+    p1F9: boolean;
+    p1F10: boolean;
+    p1F11: boolean;
+    p1F12: boolean;
+    p1F13: boolean;
+    p1F14: boolean;
+    p1F15: boolean;
+    p1F16: boolean;
+    p1F17: boolean;
+    p1F18: boolean;
+    p1F19: boolean;
+    p1F20: boolean;
+    p1F21: boolean;
+    p1F22: boolean;
+    p1F23: boolean;
+    p1F24: boolean;
+    p1F25: boolean;
+    p1F26: boolean;
+    p1F27: boolean;
+    p1F28: boolean;
+}
+
+export interface FromP1Err {
+    [key: string]: boolean|string;
+    p1F1Status: boolean;
+    p1F1Txt: string;
+    p1F2Status: boolean;
+    p1F2Txt: string;
+    p1F2TStatus: boolean;
+    p1F2TTxt: string;
+    p1F3Status: boolean;
+    p1F3Txt: string;
+    p1F4Status: boolean;
+    p1F4Txt: string;
+    p1F5Status: boolean;
+    p1F5Txt: string;
+    p1F6Status: boolean;
+    p1F6Txt: string;
+    p1F7Status: boolean;
+    p1F7Txt: string;
+    p1F8Status: boolean;
+    p1F8Txt: string;
+    p1F9Status: boolean;
+    p1F9Txt: string;
+    p1F10Status: boolean;
+    p1F10Txt: string;
+    p1F11Status: boolean;
+    p1F11Txt: string;
+    p1F12Status: boolean;
+    p1F12Txt: string;
+    p1F13Status: boolean;
+    p1F13Txt: string;
+    p1F14Status: boolean;
+    p1F14Txt: string;
+    p1F15Status: boolean;
+    p1F15Txt: string;
+    p1F16Status: boolean;
+    p1F16Txt: string;
+    p1F17Status: boolean;
+    p1F17Txt: string;
+    p1F18Status: boolean;
+    p1F18Txt: string;
+    p1F19Status: boolean;
+    p1F19Txt: string;
+    p1F20Status: boolean;
+    p1F20Txt: string;
+    p1F21Status: boolean;
+    p1F21Txt: string;
+    p1F22Status: boolean;
+    p1F22Txt: string;
+    p1F23Status: boolean;
+    p1F23Txt: string;
+    p1F24Status: boolean;
+    p1F24Txt: string; 
+    p1F25Status: boolean;
+    p1F25Txt: string; 
+    p1F26Status: boolean;
+    p1F26Txt: string; 
+    p1F27Status: boolean;
+    p1F27Txt: string; 
+    p1F28Status: boolean;
+    p1F28Txt: string; 
+    status: boolean;
 }

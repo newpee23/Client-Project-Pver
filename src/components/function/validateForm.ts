@@ -1,7 +1,7 @@
 import { dataSingUp, dataSingUpErr } from "../../types/authType";
-import { FormDataP0, FromP0Err, messageSubmitP0 } from "../../types/pageType";
-import { compareTimes } from "./function";
-import { dataFromP0Err, dataFromSingUpErr } from "./initialDataFrom";
+import { FormDataP0, FormDataP1Type, FromP0Err, FromP1Err, messageSubmitP0 } from "../../types/pageType";
+import { compareTimes, currentDateAge } from "./function";
+import { dataFromP0Err, dataFromP1Err, dataFromSingUpErr } from "./initialDataFrom";
 
 // check value SingUp
 export const checkValueSignUp = (data: dataSingUp): dataSingUpErr => {
@@ -328,4 +328,84 @@ export const submitStrErr = (dataErr: messageSubmitP0): string => {
       }
     
       return str;
+}
+
+// validateForm P1
+export const validateFormP1 = (dataP1: FormDataP1Type): FromP1Err => {
+
+    const newFormErr: FromP1Err = { ...dataFromP1Err };
+    const setNewFormErr = ({ status, txt, name }: { status: boolean; txt: string; name:string; }) => {
+        newFormErr[name+'Status'] = status;
+        newFormErr[name+'Txt'] = txt;
+        newFormErr['status'] = true;
+    };
+    // f1 ครอบครัวที่
+    if(!dataP1.p1F1) setNewFormErr({status:true, txt:"กรุณาเลือกครอบครัวที่", name:"p1F1"});
+    // f2t คำนำหน้า
+    if(!dataP1.p1F2T) setNewFormErr({status:true, txt:"กรุณาเลือกคำนำหน้าชื่อ", name:"p1F2T"});
+    // f2 หมายเลขบัตรประชาชน
+    if(dataP1.p1F2 !== "-"){
+        if(dataP1.p1F2.length !== 13) setNewFormErr({status:true, txt:"กรุณารุบุหมายเลขบัตรประชาชน 13 หลัก", name:"p1F2"});
+    } 
+    // f3 ชื่อ
+    if(dataP1.p1F3.length < 1) setNewFormErr({status:true, txt:"กรุณาระบุชื่อ", name:"p1F3"});
+    // f4 นามสกุล
+    if(dataP1.p1F4.length < 1) setNewFormErr({status:true, txt:"กรุณาระบุนามสกุล", name:"p1F4"});
+    // f5 ความสัมพันธ์กับเจ้าบ้าน
+    if(!dataP1.p1F5) setNewFormErr({status:true, txt:"กรุณาเลือกความสัมพันธ์กับเจ้าบ้าน", name:"p1F5"});
+    // f6 วัน/เดือน/ปี ค.ศ. เกิด
+    if(!dataP1.p1F6) setNewFormErr({status:true, txt:"กรุณาเลือกวัน/เดือน/ปี ค.ศ. เกิด", name:"p1F6"});
+    // f7 อายุ
+    const age: string = currentDateAge(dataP1.p1F6)
+    if(dataP1.p1F7.length < 1 || age === "กรุณาเลือกวันที่ให้ถูกต้อง") setNewFormErr({status:true, txt:"กรุณาเลือกวันที่ให้ถูกต้อง", name:"p1F7"});
+    // f8 เพศ
+    if(!dataP1.p1F8) setNewFormErr({status:true, txt:"กรุณาเลือกคำนำหน้าชื่อเพื่อกำหนดเพศ", name:"p1F8"});
+    if(dataP1.p1F2T?.value === 1 || dataP1.p1F2T?.value === 4){
+        if(dataP1.p1F8?.value !== 1) setNewFormErr({status:true, txt:"กรุณาเลือกคำนำหน้าชื่อให้สอดคล้องกับเพศ", name:"p1F8"});
+    }
+    if(dataP1.p1F2T?.value === 2 || dataP1.p1F2T?.value === 3 || dataP1.p1F2T?.value === 5){
+        if(dataP1.p1F8?.value !== 2) setNewFormErr({status:true, txt:"กรุณาเลือกคำนำหน้าชื่อให้สอดคล้องกับเพศ", name:"p1F8"});
+    }
+    // f9 การทะเบียนราษฎร์
+    if(!dataP1.p1F9) setNewFormErr({status:true, txt:"กรุณาเลือกการทะเบียนราษฎร์", name:"p1F9"});
+    // f10 สถานภาพ
+    if(!dataP1.p1F10) setNewFormErr({status:true, txt:"กรุณาเลือกสถานภาพ", name:"p1F10"});
+    // f11 การวางแผนครอบครัว
+    if(!dataP1.p1F11) setNewFormErr({status:true, txt:"กรุณาเลือกการวางแผนครอบครัว", name:"p1F11"});
+    // f12 ศาสนา/ความเชื่อ
+    if(!dataP1.p1F12) setNewFormErr({status:true, txt:"กรุณาเลือกศาสนา/ความเชื่อ", name:"p1F12"});
+    // f13 ระดับการศึกษา
+    if(!dataP1.p1F13) setNewFormErr({status:true, txt:"กรุณาเลือกระดับการศึกษา", name:"p1F13"});
+    // f14 การใช้ภาษาไทย(ฟัง)
+    if(!dataP1.p1F14) setNewFormErr({status:true, txt:"กรุณาเลือกการใช้ภาษาไทย(ฟัง)", name:"p1F14"});
+    // f15 การใช้ภาษาไทย(พูด)
+    if(!dataP1.p1F15) setNewFormErr({status:true, txt:"กรุณาเลือกการใช้ภาษาไทย(พูด)", name:"p1F15"});
+    // f16 การใช้ภาษาไทย(อ่าน)
+    if(!dataP1.p1F16) setNewFormErr({status:true, txt:"กรุณาเลือกการใช้ภาษาไทย(อ่าน)", name:"p1F16"});
+    // f17 การใช้ภาษาไทย(เขียน)
+    if(!dataP1.p1F17) setNewFormErr({status:true, txt:"กรุณาเลือกการใช้ภาษาไทย(เขียน)", name:"p1F17"});
+    // f18 อาศัยที่อยู่
+    if(!dataP1.p1F18) setNewFormErr({status:true, txt:"กรุณาเลือกอาศัยที่อยู่", name:"p1F18"});
+    // f19 สถานภาพการทำงานปัจจุบัน
+    if(!dataP1.p1F19) setNewFormErr({status:true, txt:"กรุณาเลือกสถานภาพการทำงานปัจจุบัน", name:"p1F19"});
+    // f20 อาชีพและรายได้ในปีที่ผ่านมา(อาชีพ)
+    if(!dataP1.p1F20) setNewFormErr({status:true, txt:"กรุณาเลือกอาชีพและรายได้ในปีที่ผ่านมา(อาชีพ)", name:"p1F20"});
+    // f21 อาชีพและรายได้ในปีที่ผ่านมา(สถานที่ทำงาน)
+    if(!dataP1.p1F21) setNewFormErr({status:true, txt:"กรุณาเลือกอาชีพและรายได้ในปีที่ผ่านมา(สถานที่ทำงาน)", name:"p1F21"});
+    // f22 อาชีพและรายได้ในปีที่ผ่านมา(รายได้ต่อเดือน(บาท))
+    if(!dataP1.p1F22) setNewFormErr({status:true, txt:"กรุณาเลือกอาชีพและรายได้ในปีที่ผ่านมา(รายได้ต่อเดือน(บาท))", name:"p1F22"});
+    // f23 อาชีพและรายได้ในปีที่ผ่านมา(รายได้ต่อปี(บาท))
+    if(!dataP1.p1F23) setNewFormErr({status:true, txt:"กรุณาเลือกอาชีพและรายได้ในปีที่ผ่านมา(รายได้ต่อปี(บาท))", name:"p1F23"});
+    // f24 สถานภาพการทำงานในปีหน้า
+    if(!dataP1.p1F24) setNewFormErr({status:true, txt:"กรุณาเลือกสถานภาพการทำงานในปีหน้า", name:"p1F24"});
+    // f25 อาชีพและรายได้ในปีหน้า(อาชีพ)
+    if(!dataP1.p1F25) setNewFormErr({status:true, txt:"กรุณาเลือกอาชีพและรายได้ในปีหน้า(อาชีพ)", name:"p1F25"});
+    // f26 อาชีพและรายได้ในปีหน้า(สถานที่ทำงาน)
+    if(!dataP1.p1F26) setNewFormErr({status:true, txt:"กรุณาเลือกอาชีพและรายได้ในปีหน้า(สถานที่ทำงาน)", name:"p1F26"});
+    // f27 อาชีพและรายได้ในปีหน้า(รายได้ต่อเดือน(บาท))
+    if(!dataP1.p1F27) setNewFormErr({status:true, txt:"กรุณาเลือกอาชีพและรายได้ในปีหน้า(รายได้ต่อเดือน(บาท))", name:"p1F27"});
+    // f28 อาชีพและรายได้ในปีหน้า(รายได้ต่อปี(บาท))
+    if(!dataP1.p1F28) setNewFormErr({status:true, txt:"กรุณาเลือกอาชีพและรายได้ในปีหน้า(รายได้ต่อปี(บาท))", name:"p1F28"});
+  
+    return newFormErr;
 }

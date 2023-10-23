@@ -1,6 +1,6 @@
 import { Opprovince } from "../../types/atomsType";
 import { dataSingUp, dataSingUpErr } from "../../types/authType";
-import { ErrFromDataP0, FormDataP0, FormDataP1Type, FromP0Err } from "../../types/pageType";
+import { ErrFromDataP0, FormDataP0, FormDataP1ReadOnlyType, FormDataP1Type, FromP0Err, FromP1Err } from "../../types/pageType";
 
 export const dataInsertP0: FormDataP0 = {
     p0F1: "",
@@ -103,7 +103,7 @@ export const dataFromSingUpErr: dataSingUpErr= {
   m_phoneTxt: ''
 };
 
-export const dataFromP0Err:FromP0Err = {
+export const dataFromP0Err: FromP0Err = {
   p0F1Status: false,
   p0F1Txt: '',
   p0F2Status: false,
@@ -152,6 +152,68 @@ export const dataFromP0Err:FromP0Err = {
   p0F23Txt: '',
   p0F24Status: false,
   p0F24Txt: '',
+}
+
+export const dataFromP1Err: FromP1Err = {
+  p1F1Status: false,
+  p1F1Txt: '',
+  p1F2Status: false,
+  p1F2Txt: '',
+  p1F2TStatus: false,
+  p1F2TTxt: '',
+  p1F3Status: false,
+  p1F3Txt: '',
+  p1F4Status: false,
+  p1F4Txt: '',
+  p1F5Status: false,
+  p1F5Txt: '',
+  p1F6Status: false,
+  p1F6Txt: '',
+  p1F7Status: false,
+  p1F7Txt: '',
+  p1F8Status: false,
+  p1F8Txt: '',
+  p1F9Status: false,
+  p1F9Txt: '',
+  p1F10Status: false,
+  p1F10Txt: '',
+  p1F11Status: false,
+  p1F11Txt: '',
+  p1F12Status: false,
+  p1F12Txt: '',
+  p1F13Status: false,
+  p1F13Txt: '',
+  p1F14Status: false,
+  p1F14Txt: '',
+  p1F15Status: false,
+  p1F15Txt: '',
+  p1F16Status: false,
+  p1F16Txt: '',
+  p1F17Status: false,
+  p1F17Txt: '',
+  p1F18Status: false,
+  p1F18Txt: '',
+  p1F19Status: false,
+  p1F19Txt: '',
+  p1F20Status: false,
+  p1F20Txt: '',
+  p1F21Status: false,
+  p1F21Txt: '',
+  p1F22Status: false,
+  p1F22Txt: '',
+  p1F23Status: false,
+  p1F23Txt: '',
+  p1F24Status: false,
+  p1F24Txt: '',
+  p1F25Status: false,
+  p1F25Txt: '',
+  p1F26Status: false,
+  p1F26Txt: '',
+  p1F27Status: false,
+  p1F27Txt: '',
+  p1F28Status: false,
+  p1F28Txt: '',
+  status: false
 }
 
 // P1F5
@@ -545,4 +607,37 @@ export const dataInsertP1:FormDataP1Type = {
   p1F26: null,
   p1F27: "",
   p1F28: ""
+}
+
+// dataPage1 
+export const dataInsertReadonlyP1:FormDataP1ReadOnlyType = {
+  p1F1: false,
+  p1F2T: false,
+  p1F2: false,
+  p1F3: false,
+  p1F4: false,
+  p1F5: false,
+  p1F6: false,
+  p1F7: true,
+  p1F8: true,
+  p1F9: false,
+  p1F10: false,
+  p1F11: false,
+  p1F12: false,
+  p1F13: false,
+  p1F14: false,
+  p1F15: false,
+  p1F16: false,
+  p1F17: false,
+  p1F18: false,
+  p1F19: false,
+  p1F20: false,
+  p1F21: false,
+  p1F22: false,
+  p1F23: false,
+  p1F24: false,
+  p1F25: false,
+  p1F26: false,
+  p1F27: false,
+  p1F28: false
 }
