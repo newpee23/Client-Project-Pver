@@ -184,6 +184,39 @@ export interface FormDataP1Type {
     p1F28: string;
 }
 
+export interface FormDataP1InsertType {
+    [key: string]: string | number | null;
+    p1F1: number | null;
+    p1F2T: number | null;
+    p1F2: string;
+    p1F3: string;
+    p1F4: string;
+    p1F5: number | null;
+    p1F6: string;
+    p1F7: string;
+    p1F8: number | null;
+    p1F9: number | null;
+    p1F10: number | null;
+    p1F11: number | null;
+    p1F12: number | null;
+    p1F13: number | null;
+    p1F14: number | null;
+    p1F15: number | null;
+    p1F16: number | null;
+    p1F17: number | null;
+    p1F18: number | null;
+    p1F19: number | null;
+    p1F20: number | null;
+    p1F21: number | null;
+    p1F22: string;
+    p1F23: string;
+    p1F24: number | null;
+    p1F25: number | null;
+    p1F26: number | null;
+    p1F27: string;
+    p1F28: string;
+}
+
 export interface FormDataP1ReadOnlyType {
     p1F1: boolean;
     p1F2T: boolean;

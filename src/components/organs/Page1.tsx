@@ -14,6 +14,7 @@ import { validateFormP1 } from "../function/validateForm"
 import DivTextMesErr from "../atoms/DivTextMesErr"
 import ModalSave from "../atoms/ModalSave"
 import LoadingCheck from "../atoms/LoadingCheck"
+import { savePage1 } from "../../api/pageApi"
 
 const Page1 = (props: pageComponents) => {
 
@@ -205,6 +206,7 @@ const Page1 = (props: pageComponents) => {
   }
 
   const handleSubmit = async (): Promise<void> => {
+    await savePage1(dataFromPage1)
     console.log(dataFromPage1);
   }
   return (
