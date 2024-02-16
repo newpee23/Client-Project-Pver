@@ -17,7 +17,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ dataFrom }) => {
   const generateCardItem = useCallback((item: allFromMaster | null): JSX.Element[] => {
     const cardQuestionnaires: JSX.Element[] = [];
     if (item?.p0_user) {
-      for (let i = 0; i < 18; i++) {
+      for (let i = 0; i < 2; i++) {
         const pageuser = (item as any)[`p${i}_user`] as number | null;
         const pageusername = (item as any)[`p${i}_user_name`] as string | null;
         const pagetimeText = (item as any)[`p${i}_time`] as Date | null;
@@ -34,7 +34,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({ dataFrom }) => {
         );
       }
     } else {
-      for (let i = 0; i < 18; i++) {
+      for (let i = 0; i < 2; i++) {
         cardQuestionnaires.push(
           <CardQuestionnaire
             key={`card-${i}`}
